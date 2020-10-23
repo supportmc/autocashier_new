@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Bitso: Web Socket API Demo</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: black;
+            color: white;
+        }
+        
+        table {
+            width: 50%;
+        }
+        
+        td {
+            text-align: center;
+        }
+        
+        th {
+            height: 50px;
+            background-color: white;
+            color: black;
+        }
+        
+        .myButton {
+            -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            box-shadow: 0px 0px 0px 2px #9fb4f2;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+            background: -moz-linear-gradient( center top, #7892c2 5%, #476e9e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e');
+            background-color: #7892c2;
+            -webkit-border-top-left-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            border-top-left-radius: 10px;
+            -webkit-border-top-right-radius: 10px;
+            -moz-border-radius-topright: 10px;
+            border-top-right-radius: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomleft: 10px;
+            border-bottom-left-radius: 10px;
+            text-indent: 0;
+            border: 1px solid #4e6096;
+            display: inline-block;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            height: 25px;
+            line-height: 25px;
+            width: 70px;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0px 1px 0px #283966;
+        }
+        
+        .myButton:hover {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+            background: -moz-linear-gradient( center top, #476e9e 5%, #7892c2 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2');
+            background-color: #476e9e;
+        }
+        
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+    <script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <h2>4. Network Settings </h2>
+
+        <div id="trades-output" style="font-size: x-small;">
+
+        </div>
+        <table style="border-color:red;">
+
+            <tr>
+                <td>Wifi Name:</td>
+                <td>
+                    <input type="text" placeholder="wifi name"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="password"></input>
+                </td>
+            </tr>
+
+
+        </table>
+        <br>
+
+
+        <a href="setup.html" class="myButton">Back</a>
+
+
+        <script>
+            document.getElementById("customer").innerHTML = getParameterByName('c');
+            document.getElementById("spacv").innerHTML = getParameterByName('spacv');
+            document.getElementById("appacv").innerHTML = getParameterByName('appacv');
+            document.getElementById("vacv").innerHTML = getParameterByName('vacv');
+            document.getElementById("spacs").innerHTML = getParameterByName('spacs');
+            document.getElementById("appacs").innerHTML = getParameterByName('appacs');
+            document.getElementById("vacs").innerHTML = getParameterByName('vacs');
+        </script>
+
+    </center>
+</body>
+
+</html>

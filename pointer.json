@@ -1,0 +1,6 @@
+{
+    "StartSPCA": "SPCA1",
+    "DownloadSPCA": "SPCA2",
+    "StartAPPCA": "APPCA1",
+    "DownloadAPPCA": "APPCA2"
+}

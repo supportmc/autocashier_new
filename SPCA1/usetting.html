@@ -1,0 +1,219 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Bitso: Web Socket API Demo</title>
+    <style>
+        /* The container must be positioned relative: */
+        .select-css {
+        display: block;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        font-weight: 400;
+        color: white;
+        line-height: 1.3;
+        padding: .4em 1.4em .3em .8em;
+        width: 400px;
+        max-width: 100%; 
+        box-sizing: border-box;
+        margin: 0;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0,0,0,.03);
+        border-radius: .3em;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: rgb(0, 0, 0);
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+        linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;
+        }
+        .select-css::-ms-expand {
+        display: none;
+        }
+        .select-css:hover {
+        border-color: #888;
+        }
+        .select-css:focus {
+        border-color: #aaa;
+        box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+        box-shadow: 0 0 0 3px -moz-mac-focusring;
+        color: #222; 
+        outline: none;
+        }
+        .select-css option {
+        font-weight:normal;
+        }
+        body {
+            font-family: Arial;
+            background-color: black;
+            color: white;
+        }
+        
+        table {
+            width: 50%;
+        }
+        
+        td {
+            text-align: center;
+        }
+        
+        th {
+            height: 50px;
+            background-color: white;
+            color: black;
+        }
+        
+        .myButton {
+            -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            box-shadow: 0px 0px 0px 2px #9fb4f2;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+            background: -moz-linear-gradient( center top, #7892c2 5%, #476e9e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e');
+            background-color: #7892c2;
+            -webkit-border-top-left-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            border-top-left-radius: 10px;
+            -webkit-border-top-right-radius: 10px;
+            -moz-border-radius-topright: 10px;
+            border-top-right-radius: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomleft: 10px;
+            border-bottom-left-radius: 10px;
+            text-indent: 0;
+            border: 1px solid #4e6096;
+            display: inline-block;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            height: 25px;
+            line-height: 25px;
+            width: 70px;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0px 1px 0px #283966;
+        }
+        
+        .myButton:hover {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+            background: -moz-linear-gradient( center top, #476e9e 5%, #7892c2 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2');
+            background-color: #476e9e;
+        }
+        
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+    <script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function myFunction() {
+
+            var selectBox = document.getElementById("tupdate");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+            var x = document.getElementById("mdiv");
+            if (selectedValue=='Pen'){
+                x.style.display = "none";
+            }else{
+                x.style.display = "block";
+            }
+            
+        }
+        function myFunction2() {
+
+        var selectBox = document.getElementById("fupdate");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+        var x = document.getElementById("mdivb");
+        if (selectedValue=='Auto'){
+            x.style.display = "none";
+        }else{
+            x.style.display = "block";
+        }
+
+        }
+        function updatenow(){
+            var txt;
+            var r = confirm("Press a button!");
+            if (r == true) {
+                txt = "You pressed OK!";
+            } else {
+                txt = "You pressed Cancel!";
+            }
+        }
+        window.alert = function(title, message){
+        var myElementToShow = document.getElementById("someElementId");
+        myElementToShow.innerHTML = title + "</br>" + message; 
+    }
+    </script>
+</head>
+
+<body>
+    <center>
+        <h2>3. Update Settings </h2>
+
+        <div id="trades-output" style="font-size: x-small;">
+
+        </div>
+        <table style="border-color:red;">
+
+            <tr>
+                <td>Update from</td>
+                <td>
+                    <select id="tupdate" onchange="myFunction()">
+                        <option value="Pen">Pendrive</option>
+                        <option value="Api">Api</option>   
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Update Mode</td>
+                <td>
+                    <select id="fupdate" onchange="myFunction2()">
+                        <option value="Manu">Manual</option>
+                        <option value="Auto">Auto</option>   
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+        <div id="mdiv" style="display:none">Api Url:<input type="text"></input></div>
+        <div id="mdivb" style="display:none"><button type="button" class="myButton" onclick="updatenow()">Update Now</button></div>
+        <br>
+
+
+        <a href="setup.html" class="myButton">Back</a>
+
+
+        <script>
+            document.getElementById("customer").innerHTML = getParameterByName('c');
+            document.getElementById("spacv").innerHTML = getParameterByName('spacv');
+            document.getElementById("appacv").innerHTML = getParameterByName('appacv');
+            document.getElementById("vacv").innerHTML = getParameterByName('vacv');
+            document.getElementById("spacs").innerHTML = getParameterByName('spacs');
+            document.getElementById("appacs").innerHTML = getParameterByName('appacs');
+            document.getElementById("vacs").innerHTML = getParameterByName('vacs');
+        </script>
+
+    </center>
+</body>
+
+</html>
