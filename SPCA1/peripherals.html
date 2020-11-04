@@ -5,7 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
     <title>Bitso: Web Socket API Demo</title>
     <style>
-        
+
+    #imgflecha{
+      top:65;
+      left:410;
+      position: absolute;
+
+    }
+
+    /* esto es para los checks generales */    
         .container {
   display: block;
   position: relative;
@@ -31,6 +39,7 @@
   width: 30px;
   background-color: white;
   border-radius: 50%;
+  
 }
 
 .container:hover input ~ .check {
@@ -60,8 +69,100 @@
 	background: black;
 }
 
+/* check archivo */
+
+.container1 {
+  display: block;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 25px;
+  width: 250;
+}
 
 
+.check1 {
+  position: absolute;
+  top: 0;
+  left: 380;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.container1:hover input ~ .check{
+  background-color: white;
+}
+
+.container1 input:checked ~ .check {
+  background-color: white;
+}
+
+.container1 input:checked ~ .check:after {
+  display: block;
+}
+
+.container1 .check:after {
+ 	top: 8px;
+	left: 8px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: black;
+}
+
+
+.checkmark1{
+        position: absolute;
+        top: 0;
+        left: 350;
+        height: 25px;
+        width: 25px;
+        background-color: white;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container1:hover input ~ .checkmark1{
+        background-color: white;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container1 input:checked ~ .checkmark1 {
+        background-color: white;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark1:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container1 input:checked ~ .checkmark1:after {
+        display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container1 .checkmark1:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+
+
+
+/*------ */
 
 
 
@@ -70,6 +171,17 @@
             background-color: black;
             color: white;
         }
+
+        .archivob{
+          position: absolute;
+          top: 0;
+          left: 380;
+          height: 30px;
+          width: 30px;
+          background-color: white;
+          border-radius: 50%;
+        }
+
         /* The container */
         .container {
         display: block;
@@ -190,6 +302,14 @@
             position: relative;
             top: 1px;
         }
+
+        #archivo{
+          position: absolute;
+        top: 90;
+        left: 600;
+        height: 25px;
+        width: 25px;
+        }
     </style>
     <script>
         function getParameterByName(name) {
@@ -197,6 +317,21 @@
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function MuestroValores(){
+          b1=document.getElementById('bill1').checked;
+          b2=document.getElementById('bill2').checked;
+          c=document.getElementById('coin').checked;
+          mr=document.getElementById('magnetic_reader').checked;
+          nfcr=document.getElementById('nfc_reader').checked;
+          bcr=document.getElementById('barcode_reader').checked;
+          /*mcd=document.getElementById('magnetic_dispenser').checked;
+          nfccd=document.getElementById('nfc_dispenser').checked;*/
+          p=document.getElementById('printer').checked; 
+
+
+          alert(b1 +' '+ b2+' '+ c+' '+ mr+' '+ nfcr+' '+ bcr+' '+ p );
         }
     </script>
 </head>
@@ -209,11 +344,21 @@
         <label class="container">Bill Aceptor 1
         <input type="checkbox" id="bill1">
         <span class="checkmark"></span>
-      </label>
+        </label>
         <label class="container">Bill Aceptor 2
         <input type="checkbox" id="bill2">
         <span class="checkmark"></span>
         </label>
+        
+        <img src="flecha_channel_file.png" id="imgflecha">
+
+        <div id="archivo">
+        <label class="container1">Update channels File
+        <input type="checkbox" id="channel_file" style="visibility: hidden;">
+        <span class="checkmark1"></span>
+        </label>
+        </div>
+
         <label class="container">Coin Aceptor
         <input type="checkbox" id="coin">
         <span class="checkmark"></span>
@@ -232,11 +377,11 @@
         </label>
         
         <label class="container">Magnetic Card Dispenser
-            <input type="radio" name="radio" id="magnetic_dispenser">
+            <input type="radio" name="radio" id="magnetic_dispenser" value="magnetic_dispenser">
             <span class="check"></span>
             </label>
             <label class="container">NFC Card Dispenser
-            <input type="radio" name="radio" id="nfc_dispenser">
+            <input type="radio" name="radio" id="nfc_dispenser" value="nfc_dispenser">
             <span class="check"></span>
             </label>      
         <label class="container">Printer
@@ -252,17 +397,21 @@
         <br>
 
 
-        <a href="setup.html" class="myButton">Back</a>
+        <a href="setup.html" class="myButton" onclick="MuestroValores()">Back</a>
 
 
         <script>
-            document.getElementById("customer").innerHTML = getParameterByName('c');
-            document.getElementById("spacv").innerHTML = getParameterByName('spacv');
-            document.getElementById("appacv").innerHTML = getParameterByName('appacv');
-            document.getElementById("vacv").innerHTML = getParameterByName('vacv');
-            document.getElementById("spacs").innerHTML = getParameterByName('spacs');
-            document.getElementById("appacs").innerHTML = getParameterByName('appacs');
-            document.getElementById("vacs").innerHTML = getParameterByName('vacs');
+            document.getElementById("bill1").checked= getParameterByName('bill1');
+            document.getElementById("bill2").checked= getParameterByName('bill2');
+            document.getElementById("channel_file").checked= getParameterByName('channel_file');
+            document.getElementById("coin").checked= getParameterByName('coin');
+            document.getElementById("magnetic_reader").checked= getParameterByName('magnetic_reader');
+            document.getElementById("nfc_reader").checked= getParameterByName('nfc_reader');
+            document.getElementById("barcode_reader").checked= getParameterByName('barcode_reader');
+            document.getElementById("magnetic_dispenser").checked= getParameterByName('magnetic_dispenser');
+            document.getElementById("nfc_dispenser").checked= getParameterByName('nfc_dispenser');
+            document.getElementById("printer").checked= getParameterByName('printer');
+            
         </script>
 
     </center>

@@ -87,6 +87,7 @@ def Start():
                 UpgradeModule.CheckUpgrade()
             else:
                 CloseApp()
+                
                 SetupModule.Show(GetVersion())
             sleep(3)
         except Exception as e:
@@ -94,9 +95,15 @@ def Start():
             continue
 
 #start App-----------------------------------------
-
-
 print('Welcome to Magnetic Cash Autocashier Software')
+print('Starting SPCA ...')
+sleep(1)
+if CounterModule.Change_CounterStart()==True:
+    print('CounterModule --> OK')
+else:
+    print('CounterModule --> Error')
+
+
 print('Checking Versions....')
 print("SPCA Version ->"+ GetVersion())
 print("CounterModule Version ->"+ CounterModule.GetVersion())
@@ -105,17 +112,9 @@ print("SetupModule Version ->"+ SetupModule.GetVersion())
 print("UpgradeModule Version ->"+ UpgradeModule.GetVersion())
 print("DownloadModule Version ->"+ DownloadModule.GetVersion())
 
-
-
-print('Starting SPCA ...')
-sleep(1)
-if CounterModule.Change_CounterStart()==True:
-    print('CounterModule --> OK')
-else:
-    print('CounterModule --> Error')
-
 Customer=CustomerModule.Read_Customer()
 print ('Customer '+ Customer)
 Start()
+
 
 

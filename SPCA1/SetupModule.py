@@ -74,11 +74,12 @@ def GetVersion():
     return(str(Version))
 
 def Read_SetupJson():
+    global JsonSetup
     try:
         with open('setup.json') as json_file:
-            mijson = json.loads(json_file.read())        
+            JsonSetup = json.loads(json_file.read())        
         #print(mijson)
-        return mijson
+        return JsonSetup
     #Total_Start=mijson["Total_Start"]
 
     except Exception as error:
@@ -89,10 +90,11 @@ def Read_Setup():
     global JsonSetup
     try:
         with open('setup.json') as json_file:
-            mijson = json.loads(json_file.read())        
-        #print(mijson)
+            mijson = json.loads(json_file.read())
+            JsonSetup=Read_SetupJson() #actualizo JsonGral        
+        
         return mijson['Setup']
-    #Total_Start=mijson["Total_Start"]
+    
 
     except Exception as error:
         print(error)

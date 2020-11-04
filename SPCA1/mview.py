@@ -46,7 +46,7 @@ def creoVentana(sversion):
     #Paso todo los parametros a la vista
     ruta='setup.html'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
     print(ruta)
-    window = webview.create_window('Get current URL1', ruta)
+    window = webview.create_window('Get current URL1', ruta,fullscreen=True)
     webview.start(change_url, window,http_server=True)
     
 
@@ -100,13 +100,15 @@ def imprime():
             #print(page[-10:])
             if  page[-9:]=='exit.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 webview.windows[0].hide()
+                SetupModule.GetJsonSetup() #recupero el anterior
+                SetupModule.SaveSetup() #guardo el viejo
                 CloseSetup()
                 webview.windows[0].destroy()
 
             if  page[-9:]=='save.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 webview.windows[0].hide()
-                SetupModule.SaveSetup()
-                CloseSetup()
+                SetupModule.SaveSetup() #guardo el nuevo
+                CloseSetup() #cierro
                 webview.windows[0].destroy()    
                 #cambia setup.json
 
@@ -132,15 +134,36 @@ def imprime():
                 spacv=softversion
                 appacv=sapp.GetVersion()
                 vacv=sview.GetVersion()
-                #//customer
-                data=CustomerModule.Read_Customer()
-                customer=data
+                
+                #data=[CustomerModule.Read_Customer()]
+                
+                customer=data["Customer"]
+                channelFile= data["Channel_file_Update"]
+
+                bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
+                bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
+                coinEnabled= data["Peripherals"][0]["coinEnabled"]
+                magnetic_reader_Enabled= data["Peripherals"][0]["magnetic_reader_Enabled"]
+                nfc_reader_Enabled= data["Peripherals"][0]["nfc_reader_Enabled"]
+                barcode_reader_Enabled= data["Peripherals"][0]["barcode_reader_Enabled"]
+                magnetic_card_dispenser_Enabled= data["Peripherals"][0]["magnetic_card_dispenser_Enabled"]
+                nfc_card_dispenser_Enabled= data["Peripherals"][0]["nfc_card_dispenser_Enabled"]
+                printer_Enabled= data["Peripherals"][0]["printer_Enabled"]
+
+                #+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&nfc_dispenser_='+str(nfc_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)
+                
+                if nfc_card_dispenser_Enabled == True:
+                    nfc_card_dispenser_Enabled=1
+                    magnetic_card_dispenser_Enabled=""
+                elif magnetic_card_dispenser_Enabled ==True:
+                    magnetic_card_dispenser_Enabled=1 
+                    nfc_card_dispenser_Enabled=""
 
 
                 #Paso todo los parametros a la vista
                 #file:///home/pi/Autocashier/
                 #ruta= 'file://'+os.getcwd()+'/' +'setup.html'+'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
-                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)#'?t=000000000100&p=000000000037&r=28-09-20 2019:48:35&spacs=000000000100&appacs=000000000100&vacs=000000000100&spacv=000.022.001.001&appacv=022.101.001.001&vacv=101.501.001.001&c=Lepark_5400001'
+                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_card_dispenser_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
             

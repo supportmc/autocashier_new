@@ -8,6 +8,55 @@
             font-family: Arial;
             background-color: black;
             color: white;
+            font-size: large;
+        }
+
+        .myButton {
+            -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            box-shadow: 0px 0px 0px 2px #9fb4f2;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+            background: -moz-linear-gradient( center top, #7892c2 5%, #476e9e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e');
+            background-color: #7892c2;
+            -webkit-border-top-left-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            border-top-left-radius: 10px;
+            -webkit-border-top-right-radius: 10px;
+            -moz-border-radius-topright: 10px;
+            border-top-right-radius: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomleft: 10px;
+            border-bottom-left-radius: 10px;
+            text-indent: 0;
+            border: 1px solid #4e6096;
+            display: inline-block;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            height: 35px;
+            line-height: 35px;
+            width: 80px;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0px 1px 0px #283966;
+        }
+        
+        .myButton:hover {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+            background: -moz-linear-gradient( center top, #476e9e 5%, #7892c2 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2');
+            background-color: #476e9e;
+        }
+        
+        .myButton:active {
+            position: relative;
+            top: 1px;
         }
     </style>
     <script>
@@ -35,7 +84,7 @@
     <h3><a href="" name="a" style="color:white;">2.Software Update</a></h3>
     <h3><a href="usetting.html" name="a" style="color:white;">3.Update Settings</a></h3>
     <h3><a href="nsetting.html" name="a" style="color:white;">4.Network Settings</a></h3>
-    <h3><a href="peripherals.html" name="a" style="color:white;">5.Peripherals Set</a></h3>
+    <h3><a href="" name="a" style="color:white;">5.Peripherals Set</a></h3>
 
 
     <!--  <h1>Diff Orders</h1>
@@ -44,16 +93,20 @@
     </div> -->
     <script>
         //a
-        var d = "scounter.html?r=" + getParameterByName('r') + "&t=" + getParameterByName('t') + "&p=" + getParameterByName('p')
-        document.getElementsByTagName("a")[0].setAttribute("href", d);
+        var a = "scounter.html?r=" + getParameterByName('r') + "&t=" + getParameterByName('t') + "&p=" + getParameterByName('p')
+        document.getElementsByTagName("a")[0].setAttribute("href", a);
 
         //b
-        var e = "supdate.html?c=" + getParameterByName('c') + "&spacv=" + getParameterByName('spacv') + "&appacv=" + getParameterByName('appacv') + "&vacv=" + getParameterByName('vacv') + "&spacs=" + getParameterByName('spacs') + "&appacs=" + getParameterByName('appacs') + "&vacs=" + getParameterByName('vacs')
-        document.getElementsByTagName("a")[1].setAttribute("href", e);
-    </script>
+        var b = "supdate.html?c=" + getParameterByName('c') + "&spacv=" + getParameterByName('spacv') + "&appacv=" + getParameterByName('appacv') + "&vacv=" + getParameterByName('vacv') + "&spacs=" + getParameterByName('spacs') + "&appacs=" + getParameterByName('appacs') + "&vacs=" + getParameterByName('vacs')
+        document.getElementsByTagName("a")[1].setAttribute("href", b);
 
-    <a href="exit.html">Exit</a><br>
-    <a href="save.html">Save</a>
+        //e
+        var e = "peripherals.html?bill1=" + getParameterByName('bill1') + "&bill2=" + getParameterByName('bill2')+ "&coin=" + getParameterByName('coin')+ "&magnetic_reader=" + getParameterByName('magnetic_reader')+ "&nfc_reader=" + getParameterByName('nfc_reader')+ "&barcode_reader=" + getParameterByName('barcode_reader')+ "&magnetic_dispenser=" + getParameterByName('magnetic_dispenser')+ "&nfc_dispenser=" + getParameterByName('nfc_dispenser')+ "&printer=" + getParameterByName('printer')+ "&channel_file=" + getParameterByName('channel_file')
+        document.getElementsByTagName("a")[4].setAttribute("href", e);
+    </script>
+<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="save.html" class="myButton">Save & Exit</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="exit.html" class="myButton">Exit</a>
+    
 
 
 </body>
