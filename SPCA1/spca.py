@@ -5,7 +5,7 @@ import os,sys #import dyn modules
 #-----------------------------------------------------------------
 #importa modulos de magnetic cash
 import CustomerModule,SetupModule,UpgradeModule,DownloadModule
-import CounterModule 
+import CounterModule
 import mview
 #-----------------------------------------------------------------
 #importo puntero
@@ -29,9 +29,49 @@ UpgradeModuleVersion=""
 DownloadModuleVersion=""
 Customer=""
 Setup=0
-
+#JsonSetup=""
 #-----------------------------------------
 
+""" def Read_Setup():
+    global JsonSetup
+    try:
+        with open('setup.json') as json_file:
+            JsonSetup = json.loads(json_file.read())        
+        #print(mijson)
+        return JsonSetup
+    #Total_Start=mijson["Total_Start"]
+
+    
+    except Exception as error:
+        print(error)
+        return('')    """    
+""" def CloseSetup():
+    global JsonSetup
+    try:
+        
+        filename='setup.json'            
+        
+        data = JsonSetup#Read_Setup()
+        if data=='':
+            return False
+        
+
+        data['Setup'] = 0
+
+        os.remove(filename)
+        with open(filename, 'w') as f:
+            json.dump(data, f, indent=4)
+        
+        return(True)
+
+
+    except Exception as error:
+        print(str(error) + ' Error to reset partial start counter')
+        return False    """
+
+""" def GetSetupJson():
+    global JsonSetup
+    return JsonSetup """
 def GetVersion():
     return(str(Version))
 
@@ -52,6 +92,9 @@ def Start():
         except Exception as e:
             print(str(e))
             continue
+
+#start App-----------------------------------------
+
 
 print('Welcome to Magnetic Cash Autocashier Software')
 print('Checking Versions....')

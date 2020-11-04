@@ -1,3 +1,12 @@
 {
-    "Setup": 0
+    "Setup": 0,
+    "Enabled": 0,
+    "Type": "Pendrive",
+    "Customer": "Lepark_5400001",
+    "Total_Start": 162,
+    "Parcial_Start": 0,
+    "SPAC_Start": 162,
+    "APPAC_Start": 162,
+    "VAC_Start": 162,
+    "LastReset": "04/11/20 01:42:42"
 }

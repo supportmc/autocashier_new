@@ -3,6 +3,9 @@ import os
 import datetime
 
 import time
+import SetupModule
+
+
 Version='022.001.001.001'
 
 def GetVersion():
@@ -10,10 +13,12 @@ def GetVersion():
 
 def Read_CounterStart():
     try:
-        with open('counter.json') as json_file:
-            mijson = json.loads(json_file.read())        
+        #with open('setup.json') as json_file:
+        #    mijson = json.loads(json_file.read())        
         #print(mijson)
-        return mijson
+        j=SetupModule.GetJsonSetup()
+
+        return j
     #Total_Start=mijson["Total_Start"]
 
     
@@ -24,9 +29,9 @@ def Read_CounterStart():
 def Reset_CounterStart():
     try:
         
-        filename='counter.json'            
+        #filename='setup.json'            
         
-        data = Read_CounterStart()
+        data = SetupModule.GetJsonSetup()#Read_CounterStart()
         if data=='':
             return False
         
@@ -38,9 +43,10 @@ def Reset_CounterStart():
         data['VAC_Start'] = data['VAC_Start']
         data['LastReset'] = time.strftime("%d/%m/%y")+' '+time.strftime("%H:%M:%S")
 
-        os.remove(filename)
-        with open(filename, 'w') as f:
-            json.dump(data, f, indent=4)
+        SetupModule.SetJsonSetup(data)#send update json file
+        #os.remove(filename)
+        #with open(filename, 'w') as f:
+        #    json.dump(data, f, indent=4)
         print('Partial Counter start reset Ok')
         return(True)
 
@@ -52,7 +58,7 @@ def Reset_CounterStart():
 def Change_CounterStart():
     try:
         
-        filename='counter.json'            
+        filename='setup.json'            
         
         data = Read_CounterStart()
         if data=='':

@@ -15,6 +15,7 @@ sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/App/') #importa apl
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 import sapp
 import sview
+import SetupModule
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -101,7 +102,12 @@ def imprime():
                 webview.windows[0].hide()
                 CloseSetup()
                 webview.windows[0].destroy()
-                
+
+            if  page[-9:]=='save.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+                webview.windows[0].hide()
+                SetupModule.SaveSetup()
+                CloseSetup()
+                webview.windows[0].destroy()    
                 #cambia setup.json
 
             if (page.find('r=0') != -1):
@@ -109,7 +115,7 @@ def imprime():
                     print('reset ok')
                 else:
                     print('reset error')
-                data=CounterModule.Read_CounterStart()
+                data=SetupModule.GetJsonSetup()#CounterModule.Read_CounterStart()
                 t=str(data["Total_Start"]).zfill(12)
                 p=str(data["Parcial_Start"]).zfill(12)
                 r=datetime.datetime.strptime(data["LastReset"], "%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
