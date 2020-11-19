@@ -8,7 +8,7 @@ import mview
 Version='022.003.001.001'
 
 JsonSetup=""
-
+FirstStart=True
 
 def GetJsonSetup():
     global JsonSetup
@@ -101,11 +101,16 @@ def Read_Setup():
         return('')
 
 def Show(sversion):
+    global FirstStart
     #while True:
     # Read_Setup()==1:
     #    sleep(1)
     #    print("showing Setup Screen")
+    #if FirstStart==True:
     mview.creoVentana(sversion)
+   #     FirstStart=False
+    #else:
+    #    mview.muestraVentana()
 
         
     

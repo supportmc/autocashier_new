@@ -3,24 +3,25 @@
     "Enabled": 0,
     "Type": "Pendrive",
     "Customer": "Lepark_5400001",
-    "Total_Start": 184,
-    "Parcial_Start": 13,
-    "SPAC_Start": 184,
-    "APPAC_Start": 184,
-    "VAC_Start": 184,
+    "Total_Start": 207,
+    "Parcial_Start": 36,
+    "SPAC_Start": 207,
+    "APPAC_Start": 207,
+    "VAC_Start": 207,
     "LastReset": "04/11/20 13:13:25",
     "Peripherals": [
         {
             "bill1Enabled": true,
             "bill2Enabled": true,
-            "coinEnabled": true,
-            "magnetic_reader_Enabled": true,
-            "nfc_reader_Enabled": true,
-            "barcode_reader_Enabled": true,
-            "magnetic_card_dispenser_Enabled": false,
-            "nfc_card_dispenser_Enabled": true,
-            "printer_Enabled": true
+            "coinEnabled": false,
+            "magnetic_reader_Enabled": false,
+            "nfc_reader_Enabled": false,
+            "barcode_reader_Enabled": false,
+            "magnetic_card_dispenser_Enabled": true,
+            "nfc_card_dispenser_Enabled": false,
+            "printer_Enabled": false
         }
     ],
-    "Channel_file_Update": false
+    "Channel_file_Update": false,
+    "Exchange_file_Update": false
 }
