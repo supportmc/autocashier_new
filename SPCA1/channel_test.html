@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-    <title>Bitso: Web Socket API Demo</title>
+    <title>Autocashier</title>
     <style>
 
     #imgflecha{
@@ -320,6 +320,46 @@
         .estado{
           margin-left:50px;
         }
+
+        
+        .Amount{
+          top: 130;
+          left: 275;
+          position: fixed;
+          
+        }
+        .Currency{
+          margin-left:150px;
+        }
+        .Symbol{
+          margin-left:200px;
+        }
+        .Rate{
+          margin-left:250px;
+        }
+        #hardware{
+          
+          top: 160;
+          left: 100;
+          position: fixed;
+        }
+        #amount{
+          
+    /* float: left; */
+    margin-left: 100px;
+    position: fixed;
+    top: 160;
+    left: 185;
+        }
+        #currency{
+          margin-left:150px;
+        }
+        #symbol{
+          margin-left:200px;
+        }
+        #rate{
+          margin-left:250px;
+        }
     </style>
     <script>
         function getParameterByName(name) {
@@ -371,15 +411,15 @@
 
 <body>
     <center>
-        <h2>6. Peripherals Status</h2>
+        <h2>7. Money channel test</h2>
 
         
-        <label class="container">Bill Aceptor 1
-        <label id="bill1" class="estado"></label>
+        <label class="container">Currency
+        <label id="currency" class="estado"></label>
         
         </label>
-        <label class="container">Bill Aceptor 2
-        <label id="bill2" class="estado"></label>
+        <label class="container">Symbol
+        <label id="symbol" class="estado"></label>
         
         </label>
         
@@ -388,35 +428,24 @@
                
           
 
-        <label class="container">Coin Aceptor
-        <label id="coin" class="estado"></label>
-        
+        <label id="hardware" class="Hardware">Bill1
         </label>
-        <label class="container">Magnetic Reader
-        <label id="magnetic_reader" class="estado"></label>
-        
+        <label class="Amount">Amount
+        <label id="amount">1000</label>
         </label>
-        <label class="container">Nfc Reader
-        <label id="nfc_reader" class="estado"></label>
+
+        <label class="Currency">Currency
+          <label id="moneda">1000</label>
+          </label>
         
-        </label>
-        <label class="container">Barcode Reader
-          <label id="barcode_reader" class="estado"></label>
+        <label class="Symbol">Symbol
+          <label id="moneda">$</label>
+          </label>
+
+        <label class="Rate">Rate
+          <label id="rate">1</label>
+          </label>
         
-        </label>
-        
-        <label class="container">Magnetic Card Dispenser
-        <label id="magnetic_dispenser" class="estado"></label>
-            
-        </label>
-        <label class="container">NFC Card Dispenser
-        <label id="nfc_dispenser" class="estado"></label>
-        
-        </label>      
-        <label class="container">Printer
-        <label id="printer" class="estado"></label>
-        
-        </label>       
         
         <br><br>
 
