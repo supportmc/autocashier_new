@@ -196,6 +196,7 @@
         -ms-user-select: none;
         user-select: none;
         
+        
         }
 
         /* Hide the browser's default checkbox */
@@ -318,47 +319,81 @@
         width: 25px;
         }
         .estado{
-          margin-left:50px;
+          margin-left:100px;
+          
         }
 
         
+        
         .Amount{
-          top: 130;
+          top: 150;
           left: 275;
           position: fixed;
+          font-weight: bold;
           
         }
         .Currency{
-          margin-left:150px;
+          
+          top: 150;
+          left: 375;
+          position: fixed;
+          font-weight: bold;
         }
         .Symbol{
-          margin-left:200px;
+          font-weight: bold;
+          top: 150;
+          left: 475;
+          position: fixed;
         }
         .Rate{
-          margin-left:250px;
+          font-weight: bold;
+          top: 150;
+          left: 585;
+          position: fixed;
         }
         #hardware{
-          
-          top: 160;
+          font-weight: bold;
+          top: 180;
           left: 100;
           position: fixed;
         }
         #amount{
-          
+          font-weight: bold;
     /* float: left; */
-    margin-left: 100px;
+    
     position: fixed;
-    top: 160;
-    left: 185;
+    top: 180;
+    left: 275;
+    background-color: gold;
+    color:black;
+    width:55;
         }
         #currency{
-          margin-left:150px;
+          font-weight: bold;
+          position: fixed;
+    top: 180;
+    left: 375;
+    background-color: gold;
+    color:black;
+    width:65;
         }
         #symbol{
-          margin-left:200px;
+          font-weight: bold;
+          position: fixed;
+    top: 180;
+    left: 475;
+    background-color: gold;
+    color:black;
+    width:55;
         }
         #rate{
-          margin-left:250px;
+          position: fixed;
+          top: 180;
+          left: 575;
+          background-color: gold;
+          color:black;
+          width:55;
+          font-weight: bold;
         }
     </style>
     <script>
@@ -397,29 +432,21 @@
           //alert(b1 +' '+ b2+' '+ c+' '+ mr+' '+ nfcr+' '+ bcr+' '+ p+ chaf+' '+ excf);
         }
 
-        function Estados(q){
-          if (q==''){
-            return ("<font color=red>Disabled</font>");
-          //}else if(q=='true'){
-            //return ("<font color=green>Enabled</font>");
-          }else{
-            return ("<font color=green>Enabled</font>");
-          }
-        }
+        
     </script>
 </head>
 
 <body>
     <center>
-        <h2>7. Money channel test</h2>
+        <h2>7. Money Channel Test</h2>
 
         
         <label class="container">Currency
-        <label id="currency" class="estado"></label>
+        <label id="moneda" class="estado">Pesos</label>
         
         </label>
-        <label class="container">Symbol
-        <label id="symbol" class="estado"></label>
+        <label class="container">Symbol &nbsp;
+        <label id="simbolo" class="estado">$</label>
         
         </label>
         
@@ -431,15 +458,15 @@
         <label id="hardware" class="Hardware">Bill1
         </label>
         <label class="Amount">Amount
-        <label id="amount">1000</label>
+        <label id="amount">2</label>
         </label>
 
         <label class="Currency">Currency
-          <label id="moneda">1000</label>
+          <label id="currency">1000</label>
           </label>
         
         <label class="Symbol">Symbol
-          <label id="moneda">$</label>
+          <label id="symbol">$</label>
           </label>
 
         <label class="Rate">Rate
@@ -459,16 +486,15 @@
 
 
         <script>
-            document.getElementById("bill1").innerHTML= Estados(getParameterByName('bill1'));//getParameterByName('bill1');
-            document.getElementById("bill2").innerHTML= Estados(getParameterByName('bill2'));
+            document.getElementById("moneda").innerHTML= getParameterByName('moneda');
+            document.getElementById("simbolo").innerHTML= getParameterByName('simbolo');
             
-            document.getElementById("coin").innerHTML= Estados(getParameterByName('coin'));
-            document.getElementById("magnetic_reader").innerHTML= Estados(getParameterByName('magnetic_reader'));
-            document.getElementById("nfc_reader").innerHTML= Estados(getParameterByName('nfc_reader'));
-            document.getElementById("barcode_reader").innerHTML= Estados(getParameterByName('barcode_reader'));
-            document.getElementById("magnetic_dispenser").innerHTML= Estados(getParameterByName('magnetic_dispenser'));
-            document.getElementById("nfc_dispenser").innerHTML= Estados(getParameterByName('nfc_dispenser'));
-            document.getElementById("printer").innerHTML= Estados(getParameterByName('printer'));
+            document.getElementById("hardware").innerHTML= getParameterByName('hardware');
+            document.getElementById("amount").innerHTML= getParameterByName('amount');
+            document.getElementById("currency").innerHTML= getParameterByName('currency');
+            document.getElementById("symbol").innerHTML= getParameterByName('symbol');
+            document.getElementById("rate").innerHTML= getParameterByName('rate');
+            
             
         </script>
 
