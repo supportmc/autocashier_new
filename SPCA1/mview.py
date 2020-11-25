@@ -17,6 +17,8 @@ sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 import sapp
 import sview
 import SetupModule
+
+import BoardModule
 #-----------------------------------------------------------------------------------
 
 import datetime
