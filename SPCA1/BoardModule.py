@@ -21,26 +21,36 @@ def ReadSerie():
     
 
     while True:
-        qq=serie.read(1024) #aca lee del puerto
-        sleep(0.001)
-        if len(qq)>5:
-            q=qq[2]
-            channel_board=q
-            print('canal '+str(q))
-            q=qq[3]
-            device_board=q
-            print('billetero '+str(q))
-        else:
-            print(qq.decode())
-        if EnviarPuerto !='':
-            serie.write(bytes(bytearray(EnviarPuerto)))
-            EnviarPuerto=''
+        try:
+            qq=serie.read(1024) #aca lee del puerto
+            sleep(0.001)
+            if len(qq)>5:
+                q=qq[2]
+                channel_board=q
+                #print('canal '+str(q))
+                q=qq[3]
+                device_board=q
+                #print('billetero '+str(q))
+            else:
+                #print(qq.decode())
+                a=1
+            if EnviarPuerto !='':
+                serie.write(bytes(bytearray(EnviarPuerto)))
+                EnviarPuerto=''
+        except Exception as e:
+            print(e)
+            continue
 
     #print(bytearray(q))
     serie.close()
 
 if (abrio==False):
     threading.Thread(target=ReadSerie).start()
+    #EnviarPuerto=[0x53]  
+    EnviarPuerto=[0x53]    
+    sleep(1)
+    EnviarPuerto=[0x56]
+    print('abrio todo')  
 
 
-    
+  

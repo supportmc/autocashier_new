@@ -1,6 +1,6 @@
 import json
 import os
-import SetupModule
+import SetupM022003001001
 
 Version='022.002.001.001'
 
@@ -12,8 +12,8 @@ def Read_Customer():
         #with open('Customer.json') as json_file:
         #    mijson = json.loads(json_file.read())        
         #print(mijson)
-        a=SetupModule.GetJsonSetup()
-        return a['Customer']#mijson['Customer']
+        a=SetupM022003001001.GetJsonSetup()
+        return a['Customer']#mijson['Customer']/
     #Total_Start=mijson["Total_Start"]
 
     

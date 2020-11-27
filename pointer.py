@@ -2,7 +2,7 @@ import json
 import os
 
 
-Version='001'
+Version='001.001'
 
 def GetVersion():
     return(str(Version))

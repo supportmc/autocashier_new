@@ -3,7 +3,7 @@ import os
 import datetime
 
 import time
-import SetupModule
+import SetupM022003001001
 
 
 Version='022.001.001.001'
@@ -16,7 +16,7 @@ def Read_CounterStart():
         #with open('setup.json') as json_file:
         #    mijson = json.loads(json_file.read())        
         #print(mijson)
-        j=SetupModule.GetJsonSetup()
+        j=SetupM022003001001.GetJsonSetup()
 
         return j
     #Total_Start=mijson["Total_Start"]
@@ -31,7 +31,7 @@ def Reset_CounterStart():
         
         #filename='setup.json'            
         
-        data = SetupModule.GetJsonSetup()#Read_CounterStart()
+        data = SetupM022003001001.GetJsonSetup()#Read_CounterStart()
         if data=='':
             return False
         
@@ -43,7 +43,7 @@ def Reset_CounterStart():
         data['VAC_Start'] = data['VAC_Start']
         data['LastReset'] = time.strftime("%d/%m/%y")+' '+time.strftime("%H:%M:%S")
 
-        SetupModule.SetJsonSetup(data)#send update json file
+        SetupM022003001001.SetJsonSetup(data)#send update json file
         #os.remove(filename)
         #with open(filename, 'w') as f:
         #    json.dump(data, f, indent=4)

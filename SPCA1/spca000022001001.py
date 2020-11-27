@@ -4,9 +4,9 @@ import os,sys #import dyn modules
 
 #-----------------------------------------------------------------
 #importa modulos de magnetic cash
-import CustomerModule,SetupModule,UpgradeModule,DownloadModule
-import CounterModule
-import mview
+import CustomerM022002001001,SetupM022003001001,UpgradeM022004001001,DownloadM022005001001
+import CounterM022001001001
+import mview022005001001
 #-----------------------------------------------------------------
 #importo puntero
 sys.path.append('/home/pi/Autocashier/')
@@ -81,14 +81,14 @@ def CloseApp():
 def Start():
     while True:
         try:
-            Setup=SetupModule.Read_Setup()
+            Setup=SetupM022003001001.Read_Setup()
             print ('Setup '+ str(Setup))
             if Setup==0:
-                UpgradeModule.CheckUpgrade()
+                UpgradeM022004001001.CheckUpgrade()
             else:
                 CloseApp()
                 
-                SetupModule.Show(GetVersion())
+                SetupM022003001001.Show(GetVersion())
             sleep(3)
         except Exception as e:
             print(str(e))
@@ -98,7 +98,7 @@ def Start():
 print('Welcome to Magnetic Cash Autocashier Software')
 print('Starting SPCA ...')
 sleep(1)
-if CounterModule.Change_CounterStart()==True:
+if CounterM022001001001.Change_CounterStart()==True:
     print('CounterModule --> OK')
 else:
     print('CounterModule --> Error')
@@ -106,13 +106,13 @@ else:
 
 print('Checking Versions....')
 print("SPCA Version ->"+ GetVersion())
-print("CounterModule Version ->"+ CounterModule.GetVersion())
-print("CustomerModule Version ->"+ CustomerModule.GetVersion())
-print("SetupModule Version ->"+ SetupModule.GetVersion())
-print("UpgradeModule Version ->"+ UpgradeModule.GetVersion())
-print("DownloadModule Version ->"+ DownloadModule.GetVersion())
+print("CounterModule Version ->"+ CounterM022001001001.GetVersion())
+print("CustomerModule Version ->"+ CustomerM022002001001.GetVersion())
+print("SetupModule Version ->"+ SetupM022003001001.GetVersion())
+print("UpgradeModule Version ->"+ UpgradeM022004001001.GetVersion())
+print("DownloadModule Version ->"+ DownloadM022005001001.GetVersion())
 
-Customer=CustomerModule.Read_Customer()
+Customer=CustomerM022002001001.Read_Customer()
 print ('Customer '+ Customer)
 Start()
 

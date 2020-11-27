@@ -1,6 +1,9 @@
 import json
 import os
 
+
+Version='022.007.001.001'
+
 def getUpdates(mpath):
     try:
         a=os.listdir(mpath)

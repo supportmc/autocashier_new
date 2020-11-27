@@ -2,10 +2,11 @@ from furl import furl #para la url en python
 import webview
 from time import sleep
 import threading
-import CounterModule
+import CounterM022001001001
+import Channel_File
 #import App
 #import view
-import CustomerModule
+import CustomerM022002001001
 import sys
 #----------------------------------------------------------------------------------
 #importo puntero
@@ -16,7 +17,7 @@ sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/App/') #importa apl
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 import sapp
 import sview
-import SetupModule
+import SetupM022003001001
 
 import BoardModule
 #-----------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ import BoardModule
 import datetime
 import json
 import os
-softversion='0'
+softversion='022.006.001.001'
 x=1
 
 def creoVentana(sversion):
@@ -45,6 +46,7 @@ def creoVentana(sversion):
     data=CustomerModule.Read_Customer()
     customer=data """
 
+    Channel_File.GetJsonChannel()
 
     #Paso todo los parametros a la vista
     ruta='setup.html'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
@@ -113,8 +115,8 @@ def imprime():
             #print(page[-10:])
             if  page[-9:]=='exit.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 webview.windows[0].hide()
-                SetupModule.GetJsonSetup() #recupero el anterior
-                #SetupModule.SaveSetup() #guardo el viejo
+                SetupM022003001001.GetJsonSetup() #recupero el anterior
+                #SetupM022003001001.SaveSetup() #guardo el viejo
                 CloseSetup()
                 #webview.windows[0].load_url('setup.html')
                 webview.windows[0].destroy()
@@ -122,7 +124,7 @@ def imprime():
 
             if  page[-9:]=='save.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 webview.windows[0].hide()
-                SetupModule.SaveSetup() #guardo el nuevo
+                SetupM022003001001.SaveSetup() #guardo el nuevo
                 CloseSetup() #cierro
                 webview.windows[0].destroy() 
                 #webview.windows[0].load_url('setup.html') 
@@ -130,20 +132,36 @@ def imprime():
                 return
 
             if (page.find('r=0') != -1):
-                if CounterModule.Reset_CounterStart() ==True:
+                if CounterM022001001001.Reset_CounterStart() ==True:
                     print('reset ok')
                 else:
                     print('reset error')
-                data=SetupModule.GetJsonSetup()#CounterModule.Read_CounterStart()
+                data=SetupM022003001001.GetJsonSetup()#CounterModule.Read_CounterStart()
                 t=str(data["Total_Start"]).zfill(12)
                 p=str(data["Parcial_Start"]).zfill(12)
                 r=datetime.datetime.strptime(data["LastReset"], "%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
                 ruta='scounter.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)
                 webview.windows[0].load_url(ruta)
+            if (page.find('channel_test') != -1):
+                if BoardModule.device_board !='':
+                    
+                    c='Ch'+ str(BoardModule.channel_board)
+                    #print('Entro '+ str(float(canales['Bill1'][0][c][0]['value'])/100) + ' ' +str(canales['Bill1'][0]['Ch1'][0]['type']))
+                    
+                    
+                    ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                    print('lo q hice ' + ruta)
+                    BoardModule.device_board=''
+                    BoardModule.channel_board=''
+                    webview.windows[0].load_url(ruta)
+                    BoardModule.EnviarPuerto=[0x53]    
+                    sleep(0.5)
+                    BoardModule.EnviarPuerto=[0x56]  
+
             if  page[-10:]=='setup.html':#(page.find('setup.html') != -1):
 
                 
-                data=CounterModule.Read_CounterStart()
+                data=CounterM022001001001.Read_CounterStart()
                 t=str(data["Total_Start"]).zfill(12)
                 p=str(data["Parcial_Start"]).zfill(12)
                 spacs=str(data["SPAC_Start"]).zfill(12)
@@ -229,7 +247,7 @@ def imprime():
                         data["Peripherals"][0]["magnetic_card_dispenser_Enabled"]=miboleano(f.args['magnetic_dispenser'])
                         data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
                         data["Peripherals"][0]["printer_Enabled"]=miboleano(f.args['printer'])
-                        SetupModule.SetJsonSetup(data)
+                        SetupM022003001001.SetJsonSetup(data)
                         webview.windows[0].load_url('setup.html')
 
                         

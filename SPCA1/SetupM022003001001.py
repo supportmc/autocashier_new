@@ -1,7 +1,7 @@
 import json
 import os
 from time import sleep
-import mview
+import mview022005001001
 #primer punto Soft
 #segundo punto Modulo
 #tercer modificaciones de app
@@ -107,7 +107,7 @@ def Show(sversion):
     #    sleep(1)
     #    print("showing Setup Screen")
     #if FirstStart==True:
-    mview.creoVentana(sversion)
+    mview022005001001.creoVentana(sversion)
    #     FirstStart=False
     #else:
     #    mview.muestraVentana()
