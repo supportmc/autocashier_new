@@ -4,10 +4,12 @@ import serial
 import os
 from time import sleep
 import threading
+import ports
 
 channel_board=0
 device_board=0
-serie = serial.Serial('/dev/ttyUSB0', 9600, timeout=0.5, writeTimeout=0)    
+puerto=ports.GetPort('Board')
+serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
 EnviarPuerto=''
 abrio=False
 def ReadSerie():
@@ -46,7 +48,8 @@ def ReadSerie():
 
 if (abrio==False):
     threading.Thread(target=ReadSerie).start()
-    #EnviarPuerto=[0x53]  
+    EnviarPuerto=[0x89]  
+    sleep(5)
     EnviarPuerto=[0x53]    
     sleep(1)
     EnviarPuerto=[0x56]
