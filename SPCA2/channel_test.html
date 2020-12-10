@@ -1,0 +1,504 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Autocashier</title>
+    <style>
+
+    #imgflecha{
+      top:65;
+      left:410;
+      position: absolute;
+
+    }
+
+    /* esto es para los checks generales */    
+        .container {
+  display: block;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+/* Hide the default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* custom radio button */
+.check {
+  position: absolute;
+  top: 0;
+  left: 350;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+  
+}
+
+.container:hover input ~ .check {
+  background-color: white;
+}
+
+.container input:checked ~ .check {
+  background-color: white;
+}
+
+.check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .check:after {
+  display: block;
+}
+
+.container .check:after {
+ 	top: 8px;
+	left: 8px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: black;
+}
+
+/* check archivo */
+
+.container1 {
+  display: block;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 25px;
+  width: 250;
+}
+
+
+.check1 {
+  position: absolute;
+  top: 0;
+  left: 380;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.container1:hover input ~ .check{
+  background-color: white;
+}
+
+.container1 input:checked ~ .check {
+  background-color: white;
+}
+
+.container1 input:checked ~ .check:after {
+  display: block;
+}
+
+.container1 .check:after {
+ 	top: 8px;
+	left: 8px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: black;
+}
+
+
+.checkmark1{
+        position: absolute;
+        top: 0;
+        left: 350;
+        height: 25px;
+        width: 25px;
+        background-color: white;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container1:hover input ~ .checkmark1{
+        background-color: white;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container1 input:checked ~ .checkmark1 {
+        background-color: white;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark1:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container1 input:checked ~ .checkmark1:after {
+        display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container1 .checkmark1:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+
+
+
+/*------ */
+
+
+
+        body {
+            font-family: Arial;
+            background-color: black;
+            color: white;
+        }
+
+        .archivob{
+          position: absolute;
+          top: 0;
+          left: 380;
+          height: 30px;
+          width: 30px;
+          background-color: white;
+          border-radius: 50%;
+        }
+
+        /* The container */
+        .container {
+        display: block;
+        position: relative;
+        text-align: left;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
+        
+        }
+
+        /* Hide the browser's default checkbox */
+        .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+        position: absolute;
+        top: 0;
+        left: 350;
+        height: 25px;
+        width: 25px;
+        background-color: white;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+        background-color: white;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+        background-color: white;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+        
+        .myButton {
+            -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+            box-shadow: 0px 0px 0px 2px #9fb4f2;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+            background: -moz-linear-gradient( center top, #7892c2 5%, #476e9e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e');
+            background-color: #7892c2;
+            -webkit-border-top-left-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            border-top-left-radius: 10px;
+            -webkit-border-top-right-radius: 10px;
+            -moz-border-radius-topright: 10px;
+            border-top-right-radius: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomleft: 10px;
+            border-bottom-left-radius: 10px;
+            text-indent: 0;
+            border: 1px solid #4e6096;
+            display: inline-block;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            height: 25px;
+            line-height: 25px;
+            width: 70px;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0px 1px 0px #283966;
+        }
+        
+        .myButton:hover {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+            background: -moz-linear-gradient( center top, #476e9e 5%, #7892c2 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2');
+            background-color: #476e9e;
+        }
+        
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+
+        #archivo{
+          position: absolute;
+        top: 75;
+        left: 600;
+        height: 25px;
+        width: 25px;
+        }
+        #exchange{
+          position: absolute;
+        top: 116;
+        left: 600;
+        height: 25px;
+        width: 25px;
+        }
+        .estado{
+          margin-left:100px;
+          
+        }
+
+        
+        
+        .Amount{
+          top: 150;
+          left: 275;
+          position: fixed;
+          font-weight: bold;
+          
+        }
+        .Currency{
+          
+          top: 150;
+          left: 375;
+          position: fixed;
+          font-weight: bold;
+        }
+        .Symbol{
+          font-weight: bold;
+          top: 150;
+          left: 475;
+          position: fixed;
+        }
+        .Rate{
+          font-weight: bold;
+          top: 150;
+          left: 585;
+          position: fixed;
+        }
+        #hardware{
+          font-weight: bold;
+          top: 180;
+          left: 100;
+          position: fixed;
+        }
+        #amount{
+          font-weight: bold;
+    /* float: left; */
+    
+    position: fixed;
+    top: 180;
+    left: 275;
+    background-color: gold;
+    color:black;
+    width:55;
+        }
+        #currency{
+          font-weight: bold;
+          position: fixed;
+    top: 180;
+    left: 375;
+    background-color: gold;
+    color:black;
+    width:65;
+        }
+        #symbol{
+          font-weight: bold;
+          position: fixed;
+    top: 180;
+    left: 475;
+    background-color: gold;
+    color:black;
+    width:55;
+        }
+        #rate{
+          position: fixed;
+          top: 180;
+          left: 575;
+          background-color: gold;
+          color:black;
+          width:55;
+          font-weight: bold;
+        }
+    </style>
+    <script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function MuestroValores(){
+          b1=document.getElementById('bill1').checked;
+          b2=document.getElementById('bill2').checked;
+          cc=document.getElementById('coin').checked;
+          mr=document.getElementById('magnetic_reader').checked;
+          nfcr=document.getElementById('nfc_reader').checked;
+          bcr=document.getElementById('barcode_reader').checked;
+          
+          p=document.getElementById('printer').checked; 
+          chaf=document.getElementById('channel_file').checked;
+          excf=document.getElementById('exchange_file').checked;
+          
+          
+          md=document.getElementById('magnetic_dispenser').checked;
+          nfcd=document.getElementById('nfc_dispenser').checked;
+
+          var todo='setup.html?bill1='+b1+'&bill2='+b2+'&coin='+cc+'&magnetic_reader='+mr+'&nfc_reader='+nfcr+'&barcode_reader='+bcr+'&nfc_dispenser='+nfcd+'&magnetic_dispenser='+md+'&printer='+p+'&exchange_file='+excf+'&channel_file='+chaf;
+
+          console.log(todo);
+          
+
+          window.location.href = todo;
+ 
+          //alert(todo);
+
+          //alert(b1 +' '+ b2+' '+ c+' '+ mr+' '+ nfcr+' '+ bcr+' '+ p+ chaf+' '+ excf);
+        }
+
+        
+    </script>
+</head>
+
+<body>
+    <center>
+        <h2>7. Money Channel Test</h2>
+
+        
+        <label class="container">Currency
+        <label id="moneda" class="estado">Pesos</label>
+        
+        </label>
+        <label class="container">Symbol &nbsp;
+        <label id="simbolo" class="estado">$</label>
+        
+        </label>
+        
+        
+
+               
+          
+
+        <label id="hardware" class="Hardware">Bill1
+        </label>
+        <label class="Amount">Amount
+        <label id="amount">2</label>
+        </label>
+
+        <label class="Currency">Currency
+          <label id="currency">1000</label>
+          </label>
+        
+        <label class="Symbol">Symbol
+          <label id="symbol">$</label>
+          </label>
+
+        <label class="Rate">Rate
+          <label id="rate">1</label>
+          </label>
+        
+        
+        <br><br>
+
+        
+        
+
+        <br>
+
+        <!--<input type="button" onclick="MuestroValores()">ACAAA</input> -->
+        <a href="setup.html" class="myButton">Back</a>
+
+
+        <script>
+            document.getElementById("moneda").innerHTML= getParameterByName('moneda');
+            document.getElementById("simbolo").innerHTML= getParameterByName('simbolo');
+            
+            document.getElementById("hardware").innerHTML= getParameterByName('hardware');
+            document.getElementById("amount").innerHTML= getParameterByName('amount');
+            document.getElementById("currency").innerHTML= getParameterByName('currency');
+            document.getElementById("symbol").innerHTML= getParameterByName('symbol');
+            document.getElementById("rate").innerHTML= getParameterByName('rate');
+            
+            
+        </script>
+
+    </center>
+</body>
+
+</html>

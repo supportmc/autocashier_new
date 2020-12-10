@@ -21,8 +21,8 @@
         
         th {
             height: 50px;
-            background-color: white;
-            color: black;
+            background-color: black;
+            color: white;
         }
         
         .myButton {
@@ -80,60 +80,58 @@
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
-
-        function MuestroValores(){
-          ssid=document.getElementById('ssid').value;
-          pass=document.getElementById('pass').value;
-          
-
-          var todo='setup.html?ssid='+ssid+'&pass='+pass;
-
-          console.log(todo);
-          
-
-          window.location.href = todo;
- 
-          //alert(todo);
-
-          //alert(b1 +' '+ b2+' '+ c+' '+ mr+' '+ nfcr+' '+ bcr+' '+ p+ chaf+' '+ excf);
-        }
     </script>
 </head>
 
 <body>
     <center>
-        <h2>4. Network Settings </h2>
+        <h2>2. Software Update</h2>
 
         <div id="trades-output" style="font-size: x-small;">
 
         </div>
         <table style="border-color:red;">
-
             <tr>
-                <td>Wifi Name:</td>
-                <td>
-                    <input type="text" id="ssid" placeholder="wifi name"></input>
-                </td>
+                <th>Soft</th>
+                <th>Version</th>
+                <th>Starts</th>
             </tr>
             <tr>
-                <td>Password</td>
-                <td>
-                    <input type="password" id="pass"></input>
-                </td>
+                <td>Customer</td>
+                <td><label id="customer" style="color:#91ff00;"></label></td>
+                <td></td>
             </tr>
-
+            <tr>
+                <td>PSAC</td>
+                <td><label id="spacv" style="color:#91ff00;"></label></td>
+                <td><label id="spacs" style="color:yellow;"></label></td>
+            </tr>
+            <tr>
+                <td>APPAC</td>
+                <td><label id="appacv" style="color:#91ff00;"></label></td>
+                <td><label id="appacs" style="color:yellow;"></label></td>
+            </tr>
+            <tr>
+                <td>VAC</td>
+                <td><label id="vacv" style="color:#91ff00;"></label></td>
+                <td><label id="vacs" style="color:yellow;"></label></td>
+            </tr>
 
         </table>
         <br>
 
 
-        <input type="button" class="myButton" onclick="MuestroValores()" value="Back"></input>
+        <a href="setup.html" class="myButton">Back</a>
 
 
         <script>
-            document.getElementById("ssid").value = getParameterByName('ssid');
-            document.getElementById("pass").value = getParameterByName('pass');
-            
+            document.getElementById("customer").innerHTML = getParameterByName('c');
+            document.getElementById("spacv").innerHTML = getParameterByName('spacv');
+            document.getElementById("appacv").innerHTML = getParameterByName('appacv');
+            document.getElementById("vacv").innerHTML = getParameterByName('vacv');
+            document.getElementById("spacs").innerHTML = getParameterByName('spacs');
+            document.getElementById("appacs").innerHTML = getParameterByName('appacs');
+            document.getElementById("vacs").innerHTML = getParameterByName('vacs');
         </script>
 
     </center>

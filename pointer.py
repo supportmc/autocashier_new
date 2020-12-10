@@ -1,8 +1,9 @@
 import json
 import os
-
+import sys
 
 Version='001.001'
+ft=False
 
 def GetVersion():
     return(str(Version))
@@ -64,4 +65,4 @@ def Change_Pointer(newpointerSP,newpointerAPP):
         print(str(error) + ' Error to reset partial start counter')
         return False
 
-#print(Change_Pointer('SPCA1','APPCA1'))
+
