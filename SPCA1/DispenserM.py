@@ -203,6 +203,38 @@ def SendDispenser(transaction):
             return ''
 
 
+    #------
+    if transaction=='16':
+        mbyte=[0x0A,0xA0,0x00,0x10,0x98,0x30,0x02,0x00,0x09,0x35,0x32,0x00,0x54,0x45,0x4E,0x47,0x41,0x4D,0x03,0x1B,0xA8,0x0B,0xB0]#Verificar KEYA=TENGAM
+        serie.write(bytes(bytearray(mbyte)))
+        sleep(0.25)
+        print("envio peticion codigo - OK")
+        mbyte=[0x0A,0xA0,0x00,0x0B,0x98,0x30,0x02,0x00,0x04,0x35,0x33,0x00,0x01,0x03,0x02,0xA8,0x0B,0xB0]#leer bloque 0 sector 1
+        serie.write(bytes(bytearray(mbyte)))
+        sleep(0.25)
+        q=''
+        while len(q)==0:
+            q=serie.read(1024) #aca lee del puerto
+        print(q)
+        x=0
+        r=[]
+        while x < len(q):
+            #print(chr(q[x]))
+            r.append(q[x])
+            x+=1
+
+        x=0
+        #r=[]
+
+        tt=''
+        p=str(q).find('01Y')
+        if p> -1:
+            tt=str(q)[p+4:p+17]
+        
+            return(str(tt))
+        else:
+            return ''
+    
     if transaction=='7':
         mbyte=[0x0A,0xA0,0x00,0x0B,0x98,0x30,0x02,0x00,0x04,0x45,0x30,0x30,0x37,0x03,0x77,0xA8,0x0B,0xB0]#leer los 3 track en tarjeta magnetica
     if transaction=='2':
@@ -282,18 +314,23 @@ def SendDispenser(transaction):
             if x==11:
                 if chr(r[x])=='H':
                     print('tarjeta en el frente')
+                    return {"Lector Ocupado":1}
                 if chr(r[x])=='I':
                     print('tarjeta en el  extremo frontal')
+                    return {"Lector Ocupado":1}
                 if chr(r[x])=='J':
                     print('tarjeta en reposo')
+                    return {"Lector Ocupado":1}
                 if chr(r[x])=='K':
                     print('tarjeta IC en posicion de operacion')
+                    return {"Lector Ocupado":1}
                 if chr(r[x])=='L':
                     print('punta trasera del lector ocupado')
                 if chr(r[x])=='M':
                     print('punta trasera del lector libre')
                 if chr(r[x])=='N':
                     print('sin tarjeta en el lector')
+                    return {"Lector Ocupado":0}
             if x==12:
                 if chr(r[x])=='I':
                     print('tarjeta en el  extremo frontal')
@@ -309,7 +346,7 @@ def SendDispenser(transaction):
                     print('entrada trasera para tarjeta prohibida')
                 
             x+=1
-        print('pre dispensar tarjeta '+ str(tt)) 
+        #print('pre dispensar tarjeta '+ str(tt)) 
         sleep(0.1)
         mbyte=[0x0A,0xA0,0x00,0x09,0x98,0x30,0x02,0x00,0x02,0x2e,0x32,0x03,0x1F,0xA8,0x0B,0xB0]#Setear la poscion de permanecia de tarjeta IC     ([0x0A,0xA0,0x00,0x09,0x98,0x30,0x02,0x00,0x02,0x3A,0x30,0x03,0x09,0xA8,0x0B,0xB0])#Estado del lector     
         #Verificar  el byte P de estado de opraecion  en la respuesta , si P[12]='Y'(0x59)seteo ok  si P[12]='N'(0x4E)seteo no OK
@@ -371,33 +408,40 @@ sleep(4)
 SendDispenser('8') """
     
 
-def sacarTarjeta():
+def sacarTarjeta(tipo):
     tarjeta=''
     while tarjeta=='':
-        r=SendDispenser('2')
-        rj=r
-        #"Bezel Status":aa[1:2],"Pre Send Status"
-        if rj['Bezel Status']=='0':
-            print('tarjeta no preparada')
-        if rj['Pre Send Status']=='0':
-            print('No hay tarjeta')
-            #return
-        if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0':
-            print('precaucion, no hay tarjetas')
-            return
-        if rj['Error']=='1':
-            SendDispenser('9')
+        r=SendDispenser('4')
+        if r['Lector Ocupado']==0:
+            r=SendDispenser('2')
+            rj=r
+            #"Bezel Status":aa[1:2],"Pre Send Status"
+            if rj['Bezel Status']=='0':
+                print('tarjeta no preparada')
+            if rj['Pre Send Status']=='0':
+                print('No hay tarjeta')
+                #return
+            if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0':
+                print('precaucion, no hay tarjetas')
+                return
+            if rj['Error']=='1':
+                SendDispenser('9')
 
-    
-        SendDispenser('3')
-        sleep(0.1)
-        SendDispenser('4')
-        sleep(0.1)
-        SendDispenser('5')
-        sleep(0.1)
+
+            SendDispenser('3')
+            sleep(0.1)
+            SendDispenser('4')
+            sleep(0.1)
+            SendDispenser('5')
+            sleep(0.1)
         
         sleep(0.1)
-        tarjeta=str(SendDispenser('6'))
+        if tipo=='M':
+            tarjeta=str(SendDispenser('6'))
+        else:
+            tarjeta=str(SendDispenser('16'))
+        if tarjeta !='':
+            print('leyo tarjeta '+ str(tarjeta))
         sleep(0.1)
         r=SendDispenser('2')
         rj=r
@@ -407,7 +451,7 @@ def sacarTarjeta():
         if rj['Pre Send Status']=='0':
             print('No hay tarjeta')
             #return
-        if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0':
+        if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0' and tarjeta =='':
             print('precaucion, no hay tarjetas')
             return
         if rj['Error']=='1':
@@ -416,5 +460,8 @@ def sacarTarjeta():
     SendDispenser('8')    
     print('vendida!')
 
-#sacarTarjeta()
-SendDispenser('8') 
+sacarTarjeta('NFC')
+#SendDispenser('3') 
+#SendDispenser('4') 
+#SendDispenser('5') 
+#SendDispenser('8')
