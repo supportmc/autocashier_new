@@ -414,11 +414,11 @@ def sacarTarjeta(tipo):
         
     
 
-r={"status":"Error"}
-while r['status']=='Error':
-    r=sacarTarjeta('N')
-    sleep(1.5)
-print(r)
+#r={"status":"Error"}
+#while r['status']=='Error':
+#    r=sacarTarjeta('N')
+#    sleep(1.5)
+#print(r)
 
 
 #SendDispenser('3') 
