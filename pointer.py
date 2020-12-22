@@ -13,7 +13,7 @@ def CheckPointer():
         data = Read_Pointer()
         if data=='':
             return False
-        return {"SPCA":data['StartSPCA'],"APPCA":data['StartAPPCA']}    
+        return {"SPCA":data['StartSPCA'],"APPCA":data['StartAPPCA'],"Download_SPCA":data['DownloadSPCA'],"Download_APPCA":data['DownloadAPPCA']}    
     except Exception as e:
         return False
 
@@ -41,28 +41,30 @@ def Change_Pointer(newpointerSP,newpointerAPP):
             return False
         
         #Change Principal Software
-        if newpointerSP=='SPCA1':
-            data['StartSPCA'] = 'SPCA1'
-            data['DownloadSPCA'] = 'SPCA2'
-        else:
-            data['StartSPCA'] = 'SPCA2'
-            data['DownloadSPCA'] = 'SPCA1'
+        if newpointerSP!='':
+            if newpointerSP=='SPCA1':
+                data['StartSPCA'] = 'SPCA1'
+                data['DownloadSPCA'] = 'SPCA2'
+            else:
+                data['StartSPCA'] = 'SPCA2'
+                data['DownloadSPCA'] = 'SPCA1'
 
         #Change Principal App
-        if newpointerAPP=='APPCA1':
-            data['StartAPPCA'] = 'APPCA1'
-            data['DownloadAPPCA'] = 'APPCA2'
-        else:
-            data['StartAPPCA'] = 'APPCA2'
-            data['DownloadAPPCA'] = 'APPCA1'
+        if newpointerAPP!='':
+            if newpointerAPP=='APPCA1':
+                data['StartAPPCA'] = 'APPCA1'
+                data['DownloadAPPCA'] = 'APPCA2'
+            else:
+                data['StartAPPCA'] = 'APPCA2'
+                data['DownloadAPPCA'] = 'APPCA1'
 
         os.remove(filename)
         with open(filename, 'w') as f:
             json.dump(data, f, indent=4)
-        print('Partial Counter start reset Ok')
+        print('Pointer changed Ok')
         return(True)
     except Exception as error:
-        print(str(error) + ' Error to reset partial start counter')
+        print(str(error) + ' Error to change pointer')
         return False
 
 

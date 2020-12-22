@@ -14,7 +14,7 @@ def getUpdates(mpath):
         elif mpath[-3:]=='APP':
             t='APP'
         
-        copy_dir(mpath,'/home/pi/Autocashier/PSCA3')
+        copy_dir(mpath,'/home/pi/Autocashier/SPCA2')
         """ for x in range(len(a)): 
             if (a[x][-4:]=='.tar'):                
                 return '{"name":'+'"'+str(t)+'","value":"'+str(a[x][:-4])+'"}' """

@@ -6,7 +6,7 @@ import time
 import SetupM
 
 
-Version='022.001.002.001'
+Version='022.001.001.001'
 
 def GetVersion():
     return(str(Version))
