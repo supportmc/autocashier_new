@@ -1,0 +1,29 @@
+{
+    "Setup": 0,
+    "Enabled": 0,
+    "Type": "Pendrive",
+    "Customer": "Lepark_5400001",
+    "Total_Start": 247,
+    "Parcial_Start": 2,
+    "SPAC_Start": 247,
+    "APPAC_Start": 247,
+    "VAC_Start": 247,
+    "LastReset": "09/12/20 12:31:00",
+    "Peripherals": [
+        {
+            "bill1Enabled": true,
+            "bill2Enabled": false,
+            "coinEnabled": true,
+            "magnetic_reader_Enabled": true,
+            "nfc_reader_Enabled": false,
+            "barcode_reader_Enabled": true,
+            "magnetic_card_dispenser_Enabled": false,
+            "nfc_card_dispenser_Enabled": true,
+            "printer_Enabled": true
+        }
+    ],
+    "Channel_file_Update": true,
+    "Exchange_file_Update": false,
+    "SSID": "CLAROEEC2",
+    "Password": "EYA150515"
+}

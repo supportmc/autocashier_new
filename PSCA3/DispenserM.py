@@ -7,8 +7,6 @@ import ports
 
 intentos=0
 
-version="022.009.001.001"
-
 def SendDispenser(transaction):
     global intentos
     puerto=ports.GetPort('Dispenser')   
