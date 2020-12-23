@@ -9,15 +9,27 @@ Version='022.007.001.001'
 estado = False
 
 def IsUpdate(json1,json2):
+    try:
+        with open(json1+'/version.json') as json_file:
+            vjson1 = json.loads(json_file.read())    
+        with open(json2+'/version.json') as json_file:
+            vjson2 = json.loads(json_file.read())
+        if vjson1==vjson2:
+            return False
+        else:
+            return True
     
+    except Exception as error:
+        #print(error)
+        return False
 
 def getUpdates(mpath):
     try:
         a=os.listdir(mpath)
         if mpath[-4:]=='PSAC':
             t='PSAC'
-        elif mpath[-3:]=='APP':
-            t='APP'
+        elif mpath[-5:]=='APPAC':
+            t='APPAC'
         
         #-----------------------------------------------------------------
         #importo puntero
@@ -28,31 +40,35 @@ def getUpdates(mpath):
         where=''
         if t=='PSAC':
             where=data['Download_SPCA']
-        elif t=='APP':
+        elif t=='APPAC':
             where=data['Download_APPCA']
 
         estado=False
-        if copy_dir(mpath,'/home/pi/Autocashier/'+where)==True:
-            #cambia puntero
-            
-            if t=='PSAC':
-                estado=pointer.Change_Pointer(where,'')
+        if IsUpdate(mpath,'/home/pi/Autocashier/'+where):
+            if copy_dir(mpath,'/home/pi/Autocashier/'+where)==True:
+                #cambia puntero
+                
+                if t=='PSAC':
+                    estado=pointer.Change_Pointer(where,'')
+                else:
+                    estado=pointer.Change_Pointer('',where)
+                print('puntero cambiado correctamente :)')
             else:
-                estado=pointer.Change_Pointer('',where)
-            print('puntero cambiado correctamente :)')
-        else:
-            print('Error al copiar')
+                print('Error al copiar')
 
-        """ for x in range(len(a)): #lista archivos de carpeta
-            if (a[x][-4:]=='.tar'):                
-                return '{"name":'+'"'+str(t)+'","value":"'+str(a[x][:-4])+'"}' """
-        if estado==True:
-            return True
+            """ for x in range(len(a)): #lista archivos de carpeta
+                if (a[x][-4:]=='.tar'):                
+                    return '{"name":'+'"'+str(t)+'","value":"'+str(a[x][:-4])+'"}' """
+            if estado==True:
+                return True
+            else:
+                return False
         else:
+            print('Same Version '+ t)
             return False
 
     except:
-        print('Carpeta no Legible')
+        #print('Carpeta no Legible')
         return False
 
 
@@ -64,16 +80,17 @@ def getFolders(mpath):
 
         for x in range(len(a)): 
         
-            if a[x]=='PSAC' or a[x]=='APP':
+            if a[x]=='PSAC' or a[x]=='APPAC':
                 re=getUpdates(mpath+'/'+a[x])
-                re=json.loads(re)
+                #re=json.loads(re)
                 
-                findUpdate.append(re)#add to response
+                #findUpdate.append(re)#add to response
         
         return(findUpdate)
             
     except:
-        print('Carpeta no Legible')
+        #print('Carpeta no Legible')
+        e=1
 
 
 def getPendrive(mpath):
@@ -91,6 +108,7 @@ def make_dir(path):
 def copy_dir(source_item, destination_item):
     try:
         if os.path.isdir(source_item):
+            os.system('rm -r '+ destination_item +'/*')
             make_dir(destination_item)
             sub_items = glob.glob(source_item + '/*')
             for sub_item in sub_items:

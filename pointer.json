@@ -1,6 +1,6 @@
 {
-    "StartSPCA": "SPCA2",
-    "DownloadSPCA": "SPCA1",
-    "StartAPPCA": "APPCA1",
-    "DownloadAPPCA": "APPCA2"
+    "StartSPCA": "SPCA1",
+    "DownloadSPCA": "SPCA2",
+    "StartAPPCA": "APPCA2",
+    "DownloadAPPCA": "APPCA1"
 }

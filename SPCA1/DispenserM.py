@@ -421,7 +421,7 @@ def sacarTarjeta(tipo):
 #    r=sacarTarjeta('N')
 #    sleep(1.5)
 #print(r)
-
+#sacarTarjeta('N')
 
 #SendDispenser('3') 
 #SendDispenser('4') 

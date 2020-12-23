@@ -6,6 +6,8 @@ from time import sleep
 import threading
 import ports
 
+version='022.012.001.001'
+
 channel_board=0
 device_board=0
 puerto=ports.GetPort('Board')
