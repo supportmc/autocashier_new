@@ -1,5 +1,6 @@
 #APP DESARROLLADA POR  Ezequiel Ciccotelli - 2019 ---Con su respectivos modulos.
 from time import sleep
+import datetime
 import os,sys #import dyn modules
 
 #-----------------------------------------------------------------
@@ -92,9 +93,27 @@ def Start():
             sleep(3)
         except Exception as e:
             print(str(e))
+            filename='spca_log.json'                
+            data ={"Error":str(e)}
+            #os.remove(filename)
+            #fo = open(filename, "wb")
+            #print ("Name of the file: ", fo.name)
+            #fo.close()
+
+            with open(filename, 'w') as f:
+                json.dump(data, f, indent=4)
             continue
 
 #start App-----------------------------------------
+filename='spca_log.json'                
+data ={"Last_Start":str(datetime.datetime.now())}
+#os.remove(filename)
+#fo = open(filename, "wb")
+#print ("Name of the file: ", fo.name)
+#fo.close()
+
+with open(filename, 'w') as f:
+    json.dump(data, f, indent=4)
 print('Welcome to Magnetic Cash Autocashier Software')
 print('Starting SPCA ...')
 sleep(1)

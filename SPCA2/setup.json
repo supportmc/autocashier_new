@@ -3,11 +3,11 @@
     "Enabled": 0,
     "Type": "Pendrive",
     "Customer": "Lepark_5400001",
-    "Total_Start": 247,
-    "Parcial_Start": 2,
-    "SPAC_Start": 247,
-    "APPAC_Start": 247,
-    "VAC_Start": 247,
+    "Total_Start": 276,
+    "Parcial_Start": 31,
+    "SPAC_Start": 276,
+    "APPAC_Start": 276,
+    "VAC_Start": 276,
     "LastReset": "09/12/20 12:31:00",
     "Peripherals": [
         {
@@ -25,5 +25,7 @@
     "Channel_file_Update": true,
     "Exchange_file_Update": false,
     "SSID": "CLAROEEC2",
-    "Password": "EYA150515"
+    "Password": "EYA150515",
+    "Payment_url": "12345",
+    "Payment_port": "123"
 }

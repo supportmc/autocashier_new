@@ -184,6 +184,8 @@ def imprime():
                 Pass=data["Password"]
                 channelFile= data["Channel_file_Update"]
                 exchangeFile= data["Exchange_file_Update"]
+                purl=data["Payment_url"]
+                pport=data["Payment_port"]
 
                 bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
                 bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
@@ -233,7 +235,7 @@ def imprime():
                 #Paso todo los parametros a la vista
                 #file:///home/pi/Autocashier/
                 #ruta= 'file://'+os.getcwd()+'/' +'setup.html'+'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
-                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)
+                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
         
@@ -268,6 +270,24 @@ def imprime():
 
                             data["SSID"]=f.args['ssid']
                             data["Password"]=f.args['pass']
+                            
+                            SetupM.SetJsonSetup(data)
+                            webview.windows[0].load_url('setup.html')
+
+                            
+                    except:
+                        sigue=True   
+
+            if (page.find('setup.html?purl')!=-1):
+                    f = furl(page) 
+                    try:
+                        if f.args['purl']!=None:
+                            print('guarda datos de payment')
+
+                            data=SetupM.GetJsonSetup()
+
+                            data["Payment_url"]=f.args['purl']
+                            data["Payment_port"]=f.args['pport']
                             
                             SetupM.SetJsonSetup(data)
                             webview.windows[0].load_url('setup.html')
