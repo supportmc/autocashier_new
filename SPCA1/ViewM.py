@@ -152,13 +152,18 @@ def imprime():
                     
                     c='Ch'+ str(BoardModule.channel_board)
                     #print('Entro '+ str(float(canales['Bill1'][0][c][0]['value'])/100) + ' ' +str(canales['Bill1'][0]['Ch1'][0]['type']))
+                    data=SetupM.JsonSetup
+                    bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
+                    bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
+                    coinEnabled= data["Peripherals"][0]["coinlEnabled"]
+                    if bill1Enabled==True or bill2Enabled==True or coinEnabled==True:
+                        ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                        webview.windows[0].load_url(ruta)
                     
-                    
-                    ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
-                    print('lo q hice ' + ruta)
+                    #agregar para controlar desde config o app
                     BoardModule.device_board=''
                     BoardModule.channel_board=''
-                    webview.windows[0].load_url(ruta)
+                    
                     BoardModule.EnviarPuerto=[0x53]    
                     sleep(0.5)
                     BoardModule.EnviarPuerto=[0x56]  
