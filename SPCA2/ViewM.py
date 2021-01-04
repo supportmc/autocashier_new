@@ -152,13 +152,18 @@ def imprime():
                     
                     c='Ch'+ str(BoardModule.channel_board)
                     #print('Entro '+ str(float(canales['Bill1'][0][c][0]['value'])/100) + ' ' +str(canales['Bill1'][0]['Ch1'][0]['type']))
+                    data=SetupM.JsonSetup
+                    bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
+                    bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
+                    coinEnabled= data["Peripherals"][0]["coinlEnabled"]
+                    if bill1Enabled==True or bill2Enabled==True or coinEnabled==True:
+                        ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                        webview.windows[0].load_url(ruta)
                     
-                    
-                    ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
-                    print('lo q hice ' + ruta)
+                    #agregar para controlar desde config o app
                     BoardModule.device_board=''
                     BoardModule.channel_board=''
-                    webview.windows[0].load_url(ruta)
+                    
                     BoardModule.EnviarPuerto=[0x53]    
                     sleep(0.5)
                     BoardModule.EnviarPuerto=[0x56]  
@@ -186,6 +191,12 @@ def imprime():
                 exchangeFile= data["Exchange_file_Update"]
                 purl=data["Payment_url"]
                 pport=data["Payment_port"]
+                nurl=data["Node_url"]
+                nport=data["Node_port"]
+                surl=data["System_url"]
+                sport=data["System_port"]
+                dname=data["device_name"]
+                did=data["device_id"]
 
                 bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
                 bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
@@ -235,7 +246,7 @@ def imprime():
                 #Paso todo los parametros a la vista
                 #file:///home/pi/Autocashier/
                 #ruta= 'file://'+os.getcwd()+'/' +'setup.html'+'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
-                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)
+                ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)+'&nurl='+str(nurl)+'&nport='+str(nport)+'&surl='+str(surl)+'&sport='+str(sport)+'&dname='+str(dname)+'&did='+str(did)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
         
@@ -276,6 +287,7 @@ def imprime():
 
                             
                     except:
+                        continue
                         sigue=True   
 
             if (page.find('setup.html?purl')!=-1):
@@ -288,13 +300,38 @@ def imprime():
 
                             data["Payment_url"]=f.args['purl']
                             data["Payment_port"]=f.args['pport']
+                            data["Node_url"]=f.args['nurl']
+                            data["Node_port"]=f.args['nport']
+                            data["System_url"]=f.args['surl']
+                            data["System_port"]=f.args['sport']
                             
                             SetupM.SetJsonSetup(data)
                             webview.windows[0].load_url('setup.html')
+            
+            
 
                             
                     except:
-                        sigue=True            
+                        sigue=True
+                        continue
+
+            if (page.find('setup.html?dname')!=-1):
+                    f = furl(page) 
+                    try:
+                        if f.args['dname']!=None:
+                            print('guarda datos de autocashier')
+
+                            data=SetupM.GetJsonSetup()
+
+                            data["device_name"]=f.args['dname']
+                            data["device_id"]=f.args['did']
+                            
+                            
+                            SetupM.SetJsonSetup(data)
+                            webview.windows[0].load_url('setup.html') 
+                    except:
+                        sigue=True
+                        continue          
 
             sleep(0.001)
                 

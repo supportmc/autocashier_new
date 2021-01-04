@@ -3,11 +3,11 @@
     "Enabled": 0,
     "Type": "Pendrive",
     "Customer": "Lepark_5400001",
-    "Total_Start": 292,
-    "Parcial_Start": 12,
-    "SPAC_Start": 292,
-    "APPAC_Start": 292,
-    "VAC_Start": 292,
+    "Total_Start": 300,
+    "Parcial_Start": 20,
+    "SPAC_Start": 300,
+    "APPAC_Start": 300,
+    "VAC_Start": 300,
     "LastReset": "28/12/20 11:02:23",
     "Peripherals": [
         {
@@ -26,6 +26,12 @@
     "Exchange_file_Update": false,
     "SSID": "CLAROEEC2",
     "Password": "EYA150515",
-    "Payment_url": "12345",
-    "Payment_port": "123"
+    "Payment_url": "10.0.0.2",
+    "Payment_port": "1234",
+    "device_name": "Autocajero Eze",
+    "device_id": "1",
+    "Node_url": "10.0.0.2",
+    "Node_port": "4555",
+    "System_url": "10.0.0.2",
+    "System_port": "4848"
 }

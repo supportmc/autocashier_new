@@ -88,6 +88,7 @@
     <h3><a href="" name="a" style="color:white;">6.Peripherals Status</a></h3>
     <h3><a href="channel_test.html?hardware=0&amount=0&currency=Pesos&symbol=$&rate=1&Moneda=Pesos&simbolo=$" name="b" style="color:white;">7.Money Channel Test</a></h3>
     <h3><a href="" name="a" style="color:white;">8.Payments Settings</a></h3>
+    <h3><a href="" name="a" style="color:white;">9.Autocashier Settings</a></h3>
 
 
     <!--  <h1>Diff Orders</h1>
@@ -118,6 +119,10 @@
         //g
         var g = "payment.html?purl=" + getParameterByName('purl') + "&pport=" + getParameterByName('pport')
         document.getElementsByTagName("a")[7].setAttribute("href", g);
+
+        //h
+        var h = "autocashier.html?dname=" + getParameterByName('dname') + "&did=" + getParameterByName('did')
+        document.getElementsByTagName("a")[8].setAttribute("href", h);
     </script>
 <br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="save.html" class="myButton">Save & Exit</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="exit.html" class="myButton">Exit</a>

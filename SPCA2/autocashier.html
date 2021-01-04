@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-    <title>Bitso: Web Socket API Demo</title>
+    <title>Autocashier</title>
     <style>
         body {
             font-family: Arial;
@@ -82,15 +82,12 @@
         }
 
         function MuestroValores(){
-          purl=document.getElementById('purl').value;
-          pport=document.getElementById('pport').value;
-          nurl=document.getElementById('nurl').value;
-          nport=document.getElementById('nport').value;
-          surl=document.getElementById('surl').value;
-          sport=document.getElementById('sport').value;
+          dname=document.getElementById('dname').value;
+          did=document.getElementById('did').value;
+          
           
 
-          var todo='setup.html?purl='+purl+'&pport='+pport+'&nurl='+nurl+'&nport='+nport+'&surl='+surl+'&sport='+sport;
+          var todo='setup.html?dname='+dname+'&did='+did;
 
           console.log(todo);
           
@@ -106,7 +103,7 @@
 
 <body>
     <center>
-        <h2>8. Payments Settings </h2>
+        <h2>9. Autocashier Settings </h2>
 
         <div id="trades-output" style="font-size: x-small;">
 
@@ -114,47 +111,18 @@
         <table style="border-color:red;">
 
             <tr>
-                <td>Payment Url:</td>
+                <td>Autocashier Name:</td>
                 <td>
-                    <input type="text" id="purl" ></input>
+                    <input type="text" id="dname" ></input>
                 </td>
             </tr>
             <tr>
-                <td>Payment Port</td>
+                <td>Autocashier Id</td>
                 <td>
-                    <input type="number" id="pport"></input>
+                    <input type="number" id="did"></input>
                 </td>
             </tr>
-            <tr></tr>
-            <tr></tr>
-            <tr>
-                <td>Node Ip:</td>
-                <td>
-                    <input type="text" id="nurl" ></input>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>Node Port</td>
-                <td>
-                    <input type="number" id="nport"></input>
-                </td>
-            </tr>
-            <tr></tr>
-            <tr></tr>
-            <tr>
-                <td>System Interface Ip:</td>
-                <td>
-                    <input type="text" id="surl" ></input>
-                </td>
-            </tr>
-            <tr>
-                <td>System Interface Port</td>
-                <td>
-                    <input type="number" id="sport"></input>
-                </td>
-            </tr>
-
+           
 
         </table>
         <br>
@@ -164,12 +132,9 @@
 
 
         <script>
-            document.getElementById("purl").value = getParameterByName('purl');
-            document.getElementById("pport").value = getParameterByName('pport');
-            document.getElementById("nurl").value = getParameterByName('nrl');
-            document.getElementById("nport").value = getParameterByName('nport');
-            document.getElementById("surl").value = getParameterByName('surl');
-            document.getElementById("sport").value = getParameterByName('sport');
+            document.getElementById("dname").value = getParameterByName('dname');
+            document.getElementById("did").value = getParameterByName('did');
+            
             
         </script>
 

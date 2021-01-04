@@ -84,9 +84,13 @@
         function MuestroValores(){
           purl=document.getElementById('purl').value;
           pport=document.getElementById('pport').value;
+          nurl=document.getElementById('nurl').value;
+          nport=document.getElementById('nport').value;
+          surl=document.getElementById('surl').value;
+          sport=document.getElementById('sport').value;
           
 
-          var todo='setup.html?purl='+purl+'&pport='+pport;
+          var todo='setup.html?purl='+purl+'&pport='+pport+'&nurl='+nurl+'&nport='+nport+'&surl='+surl+'&sport='+sport;
 
           console.log(todo);
           
@@ -102,7 +106,7 @@
 
 <body>
     <center>
-        <h2>4. Network Settings </h2>
+        <h2>8. Payments Settings </h2>
 
         <div id="trades-output" style="font-size: x-small;">
 
@@ -112,13 +116,42 @@
             <tr>
                 <td>Payment Url:</td>
                 <td>
-                    <input type="text" id="purl" placeholder="url"></input>
+                    <input type="text" id="purl" ></input>
                 </td>
             </tr>
             <tr>
                 <td>Payment Port</td>
                 <td>
                     <input type="number" id="pport"></input>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>Node Ip:</td>
+                <td>
+                    <input type="text" id="nurl" ></input>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Node Port</td>
+                <td>
+                    <input type="number" id="nport"></input>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>System Interface Ip:</td>
+                <td>
+                    <input type="text" id="surl" ></input>
+                </td>
+            </tr>
+            <tr>
+                <td>System Interface Port</td>
+                <td>
+                    <input type="number" id="sport"></input>
                 </td>
             </tr>
 
@@ -133,6 +166,10 @@
         <script>
             document.getElementById("purl").value = getParameterByName('purl');
             document.getElementById("pport").value = getParameterByName('pport');
+            document.getElementById("nurl").value = getParameterByName('nrl');
+            document.getElementById("nport").value = getParameterByName('nport');
+            document.getElementById("surl").value = getParameterByName('surl');
+            document.getElementById("sport").value = getParameterByName('sport');
             
         </script>
 
