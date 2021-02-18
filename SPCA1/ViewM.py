@@ -148,29 +148,35 @@ def imprime():
                 ruta='scounter.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)
                 webview.windows[0].load_url(ruta)
             if (page.find('channel_test') != -1):
-                if BoardModule.device_board !='':
+                
+                if BoardModule.device_board !=0:
                     
                     c='Ch'+ str(BoardModule.channel_board)
                     #print('Entro '+ str(float(canales['Bill1'][0][c][0]['value'])/100) + ' ' +str(canales['Bill1'][0]['Ch1'][0]['type']))
                     data=SetupM.JsonSetup
                     bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
                     bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
-                    coinEnabled= data["Peripherals"][0]["coinlEnabled"]
+                    coinEnabled= data["Peripherals"][0]["coinEnabled"]
                     if bill1Enabled==True or bill2Enabled==True or coinEnabled==True:
-                        ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                        if BoardModule.device_board==1:
+                            ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                        elif BoardModule.device_board==2:
+                            ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+                        elif BoardModule.device_board==3:
+                            ruta='channel_test.html' +'?hardware=Coin&amount='+str(float(Channel_File.JsonChannelFile['Coin'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Coin'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
+
                         webview.windows[0].load_url(ruta)
                     
                     #agregar para controlar desde config o app
-                    BoardModule.device_board=''
-                    BoardModule.channel_board=''
+                    BoardModule.device_board=0
+                    BoardModule.channel_board=0
+                    BoardModule.habPlata()
                     
-                    BoardModule.EnviarPuerto=[0x53]    
-                    sleep(0.5)
-                    BoardModule.EnviarPuerto=[0x56]  
 
             if  page[-10:]=='setup.html':#(page.find('setup.html') != -1):
 
-                
+                BoardModule.desPlata()
+
                 data=CounterM.Read_CounterStart()
                 t=str(data["Total_Start"]).zfill(12)
                 p=str(data["Parcial_Start"]).zfill(12)
@@ -338,7 +344,7 @@ def imprime():
                 
             
         except Exception as e:
-            #print('error '+ str(e))
+            print('error '+ str(e))
             sleep(0.0001)
             continue
 
