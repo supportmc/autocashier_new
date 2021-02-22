@@ -147,8 +147,11 @@ def imprime():
                 r=datetime.datetime.strptime(data["LastReset"], "%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
                 ruta='scounter.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)
                 webview.windows[0].load_url(ruta)
-            if (page.find('channel_test') != -1):
+
+            
                 
+            if (page.find('channel_test') != -1):
+                BoardModule.habPlata()
                 if BoardModule.device_board !=0:
                     
                     c='Ch'+ str(BoardModule.channel_board)
@@ -170,7 +173,7 @@ def imprime():
                     #agregar para controlar desde config o app
                     BoardModule.device_board=0
                     BoardModule.channel_board=0
-                    BoardModule.habPlata()
+                    
                     
 
             if  page[-10:]=='setup.html':#(page.find('setup.html') != -1):
