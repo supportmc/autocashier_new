@@ -11,7 +11,7 @@ version='022.012.001.001'
 channel_board=0
 device_board=0
 puerto=ports.GetPort('Board')
-serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
+serie =None# serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
 EnviarPuerto=''
 RespuestaPuerto=''
 abrio=False
@@ -26,19 +26,26 @@ def ReadSerie():
     global RespuestaPuerto
     global r
 
-    abrio=True
-    
+    channel_board=0
+    device_board=0
+    puerto=ports.GetPort('Board')
+    serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
+    EnviarPuerto=''
+    RespuestaPuerto=''
+    abrio=False
+    r=True
 
     while True:
         try:
             qq=serie.read(1024) #aca lee del puerto
+            abrio=True
             print(qq)
             if len(qq)>0:
                 qq=qq.decode()
                 if qq=='V':
                     r=True
-            if len(qq)>1:
-                print(qq)
+            #if len(qq)>1:
+            #    print(qq)
                 
             RespuestaPuerto=qq
             sleep(0.001)
@@ -63,34 +70,41 @@ def ReadSerie():
                 EnviarPuerto=''
                 RespuestaPuerto=''
         except Exception as e:
+            puerto=ports.GetPort('Board')
             print(e)
-            sleep(1)
+            sleep(2)
             channel_board=0
             device_board=0
-            puerto=ports.GetPort('Board')
-            serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0.3)    
+            serie.close()
+            serie=None
+            #puerto=ports.GetPort('Board')
+            #serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0.3)    
             EnviarPuerto=''
             RespuestaPuerto=''
             abrio=False
-            continue
+            #r==True
+            #continue
+            break
 
     #print(bytearray(q))
-    serie.close()
+    
+    ReadSerie()
+
 def habPlata():
     global EnviarPuerto
     global r
     r=False
     EnviarPuerto=[0x53]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x56]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x58]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
 
 def desPlata():
     global EnviarPuerto
@@ -98,17 +112,17 @@ def desPlata():
     r=False
     EnviarPuerto=[0x52]    
     while r==False:
-        sleep(0.01)
+        sleep(0.001)
 
     r=False
     EnviarPuerto=[0x55]    
     while r==False:
-        sleep(0.01)
+        sleep(0.001)
 
     r=False
     EnviarPuerto=[0x57]    
     while r==False:#ApagarLuces()
-        sleep(0.01)
+        sleep(0.001)
     
     
 
@@ -118,31 +132,31 @@ def EncenderLuces():
     r=False
     EnviarPuerto=[0x60]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x61]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x62]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x63]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x64]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x65]    
     while r==False:
-        sleep(0.01)
+        sleep(0.001)
     r=False
     EnviarPuerto=[0x66]    
     while r==False:
-        sleep(0.01)  
+        sleep(0.001)  
    
 def ApagarLuces():
     global EnviarPuerto
@@ -150,39 +164,50 @@ def ApagarLuces():
     r=False
     EnviarPuerto=[0x70]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x71]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x72]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x73]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001) 
     r=False
     EnviarPuerto=[0x74]    
     while r==False:
-        sleep(0.01) 
+        sleep(0.001)
     r=False
     EnviarPuerto=[0x75]    
     while r==False:
-        sleep(0.01)
+        sleep(0.001)
     r=False
     EnviarPuerto=[0x76]    
     while r==False:
-        sleep(0.01)   
+        sleep(0.001)   
 
 
 if (abrio==False):
     threading.Thread(target=ReadSerie).start()#ApagarLuces()
-    #habPlata()
+    #habPlata()serie.close()
     #desPlata()
-    ApagarLuces()
-    #EncenderLuces()
+    """ while 1:
+        try:
+            ApagarLuces()
+            EncenderLuces()
+            sleep(1)
+        except:
+            continue """
+        
+    #r=False
+    #EnviarPuerto=[0x71]    
+    #while r==False:
+    #    sleep(0.001)
+    
     
      
       
