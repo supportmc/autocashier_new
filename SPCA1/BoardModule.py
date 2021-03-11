@@ -90,67 +90,98 @@ def ReadSerie():
     
     ReadSerie()
 
-def habPlata():
+def habPlata(bill1,bill2,mon):
     global EnviarPuerto
     global r
 
     #--------------------
-    #billetero 1
-    r=False
-    EnviarPuerto=[0x56]    
-    while r==False:
-        sleep(0.001)
-    #luz
-    # -------------------
-    r=False
-    EnviarPuerto=[0x65]    
-    while r==False:
-        sleep(0.001)
+    #billetero 2
+    if bill2==True:
+        r=False
+        EnviarPuerto=[0x56]    
+        while r==False:
+            sleep(0.001)
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x65]    
+        while r==False:
+            sleep(0.001)
      
     # -------------------
-    #billetero 2 
-    r=False
-    EnviarPuerto=[0x53]    
-    while r==False:
-        sleep(0.001) 
-    #luz
-    # -------------------
-    r=False
-    EnviarPuerto=[0x64]    
-    while r==False:
-        sleep(0.001)
+    #billetero 1 
+    if bill1==True:
+        r=False
+        EnviarPuerto=[0x53]    
+        while r==False:
+            sleep(0.001) 
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x64]    
+        while r==False:
+            sleep(0.001)
 
     # -------------------
     #monedero
-    r=False
-    EnviarPuerto=[0x58]    
-    while r==False:
-        sleep(0.01)
-    #luz
-    # -------------------
-    r=False
-    EnviarPuerto=[0x66]    
-    while r==False:
-        sleep(0.001)
+    if mon==True:
+        r=False
+        EnviarPuerto=[0x58]    
+        while r==False:
+            sleep(0.01)
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x66]    
+        while r==False:
+            sleep(0.001)
     # -------------------
 
-def desPlata():
+def desPlata(bill1,bill2,mon):
     global EnviarPuerto
     global r
-    r=False
-    EnviarPuerto=[0x52]    
-    while r==False:
-        sleep(0.01)
+    #--------------------
+    #billetero 2
+    if bill2==True:
+        r=False
+        EnviarPuerto=[0x52]    
+        while r==False:
+            sleep(0.001)
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x75]    
+        while r==False:
+            sleep(0.001)
+     
+    # -------------------
+    #billetero 2 
+    if bill2==True:
+        r=False
+        EnviarPuerto=[0x55]    
+        while r==False:
+            sleep(0.001) 
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x74]    
+        while r==False:
+            sleep(0.001)
 
-    r=False
-    EnviarPuerto=[0x55]    
-    while r==False:
-        sleep(0.01)
-
-    r=False
-    EnviarPuerto=[0x57]    
-    while r==False:#ApagarLuces()
-        sleep(0.01)
+    # -------------------
+    #monedero
+    if mon==True:
+        r=False
+        EnviarPuerto=[0x57]    
+        while r==False:
+            sleep(0.01)
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x76]    
+        while r==False:
+            sleep(0.001)
+    # -------------------
     
     
 
@@ -224,7 +255,7 @@ if (abrio==False):
     sleep(2)
     r=False
     #EnviarPuerto=[0x53] 
-    desPlata()
+    desPlata(True,True,True)
     ApagarLuces()
     
     

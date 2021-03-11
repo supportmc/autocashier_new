@@ -181,7 +181,7 @@ def imprime():
                     #agregar para controlar desde config o app
                     BoardModule.device_board=0
                     BoardModule.channel_board=0
-                BoardModule.habPlata()
+                BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)
                 
 
                     
@@ -268,7 +268,7 @@ def imprime():
                 ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)+'&nurl='+str(nurl)+'&nport='+str(nport)+'&surl='+str(surl)+'&sport='+str(sport)+'&dname='+str(dname)+'&did='+str(did)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
-                BoardModule.desPlata()
+                BoardModule.desPlata(True,True,True)
                 entro=False
         
             if (page.find('setup.html?bill')!=-1) and entro==False:
