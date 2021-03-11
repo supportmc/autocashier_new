@@ -26,10 +26,12 @@ import datetime
 import json
 import os
 softversion='022.006.001.001'
+entro=False
 x=1
 
 def creoVentana(sversion):
     global softversion
+    global entro
     # //traigo conteos de todo \\
     softversion=sversion
     """ data=CounterModule.Read_CounterStart()
@@ -56,6 +58,7 @@ def creoVentana(sversion):
     ruta='setup.html'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
     print(ruta)
     #ruta=mdir+'/'+ruta
+    entro=False
     window = webview.create_window('Get current URL1', ruta,fullscreen=True)
     webview.start(change_url, window,http_server=True)
     
@@ -114,11 +117,13 @@ def muestraVentana():
     imprime()
 
 def imprime():
+    global entro
     while 1:
         try:
             page=webview.windows[0].get_current_url()
             #print(page[-10:])
-            if  page[-9:]=='exit.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+            if  page[-9:]=='exit.html' and entro==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+                entro=True
                 webview.windows[0].hide()
                 SetupM.GetJsonSetup() #recupero el anterior
                 #SetupM.SaveSetup() #guardo el viejo
@@ -127,7 +132,8 @@ def imprime():
                 webview.windows[0].destroy()
                 return
 
-            if  page[-9:]=='save.html':#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+            if  page[-9:]=='save.html' and entro==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+                entro=True
                 webview.windows[0].hide()
                 SetupM.SaveSetup() #guardo el nuevo
                 CloseSetup() #cierro
@@ -136,7 +142,8 @@ def imprime():
                 #cambia setup.json
                 return
 
-            if (page.find('r=0') != -1):
+            if (page.find('r=0') != -1) and entro==False:
+                entro=True
                 if CounterM.Reset_CounterStart() ==True:
                     print('reset ok')
                 else:
@@ -150,8 +157,9 @@ def imprime():
 
             
                 
-            if (page.find('channel_test') != -1):
-                BoardModule.habPlata()
+            if (page.find('channel_test') != -1)and entro==False:
+                entro=True
+                
                 if BoardModule.device_board !=0:
                     
                     c='Ch'+ str(BoardModule.channel_board)
@@ -173,12 +181,14 @@ def imprime():
                     #agregar para controlar desde config o app
                     BoardModule.device_board=0
                     BoardModule.channel_board=0
+                BoardModule.habPlata()
+                
+
                     
                     
 
             if  page[-10:]=='setup.html':#(page.find('setup.html') != -1):
-
-                BoardModule.desPlata()
+                entro=True               
 
                 data=CounterM.Read_CounterStart()
                 t=str(data["Total_Start"]).zfill(12)
@@ -258,8 +268,11 @@ def imprime():
                 ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)+'&nurl='+str(nurl)+'&nport='+str(nport)+'&surl='+str(surl)+'&sport='+str(sport)+'&dname='+str(dname)+'&did='+str(did)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
+                BoardModule.desPlata()
+                entro=False
         
-            if (page.find('setup.html?bill')!=-1):
+            if (page.find('setup.html?bill')!=-1) and entro==False:
+                entro=True
                 f = furl(page) 
                 try:
                     if f.args['bill1']!=None:
@@ -279,8 +292,10 @@ def imprime():
                         SetupM.SetJsonSetup(data)
                         webview.windows[0].load_url('setup.html')
                 except:
+                    entro=False
                     continue
-            if (page.find('setup.html?ssid')!=-1):
+            if (page.find('setup.html?ssid')!=-1) and entro==False:
+                    entro=True
                     f = furl(page) 
                     try:
                         if f.args['ssid']!=None:
@@ -299,7 +314,8 @@ def imprime():
                         continue
                         sigue=True   
 
-            if (page.find('setup.html?purl')!=-1):
+            if (page.find('setup.html?purl')!=-1) and entro==False:
+                    entro=True
                     f = furl(page) 
                     try:
                         if f.args['purl']!=None:
@@ -324,7 +340,8 @@ def imprime():
                         sigue=True
                         continue
 
-            if (page.find('setup.html?dname')!=-1):
+            if (page.find('setup.html?dname')!=-1)and entro==False:
+                    entro=True
                     f = furl(page) 
                     try:
                         if f.args['dname']!=None:
@@ -342,11 +359,12 @@ def imprime():
                         sigue=True
                         continue          
 
-            sleep(0.001)
+            sleep(0.0001)
                 
                 
             
         except Exception as e:
+            entro=False
             print('error '+ str(e))
             sleep(0.0001)
             continue
