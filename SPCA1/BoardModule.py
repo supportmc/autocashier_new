@@ -40,7 +40,8 @@ def ReadSerie():
             qq=serie.read(1024) #aca lee del puerto
             abrio=True
             #print(qq)
-            if len(qq)>0:
+            print(str(len(qq)))
+            if len(qq)==1:
                 qq=qq.decode()
                 if qq=='V':
                     r=True
@@ -255,8 +256,10 @@ if (abrio==False):
     sleep(2)
     r=False
     #EnviarPuerto=[0x53] 
-    desPlata(True,True,True)
+    habPlata(True,True,True)
     ApagarLuces()
+    #r=False
+    #EnviarPuerto=[0x81] 
     
     
      

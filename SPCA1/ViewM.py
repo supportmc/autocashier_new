@@ -157,17 +157,20 @@ def imprime():
 
             
                 
-            if (page.find('channel_test') != -1)and entro==False:
+            if (page.find('channel_test') != -1):#and entro==False:
+                data=SetupM.JsonSetup
+                bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
+                bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
+                coinEnabled= data["Peripherals"][0]["coinEnabled"]
+                if entro==False:
+                    BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)
                 entro=True
                 
                 if BoardModule.device_board !=0:
                     
                     c='Ch'+ str(BoardModule.channel_board)
                     #print('Entro '+ str(float(canales['Bill1'][0][c][0]['value'])/100) + ' ' +str(canales['Bill1'][0]['Ch1'][0]['type']))
-                    data=SetupM.JsonSetup
-                    bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
-                    bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
-                    coinEnabled= data["Peripherals"][0]["coinEnabled"]
+                    
                     if bill1Enabled==True or bill2Enabled==True or coinEnabled==True:
                         if BoardModule.device_board==1:
                             ruta='channel_test.html' +'?hardware=Bill '+str(BoardModule.device_board)+'&amount='+str(float(Channel_File.JsonChannelFile['Bill1'][0][c][0]['value'])/100)+'&currency='+str(Channel_File.JsonChannelFile['Bill1'][0]['Ch1'][0]['type'])+'&symbol=$&rate=1&moneda=Pesos&simbolo=$'
@@ -181,7 +184,7 @@ def imprime():
                     #agregar para controlar desde config o app
                     BoardModule.device_board=0
                     BoardModule.channel_board=0
-                BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)
+                
                 
 
                     
