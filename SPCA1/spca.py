@@ -8,6 +8,7 @@ import os,sys #import dyn modules
 import CustomerM,SetupM,UpgradeM,DownloadM
 import CounterM
 import ViewM
+import BoardModule
 #-----------------------------------------------------------------
 #importo puntero
 sys.path.append('/home/pi/Autocashier/')
@@ -78,17 +79,18 @@ def GetVersion():
 
 def CloseApp():
     AppClose=True
+    ViewM.CloseSetup()
 
 def Start():
     while True:
         try:
-            Setup=SetupM.Read_Setup()
-            print ('Setup '+ str(Setup))
-            if Setup==0:
+            #Setup=SetupM.Read_Setup()
+            #print ('Setup '+ str(Setup))
+            #if Setup==0:
+            if BoardModule.PuertaAbierta==False:
                 UpgradeM.CheckUpgrade()
             else:
-                CloseApp()
-                
+                CloseApp()                
                 SetupM.Show(GetVersion())
             sleep(3)
         except Exception as e:

@@ -1,10 +1,10 @@
-
 import io
 import serial
 import os
 from time import sleep
 import threading
 import ports
+from datetime import datetime,date,time,timedelta
 
 version='022.012.001.001'
 
@@ -16,6 +16,7 @@ EnviarPuerto=''
 RespuestaPuerto=''
 abrio=False
 r=False
+PuertaAbierta=False
 
 def ReadSerie():
     global EnviarPuerto
@@ -25,6 +26,7 @@ def ReadSerie():
     global abrio
     global RespuestaPuerto
     global r
+    global PuertaAbierta
 
     channel_board=0
     device_board=0
@@ -39,12 +41,25 @@ def ReadSerie():
         try:
             qq=serie.read(1024) #aca lee del puerto
             abrio=True
-            #print(qq)
-            print(str(len(qq)))
+            print(qq)
+            #print(str(len(qq)))
             if len(qq)==1:
-                qq=qq.decode()
-                if qq=='V':
+                #qq=qq.decode()
+                if qq==b'V':
                     r=True
+                if qq==b'\xb1':
+                    PuertaAbierta=True
+                if qq==b'\xb2':
+                    PuertaAbierta=True
+                if qq==b'\x00V':
+                    PuertaAbierta=True
+                if qq==b'\xb5':
+                    PuertaAbierta=False
+                if qq==b'\xb6':
+                    PuertaAbierta=False
+                if qq==b'\xffV':
+                    PuertaAbierta=True
+                
             #if len(qq)>1:
             #    print(qq)
                 
@@ -94,79 +109,88 @@ def ReadSerie():
 def habPlata(bill1,bill2,mon):
     global EnviarPuerto
     global r
+    to=datetime.now()+timedelta(seconds=3)
 
-    #--------------------
-    #billetero 2
-    if bill2==True:
-        r=False
-        EnviarPuerto=[0x56]    
-        while r==False:
-            sleep(0.001)
-        #luz
-        # -------------------
-        r=False
-        EnviarPuerto=[0x65]    
-        while r==False:
-            sleep(0.001)
-     
-    # -------------------
-    #billetero 1 
-    if bill1==True:
-        r=False
-        EnviarPuerto=[0x53]    
-        while r==False:
-            sleep(0.001) 
-        #luz
-        # -------------------
-        r=False
-        EnviarPuerto=[0x64]    
-        while r==False:
-            sleep(0.001)
-
-    # -------------------
     #monedero
     if mon==True:
         r=False
         EnviarPuerto=[0x58]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.01)
         #luz
         # -------------------
         r=False
         EnviarPuerto=[0x66]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.001)
     # -------------------
-
-def desPlata(bill1,bill2,mon):
-    global EnviarPuerto
-    global r
+    
     #--------------------
-    #billetero 2
-    if bill2==True:
+    #billetero 1
+    
+    if bill1==True:
         r=False
-        EnviarPuerto=[0x52]    
-        while r==False:
+        EnviarPuerto=[0x56]    
+        while r==False and to > datetime.now():
             sleep(0.001)
         #luz
         # -------------------
         r=False
-        EnviarPuerto=[0x75]    
-        while r==False:
+        EnviarPuerto=[0x64]    
+        while r==False and to > datetime.now():
             sleep(0.001)
      
     # -------------------
     #billetero 2 
     if bill2==True:
         r=False
+        EnviarPuerto=[0x53]    
+        while r==False and to > datetime.now():
+            sleep(0.001) 
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x65]    
+        while r==False and to > datetime.now():
+            sleep(0.001)
+
+    # -------------------
+    
+    if  to > datetime.now():
+        return True
+    else:
+        return False
+
+def desPlata(bill1,bill2,mon):
+    global EnviarPuerto
+    global r
+    #--------------------
+    #billetero 2
+    to=datetime.now()+timedelta(seconds=3)
+    if bill2==True:
+        r=False
+        EnviarPuerto=[0x52]    
+        while r==False and to > datetime.now():
+            sleep(0.001)
+        #luz
+        # -------------------
+        r=False
+        EnviarPuerto=[0x75]    
+        while r==False and to > datetime.now():
+            sleep(0.001)
+     
+    # -------------------
+    #billetero 2 
+    if bill1==True:
+        r=False
         EnviarPuerto=[0x55]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.001) 
         #luz
         # -------------------
         r=False
         EnviarPuerto=[0x74]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.001)
 
     # -------------------
@@ -174,15 +198,19 @@ def desPlata(bill1,bill2,mon):
     if mon==True:
         r=False
         EnviarPuerto=[0x57]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.01)
         #luz
         # -------------------
         r=False
         EnviarPuerto=[0x76]    
-        while r==False:
+        while r==False and to > datetime.now():
             sleep(0.001)
     # -------------------
+    if to > datetime.now():
+        return True
+    else:
+        return False
     
     
 
@@ -190,74 +218,100 @@ def EncenderLuces():
     global EnviarPuerto
     global r
     r=False
-    EnviarPuerto=[0x60]    
-    while r==False:
+    EnviarPuerto=[0x60]
+    to=datetime.now()+timedelta(seconds=3)    
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x61]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x62]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x63]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x64]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x65]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01)
     r=False
     EnviarPuerto=[0x66]    
-    while r==False:
-        sleep(0.01)  
+    while r==False and to > datetime.now():
+        sleep(0.01)
+    if  to > datetime.now():
+        return True
+    else:
+        return False
    
 def ApagarLuces():
     global EnviarPuerto
     global r
     r=False
+    to=datetime.now()+timedelta(seconds=3)    
+
     EnviarPuerto=[0x70]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x71]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x72]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x73]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) 
     r=False
     EnviarPuerto=[0x74]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01)
     r=False
     EnviarPuerto=[0x75]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01)
     r=False
     EnviarPuerto=[0x76]    
-    while r==False:
-        sleep(0.01)   
+    while r==False and to > datetime.now():
+        sleep(0.01)
+
+    if  to > datetime.now():
+        return True
+    else:
+        return False   
 
 
 if (abrio==False):
     threading.Thread(target=ReadSerie).start()#ApagarLuces()
     sleep(2)
     r=False
-    #EnviarPuerto=[0x53] 
-    habPlata(True,True,True)
-    ApagarLuces()
+    EnviarPuerto=[0x82] 
+    sleep(1)
+    EnviarPuerto=[0x83] 
+    sleep(1)
+    
+    #while desPlata(True,True,True)==False:
+    #    sleep(0.01)
+    #print("Perfect")
+    #while habPlata(True,True,True)==False:
+    #    sleep(0.01)
+    #print("Perfect")
+    
+
+
+
+
+    #ApagarLuces()
     #r=False
     #EnviarPuerto=[0x81] 
     
@@ -270,6 +324,10 @@ if (abrio==False):
     """ print("ahora")    
     r=False
     EnviarPuerto=[0x81]    
-    while r==False:
+    while r==False and to > datetime.now():
         sleep(0.01) """
-    #EncenderLuces()
+    #while 1:    
+    #    EncenderLuces()
+    #    sleep(2)
+    #    ApagarLuces()
+    #    sleep(2)

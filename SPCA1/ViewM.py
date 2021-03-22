@@ -28,6 +28,7 @@ import os
 softversion='022.006.001.001'
 entro=False
 x=1
+entroProbador=False
 
 def creoVentana(sversion):
     global softversion
@@ -86,7 +87,7 @@ def Read_Setup():
 def CloseSetup():
     try:
         
-        filename='setup.json'            
+        """ filename='setup.json'            
         
         data = Read_Setup()
         if data=='':
@@ -97,7 +98,9 @@ def CloseSetup():
 
         os.remove(filename)
         with open(filename, 'w') as f:
-            json.dump(data, f, indent=4)
+            json.dump(data, f, indent=4) """
+        webview.windows[0].hide()
+        webview.windows[0].destroy()
         
         return(True)
 
@@ -118,18 +121,20 @@ def muestraVentana():
 
 def imprime():
     global entro
+    global entroProbador
     while 1:
         try:
             page=webview.windows[0].get_current_url()
             #print(page[-10:])
-            if  page[-9:]=='exit.html' and entro==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
+            
+            if  page[-9:]=='exit.html' and entro==False or BoardModule.PuertaAbierta==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 entro=True
                 webview.windows[0].hide()
-                SetupM.GetJsonSetup() #recupero el anterior
+                #SetupM.GetJsonSetup() #recupero el anterior
                 #SetupM.SaveSetup() #guardo el viejo
                 CloseSetup()
                 #webview.windows[0].load_url('setup.html')
-                webview.windows[0].destroy()
+                #webview.windows[0].destroy()
                 return
 
             if  page[-9:]=='save.html' and entro==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
@@ -158,12 +163,16 @@ def imprime():
             
                 
             if (page.find('channel_test') != -1):#and entro==False:
+                entroProbador=True
                 data=SetupM.JsonSetup
                 bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
                 bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
                 coinEnabled= data["Peripherals"][0]["coinEnabled"]
                 if entro==False:
-                    BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)
+                    x=0
+                    while BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
+                        sleep(0.01)
+                        x+=1
                 entro=True
                 
                 if BoardModule.device_board !=0:
@@ -271,8 +280,14 @@ def imprime():
                 ruta='setup.html' +'?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)+'&bill1='+str(bill1Enabled)+'&bill2='+str(bill2Enabled)+'&coin='+str(coinEnabled)+'&magnetic_reader='+str(magnetic_reader_Enabled)+'&nfc_reader='+str(nfc_reader_Enabled)+'&barcode_reader='+str(barcode_reader_Enabled)+'&nfc_dispenser='+str(nfc_card_dispenser_Enabled)+'&magnetic_dispenser='+str(magnetic_card_dispenser_Enabled)+'&printer='+str(printer_Enabled)+'&channel_file='+str(channelFile)+'&exchange_file='+str(exchangeFile)+'&ssid='+str(ssid)+'&pass='+str(Pass)+'&purl='+str(purl)+'&pport='+str(pport)+'&nurl='+str(nurl)+'&nport='+str(nport)+'&surl='+str(surl)+'&sport='+str(sport)+'&dname='+str(dname)+'&did='+str(did)
                 print('lo q hice ' + ruta)
                 webview.windows[0].load_url(ruta)
-                BoardModule.desPlata(True,True,True)
+                #BoardModule.desPlata(True,True,True)
+                x=0
+                if entroProbador==True:
+                    while BoardModule.desPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
+                            sleep(0.01)
+                            x+=1
                 entro=False
+                entroProbador=False
         
             if (page.find('setup.html?bill')!=-1) and entro==False:
                 entro=True
@@ -309,11 +324,20 @@ def imprime():
                             data["SSID"]=f.args['ssid']
                             data["Password"]=f.args['pass']
                             
+                            if data["Payment_url"] != '' or data["Payment_url"] !=None:
+                                #NUC activado
+                                ar=open("/home/pi/Autocashier/NUC/RedActual.txt","w")
+                                ar.write(str(f.args['ssid'])+"\r\n"+ str(f.args['pass']))
+                                ar.close()
+
+
+
                             SetupM.SetJsonSetup(data)
                             webview.windows[0].load_url('setup.html')
 
                             
-                    except:
+                    except Exception as e:
+                        print(str(e))
                         continue
                         sigue=True   
 
