@@ -10,7 +10,7 @@ version='022.020.001.001'
 
 channel_board=0
 device_board=0
-puerto=ports.GetPort('Board')
+puerto=ports.GetPort('QRR')
 serie =None# serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
 EnviarPuerto=''
 RespuestaPuerto=''
@@ -30,8 +30,8 @@ def ReadSerie():
 
     channel_board=0
     device_board=0
-    puerto=ports.GetPort('Board')
-    serie = serial.Serial(puerto, 9600, timeout=0.5, writeTimeout=0)    
+    puerto=ports.GetPort('QRR')
+    serie = serial.Serial(puerto, 115200, timeout=0.5, writeTimeout=0)    
     EnviarPuerto=''
     RespuestaPuerto=''
     abrio=False
@@ -39,11 +39,12 @@ def ReadSerie():
 
     while True:
         try:
-            qq=serie.read(1024) #aca lee del puerto
+            qq=serie.read(2048) #aca lee del puerto
             abrio=True
+            #qq=qq.decode()
             print(qq)
             #print(str(len(qq)))
-            if len(qq)==1:
+            """ if len(qq)==1:
                 #qq=qq.decode()
                 if qq==b'V':
                     r=True
@@ -80,13 +81,13 @@ def ReadSerie():
                 print('billetero '+str(q))
             else:
                 #print(qq.decode())
-                a=1
+                a=1 """
             if EnviarPuerto !='':
                 serie.write(bytes(bytearray(EnviarPuerto)))
                 EnviarPuerto=''
                 RespuestaPuerto=''
         except Exception as e:
-            puerto=ports.GetPort('Board')
+            puerto=ports.GetPort('QRR')
             print(e)
             sleep(2)
             channel_board=0

@@ -313,14 +313,14 @@ if (abrio==False):
 
     #ApagarLuces()
     #r=False
-    #EnviarPuerto=[0x81] 
+    EnviarPuerto=[0x80] 
     
     
      
       
 
 
-    #sleep(0.001)
+    sleep(0.1)
     """ print("ahora")    
     r=False
     EnviarPuerto=[0x81]    

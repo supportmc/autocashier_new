@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
-	<name>Red WEP
+	<name>Magnetic Cash
 </name>
 	<SSIDConfig>
 		<SSID>
-			<name>Red WEP
+			<name>Magnetic Cash
 </name>
 		</SSID>
 	</SSIDConfig>
@@ -20,8 +20,7 @@
 			<sharedKey>
 				<keyType>passPhrase</keyType>
 				<protected>false</protected>
-				<keyMaterial>5050505050505
-</keyMaterial>
+				<keyMaterial>5050505050</keyMaterial>
 			</sharedKey>
 		</security>
 	</MSM>

@@ -62,6 +62,7 @@ if os.path.exists(BanderaConectado): #PREGUNTA SI EXISTE ARCHIVO "CONECTADO"
                 SSID_NUC = XML_NUC_WEP.readline() #BAJA HASTA LA LINEA 6 DEL XML
                 SSID_NUC = XML_NUC_WEP.readline() #BAJA HASTA LA LINEA 6 DEL XML
                 SSID_NUC = XML_NUC_WEP.readline() #BAJA HASTA LA LINEA 6 DEL XML
+                SSID_NUC = XML_NUC_WEP.readline() #BAJA HASTA LA LINEA 6 DEL XML
                 SSID_NUC = SSID_NUC.replace('\t\t\t<name>', '') #LIMPIA LA LINEA 6 DEJANDO SOLO EL SSID
                 SSID_NUC = SSID_NUC.replace('</name>\n', '') #LIMPIA LA LINEA 6 DEJANDO SOLO EL SSID
                 PASS_NUC = XML_NUC_WEP.readline() #BAJA HASTA LA LINEA 21 DEL XML

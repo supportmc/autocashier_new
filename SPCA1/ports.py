@@ -4,12 +4,16 @@ def GetPort(ptype):
     portlist = list(port.comports())
     for p in portlist:
         print(p.product)
-        #if ptype=='Board':
-        #    if str(p.product).find('FT232R')>-1:# USB UART':
-        #        return (p.device)
-        #if ptype=='Dispenser':
-        #    if str(p.product).find('USB2.0')>-1:
-        #        return (p.device)
+        if ptype=='Board':
+            if str(p.product).find('FT232R')>-1:# USB UART':
+                return (p.device)
+        if ptype=='Dispenser':
+            if str(p.product).find('USB2.0')>-1:
+                return (p.device)
+        if ptype=='QRR':
+            if str(p.product).find('USB-Serial Controller D')>-1:
+                return (p.device)
+
     
     return(None)
 
