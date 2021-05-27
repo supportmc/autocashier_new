@@ -48,11 +48,11 @@
         "Ch9":[{"value":0,"type":""}],
         "Ch10":[{"value":0,"type":""}],
         "Ch11":[{"value":0,"type":""}],
-        "Ch12":[{"value":0,"type":""}],
-        "Ch13":[{"value":0,"type":""}],
-        "Ch14":[{"value":0,"type":""}],
-        "Ch15":[{"value":0,"type":""}],
-        "Ch16":[{"value":0,"type":""}]       
+        "Ch128":[{"value":500,"type":"Pesos"}],
+        "Ch112":[{"value":200,"type":"Pesos"}],
+        "Ch144":[{"value":1000,"type":"Pesos"}],
+        "Ch160":[{"value":100,"type":"Pesos"}],
+        "Ch80":[{"value":100,"type":"Pesos"}]       
     }]
 
 }

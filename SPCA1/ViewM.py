@@ -326,7 +326,7 @@ def imprime():
                             
                             if data["Payment_url"] != '' or data["Payment_url"] !=None:
                                 #NUC activado
-                                ar=open("/home/pi/Autocashier/NUC/RedActual.txt","w")
+                                ar=open("/home/pi/Autocashier/RedActual.txt","w")
                                 ar.write(str(f.args['ssid'])+"\r\n"+ str(f.args['pass']))
                                 ar.close()
 

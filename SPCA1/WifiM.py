@@ -37,6 +37,7 @@ def ChangeWifi(WIFIN,WIFIP):
         return False
     #print('Ahora esta conectado a '+red)
 
+#print(ChangeWifi('CLAROEEC2','EYA150515'))
 
 
 

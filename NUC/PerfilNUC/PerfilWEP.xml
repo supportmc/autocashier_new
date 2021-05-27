@@ -13,11 +13,16 @@
 	<MSM>
 		<security>
 			<authEncryption>
-				<authentication>open</authentication>
-				<encryption>none</encryption>
+				<authentication>WPA2PSK</authentication>
+				<encryption>AES</encryption>
 				<useOneX>false</useOneX>
 			</authEncryption>
-			</security>
+			<sharedKey>
+				<keyType>passPhrase</keyType>
+				<protected>false</protected>
+				<keyMaterial>5050505050</keyMaterial>
+			</sharedKey>
+		</security>
 	</MSM>
 	<MacRandomization xmlns="http://www.microsoft.com/networking/WLAN/profile/v3">
 		<enableRandomization>false</enableRandomization>

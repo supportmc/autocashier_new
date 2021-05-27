@@ -1,7 +1,20 @@
 import json
 import os
+import sys
 from time import sleep
-import ViewM
+
+#------IMPORTO DE ACUERDO AL MODULO ACTIVO--------------------
+sys.path.append('/home/pi/Autocashier/')
+import pointer
+os.chdir('/home/pi/Autocashier/')
+data=pointer.CheckPointer()    
+sys.path.append('/home/pi/Autocashier/'+str(data['SPCA'])+'/') #importa aplicacion y vista actual
+rutaPrincipal='/home/pi/Autocashier/'+str(data['SPCA'])+'/'
+sys.path.append(rutaPrincipal)
+#-------------------------------------------------------------
+
+
+#import ViewM
 #primer punto Soft
 #segundo punto Modulo
 #tercer modificaciones de app
@@ -25,7 +38,7 @@ def SaveSetup():
     global JsonSetup
     try:
         
-        filename='setup.json'            
+        filename=rutaPrincipal +'setup.json'      
         
         data = JsonSetup#Read_Setup()
         if data=='':
@@ -49,7 +62,7 @@ def CloseSetup():
     global JsonSetup
     try:
         
-        filename='setup.json'            
+        filename=rutaPrincipal +'setup.json'      
         
         data = JsonSetup#Read_Setup()
         if data=='':
@@ -76,7 +89,7 @@ def GetVersion():
 def Read_SetupJson():
     global JsonSetup
     try:
-        with open('setup.json') as json_file:
+        with open(rutaPrincipal +'setup.json') as json_file:
             JsonSetup = json.loads(json_file.read())        
         #print(mijson)
         return JsonSetup
@@ -100,7 +113,7 @@ def Read_Setup():
         print(error)
         return('')
 
-def Show(sversion):
+""" def Show(sversion):
     global FirstStart
     #while True:
     # Read_Setup()==1:
@@ -110,7 +123,7 @@ def Show(sversion):
     ViewM.creoVentana(sversion)
    #     FirstStart=False
     #else:
-    #    mview.muestraVentana()
+    #    mview.muestraVentana() """
 
         
     

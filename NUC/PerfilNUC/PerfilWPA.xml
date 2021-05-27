@@ -13,12 +13,12 @@
 	<MSM>
 		<security>
 			<authEncryption>
-				<authentication>open</authentication>
-				<encryption>WEP</encryption>
+				<authentication>WPA2PSK</authentication>
+				<encryption>AES</encryption>
 				<useOneX>false</useOneX>
 			</authEncryption>
 			<sharedKey>
-				<keyType>networkKey</keyType>
+				<keyType>passPhrase</keyType>
 				<protected>false</protected>
 				<keyMaterial>5050505050</keyMaterial>
 			</sharedKey>

@@ -58,7 +58,7 @@ def ReadSerie():
                 if qq==b'\xb6':
                     PuertaAbierta=False
                 if qq==b'\xffV':
-                    PuertaAbierta=True
+                    PuertaAbierta=False
                 
             #if len(qq)>1:
             #    print(qq)
@@ -329,5 +329,5 @@ if (abrio==False):
     #while 1:    
     #    EncenderLuces()
     #    sleep(2)
-    #    ApagarLuces()
+    ApagarLuces()
     #    sleep(2)

@@ -13,7 +13,7 @@
 	<MSM>
 		<security>
 			<authEncryption>
-				<authentication>WPAPSK</authentication>
+				<authentication>WPA2PSK</authentication>
 				<encryption>AES</encryption>
 				<useOneX>false</useOneX>
 			</authEncryption>

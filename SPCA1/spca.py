@@ -91,7 +91,7 @@ def Start():
                 UpgradeM.CheckUpgrade()
             else:
                 CloseApp()                
-                SetupM.Show(GetVersion())
+                ViewM.creoVentana(GetVersion())
             sleep(3)
         except Exception as e:
             print(str(e))

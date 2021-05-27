@@ -1,6 +1,17 @@
 import json
 import os
 from time import sleep
+import sys
+
+#------IMPORTO DE ACUERDO AL MODULO ACTIVO--------------------
+sys.path.append('/home/pi/Autocashier/')
+import pointer
+os.chdir('/home/pi/Autocashier/')
+data=pointer.CheckPointer()    
+sys.path.append('/home/pi/Autocashier/'+str(data['SPCA'])+'/') #importa aplicacion y vista actual
+rutaPrincipal='/home/pi/Autocashier/'+str(data['SPCA'])+'/'
+sys.path.append(rutaPrincipal)
+#-------------------------------------------------------------
 
 import BoardModule
 #primer punto Soft
@@ -20,7 +31,7 @@ def GetJsonChannel():
 def Read_ChannelJson():
     global JsonChannelFile
     try:
-        with open('/home/pi/Autocashier/SPCA1/channel.json') as json_file:
+        with open(rutaPrincipal+'channel.json') as json_file:
             JsonChannelFile = json.loads(json_file.read())        
         #print(mijson)
         return JsonChannelFile
