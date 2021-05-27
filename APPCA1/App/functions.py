@@ -63,7 +63,10 @@ def LeerIngresoFiat():
         
         
         
-        
+        if BoardModule.PuertaAbierta:
+                BoardModule.device_board=0
+                BoardModule.channel_board=0
+                break
         
         if BoardModule.device_board !=0:
             

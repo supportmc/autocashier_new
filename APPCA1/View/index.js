@@ -15,6 +15,7 @@ if (!parseURLParams('scanApp')) document.getElementById('scan-app').style.displa
 if (!parseURLParams('newCard')) document.getElementById('new-card').style.display = 'none';
 if (!parseURLParams('saldo')) {
     document.getElementById('saldo').style.display = 'none';
+    document.getElementById('balance').style.display = 'none';
 } else {
     document.getElementById('saldo').innerHTML = parseURLParams('saldo');
 };
@@ -46,13 +47,23 @@ var mercadoPagoBtn = document.getElementById('mercado-pago');
 var cardBtn = document.getElementById('card');
 var newCardBtn = document.getElementById('new-card');
 
-// INPUT con Focus
+// Input Focus cada 1 seg
 
-function accion() {
-    var accionEjecutada = true;
-}
+document.getElementById('inputFocus').onblur = function (event) { 
+    var blurEl = this; 
+    setTimeout(function() {
+        blurEl.focus()
+    }, 1000);
+};
 
 // Screen 2 
+
+if (!parseURLParams('screen2')) {
+    document.getElementById('screen2').style.display = 'none';
+    document.getElementById('balanceScreen2').style.display = 'none';
+}
+
+
 if (!parseURLParams('value1Btn')) document.getElementById('value1Btn').style.display = 'none'
 if (!parseURLParams('value2Btn')) document.getElementById('value2Btn').style.display = 'none'
 if (!parseURLParams('value3Btn')) document.getElementById('value3Btn').style.display = 'none'
@@ -135,7 +146,17 @@ if (
         document.getElementById('values').style.display = 'none';
     }
 
+if (!parseURLParams('backToScreen2')) document.getElementById('backToScreen2').style.display = 'none' 
+
 // Screen 3 ( Monto Seleccionado y Procesos Postnet )
+if (!parseURLParams('screen3')) {
+    document.getElementById('asd').style.display = 'none'; 
+    document.getElementById('posnet').style.display = 'none'; 
+    document.getElementById('arrow-right').style.display = 'none';
+    document.getElementById('valueItem').style.display = 'none'; 
+    document.getElementById('cardBox').style.display = 'none';   
+}
+
 if (!parseURLParams('valueSimboloSelected')) {
     document.getElementById('valueSimboloSelected').style.display = 'none';
 } else {
@@ -156,11 +177,17 @@ if (!parseURLParams('processing')) document.getElementById('processing').style.d
 
 if (!parseURLParams('successProcess')) document.getElementById('successProcess').style.display = 'none';
 if (!parseURLParams('errorProcess')) document.getElementById('errorProcess').style.display = 'none';
-if (!parseURLParams('posnet')) document.getElementById('posnet').style.display = 'none';
+if (!parseURLParams('screen3')) document.getElementById('screen3').style.display = 'none';
 
 // Screen 3 Monto Personalizado
 
-if (!parseURLParams('posnetPersonalizado')) document.getElementById('posnetPersonalizado').style.display = 'none'; 
+if (!parseURLParams('posnetPersonalizado')) {
+    document.getElementById('cardElementScreen3Personalizado').style.display = 'none'; 
+    document.getElementById('posnetPersonalizado').style.display = 'none'; 
+    document.getElementById('posnetImgPersonalizado').style.display = 'none'; 
+    document.getElementById('arrow-right-personalizado').style.display = 'none';
+    document.getElementById('backToScreen2').style.display = 'none'; 
+}
 
 
 function mostrarValor( displayValue, valorBtn ) {

@@ -15,6 +15,8 @@ sys.path.append('/home/pi/Autocashier/')
 import pointer
 data=pointer.CheckPointer()
 os.chdir("/home/pi/Autocashier/"+data['SPCA'])#aplica carpeta actual
+sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/App/')#importo app actual
+import sapp
 #-----------------------------------------------------------------
 import json
 
@@ -89,6 +91,7 @@ def Start():
             #if Setup==0:
             if BoardModule.PuertaAbierta==False:
                 UpgradeM.CheckUpgrade()
+                sapp.Start()
             else:
                 CloseApp()                
                 ViewM.creoVentana(GetVersion())

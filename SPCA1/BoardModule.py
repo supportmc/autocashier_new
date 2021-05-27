@@ -58,7 +58,7 @@ def ReadSerie():
                 if qq==b'\xb6':
                     PuertaAbierta=False
                 if qq==b'\xffV':
-                    PuertaAbierta=False
+                    PuertaAbierta=True
                 
             #if len(qq)>1:
             #    print(qq)

@@ -36,4 +36,3 @@ def Start():
         sleep(0.1) """
 
 
-Start()

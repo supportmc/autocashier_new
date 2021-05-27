@@ -24,11 +24,27 @@ import functions
 rutaVista='/home/pi/Autocashier/'+str(data['APPCA'])+'/View/'
 
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
+
+sys.path.append("/home/pi/Autocashier/"+data['SPCA'])
+import BoardModule
+import SetupM
 #import sapp
 #import sview
 #import SetupM
 #import start
 ruta=''
+nfc=''
+mercadoPago=''
+insertCash=''
+swipeCard=''
+card=''
+scanApp=''
+newCard=''
+simbolo=''
+bill1=''
+bill2=''
+coin=''
+
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -88,7 +104,7 @@ def creoVentana():
     entro=False
     window = webview.create_window('Get current URL1', ruta,fullscreen=True)
     webview.start(change_url, window,http_server=True)
-    #webview.windows[0].hide()
+    webview.windows[0].hide()
     
     
 
@@ -112,7 +128,7 @@ def Read_Setup():
     except Exception as error:
         print(error)
         return('')       
-def CloseSetup():
+def CloseApp():
     try:
         
         """ filename='setup.json'            
@@ -142,28 +158,51 @@ def miboleano(q):
         return False
     else:
         return True
+def miboleano2(q):
+    if q==True:
+        return 'true'
+    else:
+        return ''
 
 def muestraVentana():
     webview.windows[0].show()
     imprime()
 
-#def VerificoHabilitaciones():
-    """ nfc
-    mercadoPago
-    insertCash
-    swipeCard
-    card
-    scanApp
-    newCard
-    simbolo """
+def VerificoHabilitaciones():
+    global nfc
+    global mercadoPago
+    global insertCash
+    global swipeCard
+    global card
+    global scanApp
+    global newCard
+    global simbolo
+    global bill1
+    global bill2
+    global coin
+
+    data=SetupM.GetJsonSetup()
+    bill1=miboleano2(data["Peripherals"][0]["bill1Enabled"])
+    bill2=miboleano2(data["Peripherals"][0]["bill2Enabled"])
+    coin=miboleano2(data["Peripherals"][0]["coinEnabled"])
+    swipeCard=miboleano2(data["Peripherals"][0]["magnetic_reader_Enabled"])
+    nfc=miboleano2(data["Peripherals"][0]["nfc_reader_Enabled"])
+    scanApp=miboleano2(data["Peripherals"][0]["barcode_reader_Enabled"])
+    newCard=miboleano2(data["Peripherals"][0]["magnetic_card_dispenser_Enabled"])
+    mercadoPago='True'
+    card='True'
+    if bill1=='strue' or bill2=='true' or  coin=='true':
+        insertCash='true'
+    #data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
+    #data["Peripherals"][0]["printer_Enabled"]=miboleano(f.args['printer'])
 
 def EventosPlaca():
     global ruta
-    ruta='index.html?nfc=1&mercadoPago=1?insertCash=1&swipeCard=1&card=1&scanApp=1&newCard=1&saldo='+ str(functions.SALDO) +'&simbolo=$'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
+    ruta='index.html?nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
     CambioVentana()
-    
     functions.LeerFiat=True
     functions.LeerIngresoFiat()
+    functions.LeerFiat=False
     
 
 
@@ -172,12 +211,16 @@ def imprime():
     global entro
     global entroProbador
     global ruta
+    VerificoHabilitaciones()
     while 1:
         try:
             
-            EventosPlaca()
+            if BoardModule.PuertaAbierta: #cierra app si abren puerta
+                CloseApp()
+                break
 
-
+            EventosPlaca()#eventos placa
+                      
 
             page=webview.windows[0].get_current_url()
             #print(page[-10:])
@@ -220,4 +263,4 @@ if __name__ == '__main__':
     #client_thread.start()
     a=1
 #threading.Thread(target=CambioVentana.start()
-creoVentana()
+#creoVentana()

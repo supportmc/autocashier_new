@@ -5,16 +5,17 @@
 }
 
 body {
-    width: 99vw;
-    height: 99vh;
-    background-image: linear-gradient(315deg, #1e3b70 0%, #29539b 74%);
+    max-width: 99vw;
+    max-height: 99vh;
+    background-image: url('assets/background-cajero.jpg');
+    overflow: hidden;
 }
 
 .main-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 95vw;
+    max-width: 100vw;
     height: 80vh;
 }
 
@@ -25,22 +26,15 @@ input {
     top: 0;
     left:0;
     cursor:none;
+    color: transparent;
+    outline: none;
 }
 
-.company-logo-1 {
+.company-logo {
+    width: 250px;
     position: absolute;
-    top: 2rem;
-    left: 2rem;
-    font-size: 1.8rem;
-    font-weight: 600;
-}
-
-.company-logo-2 {
-    position: absolute;
-    top: 4rem;
-    left: 3.9rem;
-    font-size: 1.8rem;
-    font-weight: 600;
+    top: -20px;
+    left: -30px;
 }
 
 .main-content__left {
@@ -51,6 +45,7 @@ input {
     align-items: center;
     justify-content: space-between;
     margin-left: -3rem;
+    position: relative;
 }
 
 .mercado-pago {
@@ -59,18 +54,19 @@ input {
     justify-content: flex-start;
     align-items: center;
     height: 30%;
-    width: 100%;
+    width: 70%;
     background-color: #61210f;
     background-image: linear-gradient(315deg, #7e2c16 0%, #ee6c4d 74%);
-    
-    
     border-radius: 35px;
-    padding-left:1rem;
     border: none;
     color: black;
     text-align: center;
     text-decoration: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding-left: 1.5rem;
+    position: absolute;
+    top: 3rem;
+    left: -18rem;
 }
 
 .insert-cash {
@@ -79,7 +75,7 @@ input {
     justify-content: space-around;
     align-items: center;
     height: 30%;
-    width: 100%;
+    width: 70%;
     background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
     border-radius: 35px;
     border: none;
@@ -87,6 +83,34 @@ input {
     text-align: center;
     text-decoration: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    position: absolute;
+    top: 20rem;
+    left: -18rem;
+}
+
+.insert-cash > span {
+    margin-left: 10rem;
+}
+
+.insert-cash__img {
+    margin-left: 11rem;
+}
+
+.mercado-pago > span {
+    margin-left: 11rem;
+}
+
+.mercado-pago__img {
+    margin-top:6px;
+    margin-left: 11rem;
+}
+
+.cards > span {
+    margin-right: 11rem;
+}
+
+.card__img {
+    margin-right: 11rem;
 }
 
 .insert-cash > span,
@@ -96,8 +120,16 @@ input {
     letter-spacing: 2px;
 }
 
+.balance {
+    margin-right: 2rem;
+    background-color: white;
+    padding: 1rem 2rem;
+    border: 3px solid black;
+    border-radius: 2rem;
+}
+
 .balance > span {
-    font-size: 4.5rem;
+    font-size: 4rem;
     letter-spacing: 2px;  
 }
 
@@ -123,7 +155,10 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;
+    position: absolute;
+    top: 23%;
+    left: 11%;   
 }
 
 .balance {
@@ -133,7 +168,10 @@ input {
 }
 
 .new-card {
-    width: 180px;
+    width: 160px;
+    position: absolute;
+    bottom: 7.5rem;
+    right: 13rem;
     background-image: linear-gradient(147deg, #c62128 0%, #a00000 74%);
     padding: 10px 20px;
     border-radius: 10px;
@@ -149,77 +187,130 @@ input {
     text-decoration: none;
 }
 
-.main-content__right {
-    width: 80%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-right: -3rem;
-}
-
 .cards {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
-    height: 30%;
-    width: 100%;
+    height: 12%;
+    width: 53%;
     border-radius: 35px;
     background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
     border: none;
     text-decoration: none;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    position: absolute;
+    top: 13rem;
+    right: -11rem;
 }
 
 .actions-container {
     display: flex;
     justify-content: space-between;
     align-items: space-between;
-    width: 100vw;
-    height: 20vh;
+    height: 18vh;
     padding-left: 3rem;
     padding-right: 3rem;
+    position: relative;
 }
 
 .action__item__title {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
 }
 
-.action__item {
+.scan-app {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    position: absolute;
+    top: 0;
+    right: 1.2rem;
+    height: 100%;
 }
 
+.swipe-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    right: 40%;
+    height: 100%;
+}
+
+.nfc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    height: 100%;
+}
+
+
 .action__item__arrow {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background-color: black;
     clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
 }
 
+.card-container-screen-2 {
+    position: absolute;
+    top: 10rem;
+    left: 32%;
+    width: 370px;
+}
+
+.card-container-screen-2 > a {
+    box-shadow: none;
+    border: 3px solid black;
+}
+ 
+.back-btn {
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    text-decoration: none;
+}
+
+.back__img {
+    width: 70px;
+    margin-right: 1rem;
+}
+
+.back__text {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 4.8rem;
+    right: 1.5rem;
+    font-weight: 600;
+    color: black;
+}
+
+.back__text:visited,
+.back__text:link {
+    color: black;
+}
+
 .values {
-    display: relative;
-    margin: 20px auto;
-    width:400px;
-    height:400px;
-    display:grid;
-    grid-template-columns: 170px 170px;
-    grid-row: auto auto;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    padding-left: 22px;
-    margin-bottom: 6rem;
+    width: 900px;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top: 10rem;
+    margin-left:.5rem;
 }
 
 .value__item {
-    height: 100%;
+    width: 150px;
+    height: 150px;
     display: flex;
-    position: relative;
     flex-direction: column;
     align-items: center;
     justify-content:center;
@@ -234,6 +325,7 @@ input {
     box-shadow: -6px -6px 10px rgba(10, 14, 51, 0.8),
     6px 6px 10px rgba(0, 0, 0, 0.2);
     text-decoration: none;
+    margin-top: 5rem;
 }
 
 .value__item > span {
@@ -243,34 +335,124 @@ input {
     font-weight: 600;
 }
 
-.value__item--personalizado {
-    width:165px;
-    height:165px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
-    background-image: linear-gradient(315deg, #bdd4e7 0%, #8693ab 74%);
-    padding:20px;
-    border-radius:10px;
-    color:black;
-    font-size:20px;
-    border: none;
-    outline: none;
-    font-family: sans-serif;
-    box-shadow: -6px -6px 10px rgba(10, 14, 51, 0.8),
-    6px 6px 10px rgba(0, 0, 0, 0.2);   
-    position: absolute;
-    top: 35rem;
-    left: 44.5rem;
-    text-decoration: none;
+#valueSaldoPersonalizado {
+    font-size: 1rem;
 }
 
-.balance-screen2 {
+.arrow-1 {
+    width: 5px;
+    height: 230px;
+    position: absolute;
+    top: 2rem;
+    left: -4.9rem;
+    background-color: #FFBE4F;
+    transform:rotateZ(42deg);
+}
+
+.arrow-punta-1 {
+    position: absolute;
+    top: 14.2rem;
+    left: -10.1rem;
+    width: 15px;
+    height: 15px;
+    background-color: #FFBE4F;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+    transform:rotateZ(37deg);
+}
+
+.arrow-2 {
+    width: 5px;
+    height: 160px;
+    position: absolute;
+    top: 6rem;
+    left: .5rem;
+    background-color: #FFBE4F;
+    transform:rotateZ(10deg);
+}
+
+.arrow-punta-2 {
+    position: absolute;
+    top: 15.5rem;
+    left: -.65rem;
+    width: 15px;
+    height: 15px;
+    background-color: #FFBE4F;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+    transform:rotateZ(10deg);
+}
+
+.arrow-3 {
+    width: 5px;
+    height: 150px;
+    position: absolute;
+    top: 6.3rem;
+    left: 11rem;
+    background-color: #FFBE4F;
+}
+
+.arrow-punta-3 {
+    position: absolute;
+    top: 15rem;
+    left: 10.7rem;
+    width: 15px;
+    height: 15px;
+    background-color: #FFBE4F;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+}
+
+.arrow-4 {
+    width: 5px;
+    height: 160px;
+    position: absolute;
+    top: 6rem;
+    right: .5rem;
+    background-color: #FFBE4F;
+    transform:rotateZ(-10deg);
+}
+
+.arrow-punta-4 {
+    position: absolute;
+    top: 15.5rem;
+    right: -.7rem;
+    width: 15px;
+    height: 15px;
+    background-color: #FFBE4F;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+    transform:rotateZ(-10deg);
+}
+
+.arrow-5 {
+    width: 5px;
+    height: 230px;
+    position: absolute;
+    top: 2rem;
+    right: -4.9rem;
+    background-color: #FFBE4F;
+    transform:rotateZ(-42deg);
+}
+
+.arrow-punta-5 {
+    position: absolute;
+    top: 14.2rem;
+    right: -10.1rem;
+    width: 15px;
+    height: 15px;
+    background-color: #FFBE4F;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+    transform:rotateZ(-37deg);
+}
+
+#balanceScreen2 {
     position: absolute;
     top: 1.5rem;
-    left: 32%;
-    padding: 0 3.5rem;
+    left: 35%;
+}
+
+.screen2title {
+    background-color: white;
+    padding: 1rem 2rem;
+    border: 3px solid black;
+    border-radius: 2rem;
 }
 
 .balance-screen2 > span {
@@ -298,25 +480,39 @@ input {
 }
 
 .processing-text {
-    height: 100%;
-    border-radius:10px;
+    width: 340px;
+    height: 90px;
+    padding: 0 2rem;
+    background-color: white;
+    border: 3px solid black;
+    display: flex;
+    align-items: center;
     color:black;
     font-size:30px;
     line-height: 100px;
     font-family: "Montserrat", sans-serif;
     font-size: 35px;
     font-weight: 600;
-    margin-left: 3rem;
     margin-bottom: 2rem;
     letter-spacing: 5px;
 }
 
 .posnet-img {
     position: absolute;
-    top: 12.5rem;
-    right: 20rem;
+    top: 16.9rem;
+    right: 21rem;
     padding-top: 1rem;
-    width: 180px;
+    width: 170px;
+}
+
+.arrow-screen-3 {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
+    position: absolute;
+    top: 47%;
+    right: 2rem;
 }
 
 .error-img,
@@ -334,6 +530,7 @@ input {
     background-color: #fbb034;
     border-radius: 16px;
     box-shadow: 15px 10px 0px 5px #00000033;
+    margin-top: 15.5rem;
 }
 
 .posnet-row {
@@ -341,12 +538,12 @@ input {
     justify-content: space-around;
     align-items: center;
     width:90%;
-    height: 95%;
+    height: 80%;
 }
 
 .display {
     width: 94%;
-    height: 100%;
+    height: 85%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -412,8 +609,8 @@ input {
     margin-right: 9rem;
     color: white;
     position: absolute;
-    top: 12.3rem;
-    left: 25.5rem;
+    top: 18.5rem;
+    left: 25rem;
 }
 
 .confirm-btn {
@@ -438,8 +635,13 @@ input {
 }
 
 .processing-text-personalizado {
-    height: 100%;
-    border-radius:10px;
+    width: 340px;
+    height: 90px;
+    padding: 0 2rem;
+    background-color: white;
+    border: 3px solid black;
+    display: flex;
+    align-items: center;
     color:black;
     line-height: 100px;
     font-family: "Montserrat", sans-serif;
@@ -449,14 +651,50 @@ input {
     margin-bottom: 2rem;
     letter-spacing: 5px;
     position: absolute;
-    top: 85%;
-    left: 33%;
+    top: 70%;
+    right: 1%;
 }
 
 .success-img-personalizado,
 .error-img-personalizado {
-    width: 100px;
+    width: 120px;
     position: absolute;
-    top: 85%;
-    left: 45%;
+    top: 75%;
+    right: 12%;
 } 
+
+#cardElementScreen3Personalizado {
+    position: absolute;
+    top: 9rem;
+    left: 32%;
+    width: 370px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 35px;
+    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
+    border: 3px solid black;
+    text-decoration: none;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.posnet-img-personalizado {
+    width: 250px;
+    position: absolute;
+    top: 18rem;
+    right: 3rem;
+}
+
+.arrow-screen-personalizado {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
+    position: absolute;
+    top: 13rem;
+    right: -20rem;
+    z-index: 100;
+}
