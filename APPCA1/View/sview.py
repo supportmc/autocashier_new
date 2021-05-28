@@ -40,11 +40,13 @@ swipeCard=''
 card=''
 scanApp=''
 newCard=''
+newCardNfc=''
+newCardMagnetic=''
 simbolo=''
 bill1=''
 bill2=''
 coin=''
-
+newCardPrice=0
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -175,11 +177,13 @@ def VerificoHabilitaciones():
     global swipeCard
     global card
     global scanApp
-    global newCard
+    global newCardNfc
+    global newCardMagnetic
     global simbolo
     global bill1
     global bill2
     global coin
+    global newCardPrice
 
     data=SetupM.GetJsonSetup()
     bill1=miboleano2(data["Peripherals"][0]["bill1Enabled"])
@@ -188,9 +192,11 @@ def VerificoHabilitaciones():
     swipeCard=miboleano2(data["Peripherals"][0]["magnetic_reader_Enabled"])
     nfc=miboleano2(data["Peripherals"][0]["nfc_reader_Enabled"])
     scanApp=miboleano2(data["Peripherals"][0]["barcode_reader_Enabled"])
-    newCard=miboleano2(data["Peripherals"][0]["magnetic_card_dispenser_Enabled"])
+    newCardMagnetic=miboleano2(data["Peripherals"][0]["magnetic_card_dispenser_Enabled"])
+    newCardNfc=miboleano2(data["Peripherals"][0]["nfc_card_dispenser_Enabled"])
     mercadoPago='True'
     card='True'
+    newCardPrice=float(data["PriceNewCard"])
     if bill1=='strue' or bill2=='true' or  coin=='true':
         insertCash='true'
     #data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
@@ -198,7 +204,13 @@ def VerificoHabilitaciones():
 
 def EventosPlaca():
     global ruta
-    ruta='index.html?nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
+    #muestra boton tarjeta nueva si esta hab y alcanza
+    if functions.SALDO>=newCardPrice and newCardNfc=='true' or functions.SALDO>newCardPrice and newCardMagnetic=='true':
+        newCard='True'
+    else:
+        newCard=''
+
+    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
     CambioVentana()
     functions.LeerFiat=True
     functions.LeerIngresoFiat()

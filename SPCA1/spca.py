@@ -95,7 +95,7 @@ def Start():
             else:
                 CloseApp()                
                 ViewM.creoVentana(GetVersion())
-            sleep(3)
+            sleep(0.5)
         except Exception as e:
             print(str(e))
             filename='spca_log.json'                

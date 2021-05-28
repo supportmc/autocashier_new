@@ -7,15 +7,15 @@
 body {
     max-width: 99vw;
     max-height: 99vh;
-    background-image: url('assets/background-cajero.jpg');
-    overflow: hidden;
+/*     background-image: url('assets/background-cajero.jpg'); */
+    background-image: linear-gradient(315deg, #1e3b70 0%, #29539b 74%);
 }
 
 .main-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 100vw;
+    max-width: 95vw;
     height: 80vh;
 }
 
@@ -37,7 +37,7 @@ input {
     left: -30px;
 }
 
-.main-content__left {
+/* .main-content__left {
     width: 80%;
     height: 50%;
     display: flex;
@@ -46,15 +46,18 @@ input {
     justify-content: space-between;
     margin-left: -3rem;
     position: relative;
-}
+} */
 
 .mercado-pago {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 30%;
-    width: 70%;
+    height: 12%;
+    width: 65%;
+    position: absolute;
+    top: 12.5rem;
+    left: -18rem;
     background-color: #61210f;
     background-image: linear-gradient(315deg, #7e2c16 0%, #ee6c4d 74%);
     border-radius: 35px;
@@ -63,19 +66,19 @@ input {
     text-align: center;
     text-decoration: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    padding-left: 1.5rem;
-    position: absolute;
-    top: 3rem;
-    left: -18rem;
+    padding-left: 4rem;
 }
 
 .insert-cash {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    height: 30%;
-    width: 70%;
+    position: absolute;
+    top: 28rem;
+    left: -18rem;
+    height: 12%;
+    width: 65%;
     background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
     border-radius: 35px;
     border: none;
@@ -83,9 +86,7 @@ input {
     text-align: center;
     text-decoration: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    position: absolute;
-    top: 20rem;
-    left: -18rem;
+    padding-left: 4rem;
 }
 
 .insert-cash > span {
@@ -120,12 +121,18 @@ input {
     letter-spacing: 2px;
 }
 
+.main-content__center {
+    position: absolute;
+    top: 41%;
+    left: 32%;
+}
+
 .balance {
-    margin-right: 2rem;
     background-color: white;
     padding: 1rem 2rem;
     border: 3px solid black;
     border-radius: 2rem;
+    text-align: center;
 }
 
 .balance > span {
@@ -149,7 +156,7 @@ input {
     width: 45px;
 }
 
-.main-content__center {
+ .main-content__center {
     width: 80%;
     height: 50%;
     display: flex;
@@ -159,7 +166,7 @@ input {
     position: absolute;
     top: 23%;
     left: 11%;   
-}
+} 
 
 .balance {
     display: flex;
@@ -193,7 +200,7 @@ input {
     justify-content: space-around;
     align-items: center;
     height: 12%;
-    width: 53%;
+    width: 65%;
     border-radius: 35px;
     background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
     border: none;
@@ -202,7 +209,33 @@ input {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     position: absolute;
     top: 13rem;
-    right: -11rem;
+    right:-17rem;
+    overflow: hidden;
+    padding-right: 2rem;
+}
+
+.cardsScreen2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+    border-radius: 35px;
+    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
+    border: none;
+    text-decoration: none;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.card__img_screen2 {
+    width: 60px;
+}
+
+.card__title_screen2 {
+    font-size: 1.9rem;
+    letter-spacing: 2px;
 }
 
 .actions-container {
@@ -609,8 +642,8 @@ input {
     margin-right: 9rem;
     color: white;
     position: absolute;
-    top: 18.5rem;
-    left: 25rem;
+    top: 19.8rem;
+    left: 25.4rem;
 }
 
 .confirm-btn {
@@ -659,9 +692,41 @@ input {
 .error-img-personalizado {
     width: 120px;
     position: absolute;
-    top: 75%;
+    top: 65%;
     right: 12%;
 } 
+
+.error-msg-personalizado {
+    position: absolute;
+    top: 83%;
+    right: 4%;
+    display: block;
+    word-wrap: break-word;
+    text-align: center;
+    color: red;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: .5rem;
+    background-color: white;
+    border: 2px solid black;
+    width: 300px;
+}
+
+.success-msg-personalizado {
+    position: absolute;
+    top: 83%;
+    right: 4%;
+    display: block;
+    word-wrap: break-word;
+    text-align: center;
+    color: green;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: .5rem;
+    background-color: white;
+    border: 2px solid black;
+    width: 300px;
+}
 
 #cardElementScreen3Personalizado {
     position: absolute;
@@ -684,7 +749,7 @@ input {
 .posnet-img-personalizado {
     width: 250px;
     position: absolute;
-    top: 18rem;
+    top: 14rem;
     right: 3rem;
 }
 
@@ -698,3 +763,124 @@ input {
     right: -20rem;
     z-index: 100;
 }
+
+.charge-info {
+    width: 100%;
+    height: 99vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+}
+
+.charge-info__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 100px;
+}
+
+.charge-info__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #FFE143;
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+}
+
+.charge-info__subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#card-number {
+    padding-left: 2px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.movimientos-table {
+    margin-top: 4rem;
+    width: 100%;
+    height:100%;
+}
+
+table {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+
+table::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0rem;
+    top: 0rem;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+    z-index: -1;
+}
+
+tr {
+    width: 100%;
+}
+
+th {
+    background-color: grey;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    height: 50px;
+    font-size: 1.4rem; 
+}
+
+td {
+    padding-left: 6.5rem;
+    font-size: 1.3rem; 
+    color: white;
+    font-weight: 500;
+    padding-bottom: .5rem;
+}
+
+.cardsScreen3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+    border-radius: 35px;
+    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
+    border: none;
+    text-decoration: none;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.card__title_screen3 {
+    font-size: 1.9rem;
+    letter-spacing: 2px;
+}
+
+.card__img_screen3 {
+    width: 60px;
+}
+
+#balanceScreen3 {
+    position: absolute;
+    top: 1.5rem;
+    left: 35%;
+    background-color: white;
+    padding: 1rem 2rem;
+    border: 3px solid black;
+    border-radius: 2rem;
+}
+
+
+
+

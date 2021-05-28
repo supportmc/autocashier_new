@@ -313,7 +313,7 @@ if (abrio==False):
 
     #ApagarLuces()
     #r=False
-    EnviarPuerto=[0x80] 
+    EnviarPuerto=[0x81] 
     
     
      

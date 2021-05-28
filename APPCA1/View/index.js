@@ -47,8 +47,19 @@ var mercadoPagoBtn = document.getElementById('mercado-pago');
 var cardBtn = document.getElementById('card');
 var newCardBtn = document.getElementById('new-card');
 
-// Input Focus cada 1 seg
 
+// Tomar el numero de tarjeta del input y colocar cardNumber como parametro en el navegador
+function clickPress(event) {
+    if (event.keyCode == 13) {
+        var cardNumber = document.getElementById('inputFocus').value;
+        if ( cardNumber.length > 0 ) {
+            var newUrl = window.location.href + '&cardNumber=' + cardNumber;
+            location.href = newUrl;
+        }
+    }
+}
+
+// Input Focus cada 1 seg
 document.getElementById('inputFocus').onblur = function (event) { 
     var blurEl = this; 
     setTimeout(function() {
@@ -57,12 +68,10 @@ document.getElementById('inputFocus').onblur = function (event) {
 };
 
 // Screen 2 
-
 if (!parseURLParams('screen2')) {
     document.getElementById('screen2').style.display = 'none';
     document.getElementById('balanceScreen2').style.display = 'none';
 }
-
 
 if (!parseURLParams('value1Btn')) document.getElementById('value1Btn').style.display = 'none'
 if (!parseURLParams('value2Btn')) document.getElementById('value2Btn').style.display = 'none'
@@ -149,6 +158,15 @@ if (
 if (!parseURLParams('backToScreen2')) document.getElementById('backToScreen2').style.display = 'none' 
 
 // Screen 3 ( Monto Seleccionado y Procesos Postnet )
+
+if (!parseURLParams('posnetPersonalizado')) {
+    document.getElementById('simboloScreen3').style.display = 'none';
+    document.getElementById('saldoScreen3').style.display = 'none';
+} else {
+    document.getElementById('simboloScreen3').innerHTML = parseURLParams('simboloScreen3');
+    document.getElementById('saldoScreen3').innerHTML = parseURLParams('saldoScreen3');
+};
+
 if (!parseURLParams('screen3')) {
     document.getElementById('asd').style.display = 'none'; 
     document.getElementById('posnet').style.display = 'none'; 
@@ -187,6 +205,21 @@ if (!parseURLParams('posnetPersonalizado')) {
     document.getElementById('posnetImgPersonalizado').style.display = 'none'; 
     document.getElementById('arrow-right-personalizado').style.display = 'none';
     document.getElementById('backToScreen2').style.display = 'none'; 
+    document.getElementById('screen2').style.display = 'none';
+    document.getElementById('balanceScreen2').style.display = 'none';
+}
+
+if (!parseURLParams('errorMsg')) {
+    document.getElementById('errorMsg').style.display = 'none';
+} else {
+    document.getElementById('errorMsg').innerHTML = parseURLParams('errorMsg');
+}
+
+
+if (!parseURLParams('successMsg')) {
+    document.getElementById('successMsg').style.display = 'none';
+} else {
+    document.getElementById('successMsg').innerHTML = parseURLParams('successMsg');
 }
 
 
@@ -215,3 +248,6 @@ if (!parseURLParams('processingPersonalizado')) document.getElementById('process
 if (!parseURLParams('successProcessPersonalizado')) document.getElementById('successProcessPersonalizado').style.display = 'none'; 
 if (!parseURLParams('errorProcessPersonalizado')) document.getElementById('errorProcessPersonalizado').style.display = 'none'; 
 
+// CHARGE INFORMATION SCREEN
+
+/* if (!parseURLParams('cardNumber')) document.getElementById('card-number').style.display = 'none'; */
