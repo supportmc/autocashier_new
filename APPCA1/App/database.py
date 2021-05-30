@@ -16,16 +16,16 @@ def saveHistoryEvent(event,data,ttype):
             try:
                 c=conn.cursor()
                 v=json.loads(event)
-                sql='insert'
-                c.execute(event)
-                conn.comit()
+                sql=("insert into TBL_History_Event (tipo,time_stamp) values('%s','%s')")%(v['tipo'],v['timestamp'])
+                c.execute(sql)
+                conn.commit()
                 lrow=c.lastrowid
                 c.close()
                 conn.close()
                 
                 if ttype=='device':
                     data=json.loads(data)
-                    data['id']
+                    data['Id_History_Event']=str(lrow)
                     saveMoneyInDevice(data)
                 if ttype=='process':
                     saveMoneyInProcess(data)
@@ -46,7 +46,7 @@ def saveHistoryEvent(event,data,ttype):
 def saveMoneyInDevice(event):
     try:
         conn=None
-        conn=sqlite3.connect(dbpath)
+        conn=sqlite3.connect(dbpath+'Autocashier.db')
     except Exception as e:
         print(e)
         return False
@@ -54,12 +54,15 @@ def saveMoneyInDevice(event):
         if conn:
             try:
                 c=conn.cursor()
-                c.execute(event)
-                conn.comit()
+                v=event
+                sql=("insert into TBL_Money_In_Device (ID_History_Event,Device,Channel_Device,Currency,Total_amount_local_currency) values('%s','%s','%s','%s','%s')")%(v['Id_History_Event'],v['Device'],v['Channel'],v['Currency'],v['Total_amount_local_currency'])
+                c.execute(sql)
+                conn.commit()
                 c.close()
                 conn.close()
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 return False
 
 def saveMoneyInProcess(event):
@@ -131,7 +134,7 @@ def saveCloseTransaction(event):
 
 event='{"tipo":"Money","timestamp":"'+str(datetime.now())+'"}'
 #device example
-eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
+eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_local_currency":"2.0"}'
 #process
 #eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
 #eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
