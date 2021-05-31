@@ -295,7 +295,7 @@ if (abrio==False):
     threading.Thread(target=ReadSerie).start()#ApagarLuces()
     sleep(2)
     r=False
-    EnviarPuerto=[0x82] 
+    EnviarPuerto=[0x81] 
     sleep(1)
     EnviarPuerto=[0x83] 
     sleep(1)
@@ -313,7 +313,7 @@ if (abrio==False):
 
     #ApagarLuces()
     #r=False
-    EnviarPuerto=[0x81] 
+    #EnviarPuerto=[0x81] 
     
     
      

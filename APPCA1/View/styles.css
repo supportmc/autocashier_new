@@ -5,20 +5,13 @@
 }
 
 body {
-    max-width: 99vw;
-    max-height: 99vh;
+    max-width: 1024px;
+    max-height: 768px;
     background-image: url('assets/background-cajero.jpg');
-    overflow: hidden;
+    background-size: cover;
 }
 
-.main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100vw;
-    height: 80vh;
-}
-
+/*  SCREEN 1 */
 input {
     background-color: transparent;
     border: none;
@@ -37,99 +30,99 @@ input {
     left: -30px;
 }
 
-.main-content__left {
-    width: 80%;
-    height: 50%;
+.main-button {
+    width: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
-    margin-left: -3rem;
-    position: relative;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 35px;
+    color: black;
+    text-decoration: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding: 2rem 0;
 }
 
-.mercado-pago {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 30%;
-    width: 70%;
-    background-color: #61210f;
+.mercadoPago {
+    position: absolute;
+    top: 5.5rem;
+    left: 12rem;
     background-image: linear-gradient(315deg, #7e2c16 0%, #ee6c4d 74%);
-    border-radius: 35px;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    padding-left: 1.5rem;
-    position: absolute;
-    top: 3rem;
-    left: -18rem;
 }
 
-.insert-cash {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 30%;
-    width: 70%;
+.mercadoPago > span {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.mercadoPago > img {
+    width: 70px;
+}
+
+.insertCash {
+    position: absolute;
+    top: 22rem;
+    left: 4rem;
     background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
-    border-radius: 35px;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.insertCash > span {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.insertCash > img {
+    width: 70px;
+}
+
+.card {
     position: absolute;
-    top: 20rem;
-    left: -18rem;
+    top: 22rem;
+    right: 4rem;
+    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
+    padding-top: 1rem;
 }
 
-.insert-cash > span {
-    margin-left: 10rem;
+.card > span {
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
-.insert-cash__img {
-    margin-left: 11rem;
+.card > img {
+    margin-top: 10px;
+    width: 70px;
 }
 
-.mercado-pago > span {
-    margin-left: 11rem;
-}
-
-.mercado-pago__img {
-    margin-top:6px;
-    margin-left: 11rem;
-}
-
-.cards > span {
-    margin-right: 11rem;
-}
-
-.card__img {
-    margin-right: 11rem;
-}
-
-.insert-cash > span,
-.cards > span,
-.mercado-pago > span {
-    font-size: 1.9rem;
-    letter-spacing: 2px;
+.card-btn {
+    color: black;
+    background-image: linear-gradient(147deg, #ee333c 0%, #d41b24 74%);
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: .5rem 1rem;
+    margin-top: 10px;
+    box-shadow: 0 10px 10px -5px;
 }
 
 .balance {
-    margin-right: 2rem;
+    width: 350px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 24rem;
+    right: 21rem;
     background-color: white;
     padding: 1rem 2rem;
     border: 3px solid black;
     border-radius: 2rem;
+    text-align: center;
 }
 
 .balance > span {
-    font-size: 4rem;
+    font-size: 4.5rem;
     letter-spacing: 2px;  
 }
 
@@ -138,47 +131,18 @@ input {
     letter-spacing: 1.5px;  
 }
 
-.insert-cash__img,
-.action__item__img,
-.card__img {
-    width: 60px;
-}
-
-.mercado-pago__img {
-    margin-top:6px;
-    width: 45px;
-}
-
-.main-content__center {
-    width: 80%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 23%;
-    left: 11%;   
-}
-
-.balance {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .new-card {
     width: 160px;
     position: absolute;
-    bottom: 7.5rem;
-    right: 13rem;
-    background-image: linear-gradient(147deg, #c62128 0%, #a00000 74%);
+    top: 32rem;
+    right: 27rem;
+    background-image: linear-gradient(147deg, #ee333c 0%, #d41b24 74%);
     padding: 10px 20px;
     border-radius: 10px;
     font-family: inherit;
     font-weight: 600;
     font-size: 1.2rem;
-    border: 1.5px solid black;
+    border: 2px solid black;
     box-shadow: 0 10px 10px -5px;
     letter-spacing: 1.5px;
     outline: none;
@@ -187,71 +151,15 @@ input {
     text-decoration: none;
 }
 
-.cards {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 12%;
-    width: 53%;
-    border-radius: 35px;
-    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
-    border: none;
-    text-decoration: none;
-    color: black;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    position: absolute;
-    top: 13rem;
-    right: -11rem;
-}
-
-.actions-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: space-between;
-    height: 18vh;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    position: relative;
-}
-
 .action__item__title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-.scan-app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    right: 1.2rem;
-    height: 100%;
+.action__item__img {
+    width: 80px;
+    margin: .5rem 0 1rem 0;
 }
-
-.swipe-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    right: 40%;
-    height: 100%;
-}
-
-.nfc {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    left: 2rem;
-    height: 100%;
-}
-
 
 .action__item__arrow {
     width: 30px;
@@ -260,18 +168,65 @@ input {
     clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
 }
 
-.card-container-screen-2 {
+.nfc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     position: absolute;
-    top: 10rem;
-    left: 32%;
-    width: 370px;
+    bottom: 1rem;
+    left: 2rem;
 }
 
-.card-container-screen-2 > a {
-    box-shadow: none;
-    border: 3px solid black;
+
+.swipe-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 1rem;
+    left: 26rem;
 }
- 
+
+.scan-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+}
+
+/*  SCREEN 2 */
+
+.balance2 {
+    width: 350px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 2rem;
+    right: 21rem;
+    background-color: white;
+    padding: 1rem 2rem;
+    border: 3px solid black;
+    border-radius: 2rem;
+    text-align: center;
+}
+
+.balance2 > span {
+    font-size: 4.5rem;
+    letter-spacing: 2px;  
+}
+
+.balance2 > small {
+    font-size: 3rem;
+    letter-spacing: 1.5px;  
+}
+
 .back-btn {
     position: absolute;
     right: 0;
@@ -298,190 +253,216 @@ input {
     color: black;
 }
 
-.values {
-    width: 900px;
+.card2 {
+    width: 200px;
+    height: 200px;
     display: flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top: 10rem;
-    margin-left:.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 11rem;
+    left: 26rem;
+    border: 3px solid black;
+    border-radius: 35px;
+    color: black;
+    text-decoration: none;
+    padding: 2rem 0;
+    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
 }
 
+.card2 > span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 25px; 
+}
+
+.card2 > img {
+    margin-top: 10px;
+    width: 70px;
+}
+
+
 .value__item {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    background-image: linear-gradient(315deg, #bdd4e7 0%, #8693ab 74%);
+    background-image: linear-gradient(315deg, #e50914 0%, #facbcb 99%);
     padding:20px;
-    border-radius:10px;
+    border-radius:25px;
     color:black;
     font-size:30px;
-    border: none;
+    border: 3px solid black;
     outline: none;
-    font-family: sans-serif;
-    box-shadow: -6px -6px 10px rgba(10, 14, 51, 0.8),
-    6px 6px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 10px -5px;
     text-decoration: none;
-    margin-top: 5rem;
 }
+
 
 .value__item > span {
     line-height: 100px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 600;
 }
 
-#valueSaldoPersonalizado {
-    font-size: 1rem;
+.value__item > small {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.arrow {
+    width: 5px;
+    background-color: #fbb034;
+}
+
+.arrowPunta {
+    width: 15px;
+    height: 15px;
+    background-color: #fbb034;
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+}
+
+.item1 {
+    position: absolute;
+    bottom: 10rem;
+    left: 2rem; 
 }
 
 .arrow-1 {
-    width: 5px;
-    height: 230px;
+    height: 280px;
     position: absolute;
-    top: 2rem;
-    left: -4.9rem;
-    background-color: #FFBE4F;
-    transform:rotateZ(42deg);
+    top: -14.5rem;
+    left: 16rem;
+    transform:rotateZ(60deg);
 }
 
 .arrow-punta-1 {
     position: absolute;
-    top: 14.2rem;
-    left: -10.1rem;
-    width: 15px;
-    height: 15px;
-    background-color: #FFBE4F;
-    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
-    transform:rotateZ(37deg);
+    top: -1.8rem;
+    left: 8.2rem;
+    transform:rotateZ(60deg);
+}
+
+.item2 {
+    position: absolute;
+    bottom: 10rem;
+    left: 14.5rem; 
 }
 
 .arrow-2 {
-    width: 5px;
-    height: 160px;
+    height: 110px;
     position: absolute;
-    top: 6rem;
-    left: .5rem;
-    background-color: #FFBE4F;
-    transform:rotateZ(10deg);
+    top: -6.5rem;
+    left: 9rem;
+    transform:rotateZ(48deg);
 }
 
 .arrow-punta-2 {
     position: absolute;
-    top: 15.5rem;
-    left: -.65rem;
-    width: 15px;
-    height: 15px;
-    background-color: #FFBE4F;
-    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
-    transform:rotateZ(10deg);
+    top: -1.2rem;
+    left: 6rem;
+    transform:rotateZ(50deg);
+}
+
+.item3 {
+    position: absolute;
+    bottom: 10rem;
+    left: 27rem; 
 }
 
 .arrow-3 {
-    width: 5px;
-    height: 150px;
+    height: 55px;
     position: absolute;
-    top: 6.3rem;
-    left: 11rem;
-    background-color: #FFBE4F;
+    top: -4rem;
+    left: 4.5rem;
 }
 
 .arrow-punta-3 {
     position: absolute;
-    top: 15rem;
-    left: 10.7rem;
-    width: 15px;
-    height: 15px;
-    background-color: #FFBE4F;
-    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
+    top: -1.2rem;
+    left: 4.2rem;
+}
+
+.item4 {
+    position: absolute;
+    bottom: 10rem;
+    right: 14.5rem; 
 }
 
 .arrow-4 {
-    width: 5px;
-    height: 160px;
+    height: 110px;
     position: absolute;
-    top: 6rem;
-    right: .5rem;
-    background-color: #FFBE4F;
-    transform:rotateZ(-10deg);
+    top: -6.5rem;
+    right: 8.3rem;
+    transform:rotateZ(-48deg);
 }
 
 .arrow-punta-4 {
     position: absolute;
-    top: 15.5rem;
-    right: -.7rem;
-    width: 15px;
-    height: 15px;
-    background-color: #FFBE4F;
-    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
-    transform:rotateZ(-10deg);
+    top: -1.2rem;
+    right: 5.3rem;
+    transform:rotateZ(-50deg);
 }
 
-.arrow-5 {
-    width: 5px;
-    height: 230px;
+.itemPersonalizado {
     position: absolute;
-    top: 2rem;
-    right: -4.9rem;
-    background-color: #FFBE4F;
-    transform:rotateZ(-42deg);
+    bottom: 10rem;
+    right: 2rem; 
 }
 
-.arrow-punta-5 {
+.itemPersonalizado > span {
+    font-size: 1.5rem;
+}
+
+.arrowPersonalizado {
+    height: 280px;
     position: absolute;
-    top: 14.2rem;
-    right: -10.1rem;
-    width: 15px;
-    height: 15px;
-    background-color: #FFBE4F;
-    clip-path: polygon(0 0, 100% 0, 50% 100%, 50% 100%);
-    transform:rotateZ(-37deg);
+    top: -14.5rem;
+    right: 15.5rem;
+    transform:rotateZ(-60deg);
 }
 
-#balanceScreen2 {
+.arrow-puntaPersonalizado {
     position: absolute;
-    top: 1.5rem;
-    left: 35%;
+    top: -1.6rem;
+    right: 7.3rem;
+    transform:rotateZ(-60deg);
 }
 
-.screen2title {
-    background-color: white;
-    padding: 1rem 2rem;
-    border: 3px solid black;
-    border-radius: 2rem;
+.itemSelected {
+    position: absolute;
+    top: 25rem;
+    left: 18rem;
 }
 
-.balance-screen2 > span {
-    font-size: 4rem;
-    letter-spacing: 4px;  
+.posnet-logo {
+    width: 175px;
+    position: absolute;
+    top: 25rem;
+    left: 34rem;
 }
 
-.balance-screen2 > small {
-    font-size: 2.5rem;
-    letter-spacing: 1.5px;  
-}
-
-.value-selected-container {
-    display: relative;
-    margin: 20px auto;
-    width:400px;
-    height:400px;
-    display:grid;
-    grid-template-columns: 170px;
-    grid-row: auto;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    padding-top: 2.2rem;
-    padding-left: 22px;
+.señalador {
+    width: 65px;
+    height: 65px;
+    background-color: black;
+    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
+    position: absolute;
+    top: 60%;
+    right: 2rem;
 }
 
 .processing-text {
     width: 340px;
     height: 90px;
+    position: absolute;
+    bottom: 4rem;
+    left: 20rem;
     padding: 0 2rem;
     background-color: white;
     border: 3px solid black;
@@ -490,47 +471,27 @@ input {
     color:black;
     font-size:30px;
     line-height: 100px;
-    font-family: "Montserrat", sans-serif;
     font-size: 35px;
     font-weight: 600;
-    margin-bottom: 2rem;
     letter-spacing: 5px;
-}
-
-.posnet-img {
-    position: absolute;
-    top: 16.9rem;
-    right: 21rem;
-    padding-top: 1rem;
-    width: 170px;
-}
-
-.arrow-screen-3 {
-    width: 45px;
-    height: 45px;
-    background-color: black;
-    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
-    position: absolute;
-    top: 47%;
-    right: 2rem;
 }
 
 .error-img,
 .success-img {
-    width: 170px;
-    margin-left: 6.2rem;
+    width: 40px;
+    position: absolute;
+    top: 26.3rem;
+    left: 37rem;
 }
 
 .posnet-container {
+    width:220px;
+    height:340px;
     display: flex;
     flex-direction: column;
-    width:300px;
-    height:500px;
-    padding: 2rem 15px 15px 2rem;
-    background-color: #fbb034;
-    border-radius: 16px;
-    box-shadow: 15px 10px 0px 5px #00000033;
-    margin-top: 15.5rem;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 22rem;
 }
 
 .posnet-row {
@@ -542,17 +503,17 @@ input {
 }
 
 .display {
-    width: 94%;
+    width: 90%;
     height: 85%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 2px;
-    background-color: #363636;
+    border-radius: 10px;
+    background-image: linear-gradient(315deg, #f1323b 0%, #f55b5b 99%);
+    border: 3px solid black;
     color: white;
-    margin-bottom: 1rem;
-    box-shadow: 0px 0px 0px 10px #00000033;
-    font-size: 2rem;
+    margin-bottom: .5rem;
+    font-size: 1.5rem;
     letter-spacing: 1px;
 }
 
@@ -561,11 +522,11 @@ input {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     padding: 0 1rem;
     border-radius: 10px;
-    border: none;
+    border: 3px solid black;
     color: black;
     font-size: 1.5rem;
     font-weight: 600;
@@ -577,11 +538,11 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     padding: 0 1rem;
     cursor: pointer;
-    border: none;
+    border: 3px solid black;
     border-radius: 10px;
     color: black;
     font-size: 2rem;
@@ -605,23 +566,25 @@ input {
 }
 
 .simbolo-display {
-    font-size: 20px;
+    font-size: 16px;
     margin-right: 9rem;
     color: white;
     position: absolute;
-    top: 18.5rem;
-    left: 25rem;
+    top: 1.7rem;
+    left: 1rem;
 }
 
 .confirm-btn {
+    width: 130px;
+    height: 53px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 88%;
-    height: 57%;
-    margin-left: .3rem;
+    position: absolute;
+    bottom: 1.7rem;
+    left: 35rem;
     border-radius: 10px;
-    border: none;
+    border: 3px solid black;
     padding: 0 1rem;
     cursor: pointer;
     font-size: 1.2rem;
@@ -634,8 +597,8 @@ input {
     text-decoration: none;
 }
 
-.processing-text-personalizado {
-    width: 340px;
+.processing-textPersonalizado {
+    width: 300px;
     height: 90px;
     padding: 0 2rem;
     background-color: white;
@@ -645,56 +608,133 @@ input {
     color:black;
     line-height: 100px;
     font-family: "Montserrat", sans-serif;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 600;
-    margin-left: 3rem;
-    margin-bottom: 2rem;
     letter-spacing: 5px;
     position: absolute;
-    top: 70%;
-    right: 1%;
+    top: 84.8%;
+    right: 16%;
 }
 
-.success-img-personalizado,
-.error-img-personalizado {
-    width: 120px;
+.error-msg-personalizado {
     position: absolute;
-    top: 75%;
-    right: 12%;
-} 
+    top: 89.5%;
+    right: 16%;
+    display: block;
+    word-wrap: break-word;
+    text-align: center;
+    color: red;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: .5rem;
+    background-color: white;
+    border: 2px solid black;
+    width: 300px;
+    height: 55px;
+}
 
-#cardElementScreen3Personalizado {
+.success-msg-personalizado {
     position: absolute;
-    top: 9rem;
-    left: 32%;
-    width: 370px;
-    height: 100px;
+    top: 89.5%;
+    right: 16%;
+    display: block;
+    word-wrap: break-word;
+    text-align: center;
+    color: green;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: .5rem;
+    background-color: white;
+    border: 2px solid black;
+    width: 300px;
+    height: 55px;
+}
+
+
+.charge-info {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items:center;
+}
+
+.charge-info__header {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    border-radius: 35px;
-    background-image: linear-gradient(315deg, #27a770 0%, #a1e7c9 74%);
-    border: 3px solid black;
-    text-decoration: none;
-    color: black;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    justify-content: center;
+    width: 400px;
+    height: 100px;
 }
 
-.posnet-img-personalizado {
-    width: 250px;
+.charge-info__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #FFE143;
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+}
+
+.charge-info__subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#card-number {
+    padding-left: 2px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.movimientos-table {
+    margin-top: 4rem;
+    width: 100%;
+    height:100%;
+}
+
+table {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+
+table::before {
+    content: '';
+    display: block;
     position: absolute;
-    top: 18rem;
-    right: 3rem;
-}
-
-.arrow-screen-personalizado {
-    width: 45px;
-    height: 45px;
+    left: 0rem;
+    top: 0rem;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
     background-color: black;
-    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
-    position: absolute;
-    top: 13rem;
-    right: -20rem;
-    z-index: 100;
+    z-index: -1;
 }
+
+tr {
+    width: 100%;
+}
+
+th {
+    background-color: grey;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    height: 50px;
+    font-size: 1.4rem; 
+}
+
+td {
+    padding-left: 6.5rem;
+    font-size: 1.3rem; 
+    color: white;
+    font-weight: 500;
+    padding-bottom: .5rem;
+}
+
+
+
+
+
+

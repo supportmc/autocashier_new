@@ -68,7 +68,7 @@ def saveMoneyInDevice(event):
 def saveMoneyInProcess(event):
     try:
         conn=None
-        conn=sqlite3.connect(dbpath)
+        conn=sqlite3.connect(dbpath+'Autocashier.db')
     except Exception as e:
         print(e)
         return False
@@ -76,18 +76,21 @@ def saveMoneyInProcess(event):
         if conn:
             try:
                 c=conn.cursor()
-                c.execute(event)
-                conn.comit()
+                v=event
+                sql=("insert into TBL_Money_In_Process (ID_History_Event,Process,Pay_Method,Card,Card_Number,Total_amount_local_currency) values('%s','%s','%s','%s','%s')")%(v['Id_History_Event'],v['Process'],v['Pay_Methods'],v['Currency'],v['Total_amount_local_currency'])
+                c.execute(sql)
+                conn.commit()
                 c.close()
                 conn.close()
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 return False
 
 def saveSpecialOperation(event):
     try:
         conn=None
-        conn=sqlite3.connect(dbpath)
+        conn=sqlite3.connect(dbpath+'Autocashier.db')
     except Exception as e:
         print(e)
         return False
@@ -95,18 +98,21 @@ def saveSpecialOperation(event):
         if conn:
             try:
                 c=conn.cursor()
-                c.execute(event)
-                conn.comit()
+                v=event
+                sql=("insert into TBL_Money_In_Device (ID_History_Event,Device,Channel_Device,Currency,Total_amount_local_currency) values('%s','%s','%s','%s','%s')")%(v['Id_History_Event'],v['Device'],v['Channel'],v['Currency'],v['Total_amount_local_currency'])
+                c.execute(sql)
+                conn.commit()
                 c.close()
                 conn.close()
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 return False
 
 def saveCloseTransaction(event):
     try:
         conn=None
-        conn=sqlite3.connect(dbpath)
+        conn=sqlite3.connect(dbpath+'Autocashier.db')
     except Exception as e:
         print(e)
         return False
@@ -114,14 +120,18 @@ def saveCloseTransaction(event):
         if conn:
             try:
                 c=conn.cursor()
-                c.execute(event)
-                conn.comit()
+                v=event
+                sql=("insert into TBL_Money_In_Device (ID_History_Event,Device,Channel_Device,Currency,Total_amount_local_currency) values('%s','%s','%s','%s','%s')")%(v['Id_History_Event'],v['Device'],v['Channel'],v['Currency'],v['Total_amount_local_currency'])
+                c.execute(sql)
+                conn.commit()
                 c.close()
                 conn.close()
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 return False
             #resuelvo
+
 
 #events:
 #Start
@@ -134,9 +144,9 @@ def saveCloseTransaction(event):
 
 event='{"tipo":"Money","timestamp":"'+str(datetime.now())+'"}'
 #device example
-eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_local_currency":"2.0"}'
+#eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_local_currency":"2.0"}'
 #process
+eventProcess='{"Process":"Datacap","Pay_Method":"Debit","Card":"Visa","Card_Number":"1234","Total_amount_Local_Currency":10}'
 #eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
 #eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
-#eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
-saveHistoryEvent(event,eventDevice,'device')
+saveHistoryEvent(event,eventProcess,'process')

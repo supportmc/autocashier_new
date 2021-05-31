@@ -56,6 +56,63 @@ entro=False
 x=1
 entroProbador=False
 
+
+from pynput import keyboard
+from datetime import timedelta
+from datetime import datetime
+import threading
+from time import sleep
+entrada=''
+t=datetime.now()
+def on_press(key):
+    try:
+        print(key.char)
+    except:
+        a=1
+
+
+
+def TiempoEntrada():
+    global t
+    global entrada
+    while 1:
+        if t < datetime.now() and entrada !='':
+            print('llego '+str(entrada))
+            entrada=''
+        sleep(0.5)
+    
+    
+
+
+def on_release(key):
+    global entrada
+    global t
+    try:
+        if entrada=='':
+            t=datetime.now() + timedelta(seconds=1)
+        if t> datetime.now():
+            entrada+=key.char
+        
+            
+
+    except Exception as e:
+        #print(e)
+        a=1
+
+def EscuchoTeclas():
+    while 1:
+        try:
+            with keyboard.Listener(
+            #on_press=on_press,
+            on_release=on_release)as listener:
+                listener.join()
+        except:
+            continue
+
+th=threading.Thread(target=TiempoEntrada).start()
+tl=threading.Thread(target=EscuchoTeclas).start()
+
+
 def GetVersion():
     return(str(Version))
 
@@ -276,3 +333,6 @@ if __name__ == '__main__':
     a=1
 #threading.Thread(target=CambioVentana.start()
 #creoVentana()
+
+
+
