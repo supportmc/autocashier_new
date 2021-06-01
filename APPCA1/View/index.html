@@ -8,9 +8,10 @@
     <title>Front Cajero</title>
   </head>
   <body>
+    <div id="finTransaccion" class="finTransaccionInicio"></div>
+      <img id="finTransaccionLogo" class="finTransaccionLogoInicio" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUwNy4yIDUwNy4yIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MDcuMiA1MDcuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojMzJCQTdDOyIgY3g9IjI1My42IiBjeT0iMjUzLjYiIHI9IjI1My42Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojMEFBMDZFOyIgZD0iTTE4OC44LDM2OGwxMzAuNCwxMzAuNGMxMDgtMjguOCwxODgtMTI3LjIsMTg4LTI0NC44YzAtMi40LDAtNC44LDAtNy4yTDQwNC44LDE1MkwxODguOCwzNjh6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTI2MCwzMTAuNGMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMjMuMiwyMy4yYy0xMS4yLDExLjItMzAuNCwxMS4yLTQxLjYsMEw5My42LDI3Mi44DQoJCWMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZsMjMuMi0yMy4yYzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwTDI2MCwzMTAuNHoiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTM0OC44LDEzMy42YzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwbDIzLjIsMjMuMmMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMTc2LDE3NS4yDQoJCWMtMTEuMiwxMS4yLTMwLjQsMTEuMi00MS42LDBsLTIzLjItMjMuMmMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZMMzQ4LjgsMTMzLjZ6Ii8+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" />
       <img src="assets/Nuevo logo LEPARK-01.png" class="company-logo"/>
       <!-- SCREEN 1 -->
-      <input type="text" id="input" onkeypress="clickPress(event)">
         <a
           href="?mercadoPagoBtnActivado=true"
           id="mercado-pago"
@@ -78,7 +79,6 @@
         />
         <span class="action__item__arrow"></span>
       </div>
-
       <!-- SCREEN 2 -->
       <div id="balance2" class="balance2">
         <small id="simbolo2"></small>
@@ -215,67 +215,14 @@
     <!--CHARGE INFORMATION SCREEN-->
       <div class="charge-info" id="chargeInfo">
         <div class="charge-info__header">
-      <div class="charge-info__title">Charge Information</div>
-      <div class="charge-info__subtitle">Card number: 12454254345<span id="card-number"></span></div>
-        <span class="charge-info__subtitle--title"></span>
-        <span class="charge-info__subtitle--data" id="card-number"></span>
+          <div class="charge-info__title">Charge Information</div>
+          <div class="charge-info__subtitle">Card number: 12454254345<span id="card-number"></span></div>
       </div> 
-       <div class="movimientos-table" id="movimientos-table">
-        <table>
-          <tr>
-            <th>Date</th>    
-            <th>System</th>       
-            <th>Amount</th>       
-          </tr>
-        
-          <tr>      
-            <td>5/27/2021 07:05:02</td>
-            <td>Magnetic Cash</td>
-            <td>$ 3000</td>
-        
-          </tr>
-        
-          <tr>
-            <td>5/27/2021 08:44:18</td>
-            <td>Magnetic Cash</td>
-            <td>$ 1200</td>
-        
-          </tr>
-        
-          <tr>
-            <td>5/14/2021 07:05:02</td>
-            <td>Magnetic Cash</td>
-            <td>$ 302</td>
-          </tr>
-
-          <tr>
-            <td>14/20/2021 16:34:12</td>
-            <td>Magnetic Cash</td>
-            <td>$ 20</td>
-          </tr>
-          <tr>
-            <td>14/20/2021 16:34:12</td>
-            <td>Magnetic Cash</td>
-            <td>$ 20</td>
-          </tr>
-          <tr>
-            <td>14/20/2021 16:34:12</td>
-            <td>Magnetic Cash</td>
-            <td>$ 20</td>
-          </tr>
-          <tr>
-            <td>14/20/2021 16:34:12</td>
-            <td>Magnetic Cash</td>
-            <td>$ 20</td>
-          </tr>
-        
-        </table>
-      </div> 
-
+       <div class="movimientos-table" id="chargeInfo"></div> 
      </div> 
     </div> 
-    <script src="index.js" type="text/javascript">
-    </script>
-    
+  </div>
+  
+    <script src="index.js" type="text/javascript"></script>
   </body>
 </html>

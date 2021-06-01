@@ -20,6 +20,7 @@ import Channel_File
 #VARIABLES:
 SALDO=0
 LeerFiat=False
+Ingreso=False
 
 def Saldo():
     a=1
@@ -49,6 +50,7 @@ def LeerIncompleto():
 
 def LeerIngresoFiat():
     global LeerFiat
+    global Ingreso
     x=0
     if Channel_File.JsonChannelFile=='':
         Channel_File.GetJsonChannel()
@@ -57,7 +59,7 @@ def LeerIngresoFiat():
     bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
     coinEnabled= data["Peripherals"][0]["coinEnabled"]
     while BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
-        sleep(0.01)
+        sleep(0.001)
         x+=1
     while LeerFiat:
         
@@ -92,13 +94,14 @@ def LeerIngresoFiat():
                 print('Total ingresado '+ str(SALDO))
                 BoardModule.device_board=0
                 BoardModule.channel_board=0
+                Ingreso=True
                 break
 
 
             
             #agregar para controlar desde config o app
             
-        sleep(0.2)
+        sleep(0.1)
 
 #LeerFiat=True
 #LeerIngresoFiat()

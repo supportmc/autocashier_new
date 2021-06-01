@@ -36,11 +36,25 @@ def ReadSerie():
     RespuestaPuerto=''
     abrio=False
     r=True
-
+    
+    qq=b''
     while True:
         try:
-            qq=serie.read(1024) #aca lee del puerto
+            acum=b''
+            while 1:
+                qq=serie.read(1) #aca lee del puerto
+                if qq:
+                    acum+=qq
+                else:
+                    break
+            qq=acum
+
+
+
+
+            
             abrio=True
+            
             print(qq)
             #print(str(len(qq)))
             if len(qq)==1:
@@ -88,7 +102,7 @@ def ReadSerie():
         except Exception as e:
             puerto=ports.GetPort('Board')
             print(e)
-            sleep(2)
+            sleep(1)
             channel_board=0
             device_board=0
             serie.close()

@@ -32,6 +32,7 @@ import SetupM
 #import sview
 #import SetupM
 #import start
+Tarjeta=''
 ruta=''
 nfc=''
 mercadoPago=''
@@ -75,11 +76,14 @@ def on_press(key):
 def TiempoEntrada():
     global t
     global entrada
+    global Tarjeta
     while 1:
         if t < datetime.now() and entrada !='':
-            print('llego '+str(entrada))
+            Tarjeta=entrada[:-1]
+            functions.LeerFiat=False
+            print('llego '+str(Tarjeta))
             entrada=''
-        sleep(0.5)
+        sleep(0.1)
     
     
 
@@ -158,7 +162,9 @@ def creoVentana():
     #webview.windows[0].load_url('setup.html') 
     #Paso todo los parametros a la vista
     
-    ruta=rutaVista+'index.html'
+    VerificoHabilitaciones()
+
+    ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
     #ruta=mdir+'/'+ruta
     entro=False
     window = webview.create_window('Get current URL1', ruta,fullscreen=True)
@@ -259,16 +265,25 @@ def VerificoHabilitaciones():
     #data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
     #data["Peripherals"][0]["printer_Enabled"]=miboleano(f.args['printer'])
 
-def EventosPlaca():
+def Eventos():
     global ruta
+    global Tarjeta
     #muestra boton tarjeta nueva si esta hab y alcanza
     if functions.SALDO>=newCardPrice and newCardNfc=='true' or functions.SALDO>newCardPrice and newCardMagnetic=='true':
         newCard='True'
     else:
         newCard=''
-
-    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'#'C:\\Users\\LP\\Documents\\Interface_2020\\CajeroNuevo\\setup.html?t='+str(t)+'&p='+str(p)+'&r='+str(r)+'&spacs='+str(spacs)+'&appacs='+str(appacs)+'&vacs='+str(vacs)+'&spacv='+str(spacv)+'&appacv='+str(appacv)+'&vacv='+str(vacv)+'&c='+str(customer)
-    CambioVentana()
+    if Tarjeta:
+        functions.SALDO=0
+        Tarjeta=''
+        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&finTransaccion=true'
+        CambioVentana()
+        sleep(2)
+        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+        CambioVentana()
+    elif functions.Ingreso:
+        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+        CambioVentana()
     functions.LeerFiat=True
     functions.LeerIngresoFiat()
     functions.LeerFiat=False
@@ -280,7 +295,7 @@ def imprime():
     global entro
     global entroProbador
     global ruta
-    VerificoHabilitaciones()
+    
     while 1:
         try:
             
@@ -288,7 +303,13 @@ def imprime():
                 CloseApp()
                 break
 
-            EventosPlaca()#eventos placa
+            #Eventos placa
+            Eventos()#eventos placa
+            #Evento Readers
+            
+
+
+            
                       
 
             page=webview.windows[0].get_current_url()

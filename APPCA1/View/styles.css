@@ -9,19 +9,58 @@ body {
     max-height: 768px;
     background-image: url('assets/background-cajero.jpg');
     background-size: cover;
+    display: block;
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+}
+
+.finTransaccionInicio {
+    display: block;
+    position: absolute;
+    top:  0;
+    left: 0;
+    width: 1024px;
+    height: 0px;
+    z-index: 100;
+    transition: .5s ease-in-out;
+    -webkit-transition: .5s ease-in-out; 
+}
+
+.finTransaccionFinal {
+    position: absolute;
+    top:  0;
+    left: 0;
+    width: 1024px;
+    height: 768px; 
+    z-index: 100;
+    background-color: #00a53c;
+}
+
+.finTransaccionLogoInicio {
+    position: absolute;
+    top: 40rem;
+    left:42%;
+    width: 185px; 
+    opacity: 0;
+    transition: .5s ease-in-out;
+    -webkit-transition: .5s ease-in-out; 
+    transition-delay: .5s;
+    z-index: 100;
+}
+
+.finTransaccionLogoFinal {
+    position: absolute;
+    top: 19rem;
+    left:42%;
+    width: 185px; 
+    opacity: 1;
+    z-index: 1000;
+    color: black;
+    z-index: 100;
 }
 
 /*  SCREEN 1 */
-input {
-    background-color: transparent;
-    border: none;
-    position: absolute;
-    top: 0;
-    left:0;
-    cursor:none;
-    color: transparent;
-    outline: none;
-}
 
 .company-logo {
     width: 250px;

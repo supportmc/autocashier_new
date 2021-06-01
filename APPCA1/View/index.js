@@ -24,23 +24,12 @@ if ( (!parseURLParams('saldo')) || (!parseURLParams('simbolo')) ) {
     document.getElementById('simbolo').innerHTML = parseURLParams('simbolo');
 };
 
-function clickPress(event) {
-    if (event.keyCode == 13) {
-        var cardNumber = document.getElementById('input').value;
-        if ( cardNumber.length > 0 ) {
-        location.href = window.location.href + '&cardNumber=' + cardNumber;
-        }
+window.onload = function() {
+    if ( (parseURLParams('finTransaccion'))  ) {
+        document.getElementById('finTransaccion').className += ' finTransaccionFinal';
+        document.getElementById('finTransaccionLogo').className += ' finTransaccionLogoFinal';
     }
 }
-
-document.getElementById('input').onblur = function (event) { 
-    var blurEl = this; 
-    setTimeout(function() {
-        blurEl.focus()
-    }, 5000);
-}
-
-
 
 // Pantalla 2 
 
@@ -183,19 +172,8 @@ if (!parseURLParams('errorMsg')) {
 // CHARGE INFORMATION SCREEN
 
  if (!parseURLParams('cardNumber')) document.getElementById('card-number').style.display = 'none'; 
- if (!parseURLParams('chargeInfo')) document.getElementById('chargeInfo').style.display = 'none'; 
- 
- 
-
-/* 
- function Foco(){
-    document.getElementById('input').focus();
+ if (!parseURLParams('chargeInfo')) {
+    document.getElementById('chargeInfo').style.display = 'none';
+ } else {
+     document.getElementById('chargeInfo').innerHTML = parseURLParams('saldoUpdated');
  }
-
- setTimeout(function() {
-     Foco()
-}, 5000); */
-
- 
-
- 
