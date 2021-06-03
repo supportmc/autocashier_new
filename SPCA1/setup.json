@@ -3,11 +3,11 @@
     "Enabled": 0,
     "Type": "Pendrive",
     "Customer": "Lepark_5400001",
-    "Total_Start": 402,
-    "Parcial_Start": 122,
-    "SPAC_Start": 402,
-    "APPAC_Start": 402,
-    "VAC_Start": 402,
+    "Total_Start": 457,
+    "Parcial_Start": 177,
+    "SPAC_Start": 457,
+    "APPAC_Start": 457,
+    "VAC_Start": 457,
     "LastReset": "28/12/20 11:02:23",
     "Peripherals": [
         {

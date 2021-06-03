@@ -1,0 +1,9 @@
+{
+    
+    "exchange":[
+        {"currency":"ARS","NUM_ISO":"032","Exchange":1,"Local_Currency":true},
+        {"currency":"USD","NUM_ISO":"840","Exchange":185,"Local_Currency":false}
+    ]
+        
+}
+

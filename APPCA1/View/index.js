@@ -24,10 +24,24 @@ if ( (!parseURLParams('saldo')) || (!parseURLParams('simbolo')) ) {
     document.getElementById('simbolo').innerHTML = parseURLParams('simbolo');
 };
 
+if (!parseURLParams('finTransaccion')) {
+    document.getElementById('finTransaccion').style.display = 'none';
+    document.getElementById('finTransaccionLogo').style.display = 'none';
+}
+
 window.onload = function() {
     if ( (parseURLParams('finTransaccion'))  ) {
         document.getElementById('finTransaccion').className += ' finTransaccionFinal';
         document.getElementById('finTransaccionLogo').className += ' finTransaccionLogoFinal';
+        setTimeout(() => {
+            var searchParams = window.location.search;
+            var URL = window.location.pathname;
+            console.log(window.location)
+            console.log(URL) 
+            var newStr = searchParams.split('&fin')
+            var newsearchParams = newStr[0];
+            window.location.href = URL + '?' + newsearchParams;  
+        }, 2500);
     }
 }
 
@@ -45,32 +59,32 @@ if (!parseURLParams('screen2')) {
     document.getElementById('card2').style.display = 'none' 
 }
 
-if (!parseURLParams('valueMonto1') || !parseURLParams('valueSimbolo1') ) {
+if (!parseURLParams('valueMonto1') ) {
     document.getElementById('value1').style.display = 'none'
 } else {
     document.getElementById('valueMonto1').innerHTML = parseURLParams('valueMonto1');
-    document.getElementById('valueSimbolo1').innerHTML = parseURLParams('valueSimbolo1');
+    document.getElementById('valueSimbolo1').innerHTML = parseURLParams('simbolo2');
 }
 
-if (!parseURLParams('valueMonto2') || !parseURLParams('valueSimbolo2') ) {
+if (!parseURLParams('valueMonto2') ) {
     document.getElementById('value2').style.display = 'none'
 } else {
     document.getElementById('valueMonto2').innerHTML = parseURLParams('valueMonto2');
-    document.getElementById('valueSimbolo2').innerHTML = parseURLParams('valueSimbolo2');
+    document.getElementById('valueSimbolo2').innerHTML = parseURLParams('simbolo2');
 }
 
-if (!parseURLParams('valueMonto3') || !parseURLParams('valueSimbolo3') ) {
+if (!parseURLParams('valueMonto3') ) {
     document.getElementById('value3').style.display = 'none'
 } else {
     document.getElementById('valueMonto3').innerHTML = parseURLParams('valueMonto3');
-    document.getElementById('valueSimbolo3').innerHTML = parseURLParams('valueSimbolo3');
+    document.getElementById('valueSimbolo3').innerHTML = parseURLParams('simbolo2');
 }
 
-if (!parseURLParams('valueMonto4') || !parseURLParams('valueSimbolo4') ) {
+if (!parseURLParams('valueMonto4') ) {
     document.getElementById('value4').style.display = 'none'
 } else {
     document.getElementById('valueMonto4').innerHTML = parseURLParams('valueMonto4');
-    document.getElementById('valueSimbolo4').innerHTML = parseURLParams('valueSimbolo4');
+    document.getElementById('valueSimbolo4').innerHTML = parseURLParams('simbolo2');
 }
 
 if (!parseURLParams('valuePersonalizado')) document.getElementById('valuePersonalizado').style.display = 'none'
@@ -175,5 +189,5 @@ if (!parseURLParams('errorMsg')) {
  if (!parseURLParams('chargeInfo')) {
     document.getElementById('chargeInfo').style.display = 'none';
  } else {
-     document.getElementById('chargeInfo').innerHTML = parseURLParams('saldoUpdated');
+     document.getElementById('chargeInfo').innerHTML = parseURLParams('chargeInfo');
  }

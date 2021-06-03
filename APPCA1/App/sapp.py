@@ -11,9 +11,15 @@ data=pointer.CheckPointer()
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 import sview
 import functions
+import database
 from time import sleep
+from datetime import datetime
 import threading
 #------
+sys.path.append("/home/pi/Autocashier/"+data['SPCA'])
+#import SetupM
+import Exchange_File
+
 
 def GetVersion():
     return(str(Version))
@@ -24,8 +30,16 @@ def GetVersion():
 
 
 def Start():
-    #todo
-    #threading.Thread(target=sview.creoVentana).start()
+    
+    #read current Divise
+    if Exchange_File.ExchangeFile=='':
+        Exchange_File.GetExchange()
+    
+    #save event in database
+    event='{"tipo":"Special","timestamp":"'+str(datetime.now())+'"}'
+    eventSpecial='{"App_Version_Name":"","App_Version_Number":"'+GetVersion()+'","Event":"Open_App","Loc_Currency_Type":'+str(Exchange_File.DivisaActual['currency'])+'}'#eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
+    database.saveHistoryEvent(event,eventSpecial,'special')
+
     sview.creoVentana()
     """ while 1:
 

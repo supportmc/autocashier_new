@@ -19,25 +19,31 @@ sys.path.append(rutaPrincipal)
 #tercer modificaciones de app
 Version='001'
 
-JsonChannelFile=""
+ExchangeFile=""
+DivisaActual={}
 
+def GetExchange():
+    global ExchangeFile
+    global DivisaActual
+    if ExchangeFile=='':
+        ExchangeFile=Read_Exchange()
+    for divisa in ExchangeFile['exchange']:
+        if divisa['Local_Currency']:
+            DivisaActual={"currency":'"'+ divisa['currency'] +'"',"NUM_ISO":'"'+ divisa['NUM_ISO'] +'"',"Exchange": divisa['Exchange'] ,"Local_Currency":divisa['Local_Currency']}
+    return ExchangeFile
 
-def GetJsonChannel():
-    global JsonChannelFile
-    if JsonChannelFile=='':
-        JsonChannelFile=Read_ChannelJson()
-    return JsonChannelFile
-
-def Read_ChannelJson():
-    global JsonChannelFile
+def Read_Exchange():
+    global ExchangeFile
     try:
-        with open(rutaPrincipal+'channel.json') as json_file:
-            JsonChannelFile = json.loads(json_file.read())        
+        with open(rutaPrincipal+'exchange.json') as json_file:
+            ExchangeFile = json.loads(json_file.read())        
         #print(mijson)
-        return JsonChannelFile
+        return ExchangeFile
     #Total_Start=mijson["Total_Start"]
 
     except Exception as error:
         print(error)
         return('')
+#canales=GetExchangeChannel()
 
+#GetExchange()

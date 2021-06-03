@@ -10,6 +10,7 @@ from time import sleep
 import threading
 
 
+
 #import App
 #import view
 
@@ -21,6 +22,7 @@ import pointer
 data=pointer.CheckPointer()
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/App/') #importa aplicacion y vista actual
 import functions
+import database
 rutaVista='/home/pi/Autocashier/'+str(data['APPCA'])+'/View/'
 
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
@@ -28,6 +30,7 @@ sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 sys.path.append("/home/pi/Autocashier/"+data['SPCA'])
 import BoardModule
 import SetupM
+import QRReaderM
 #import sapp
 #import sview
 #import SetupM
@@ -48,6 +51,9 @@ bill1=''
 bill2=''
 coin=''
 newCardPrice=0
+
+LectorTeclado=False
+LectorscanApp=False
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -80,6 +86,10 @@ def TiempoEntrada():
     while 1:
         if t < datetime.now() and entrada !='':
             Tarjeta=entrada[:-1]
+            functions.LeerFiat=False
+            print('llego '+str(Tarjeta))
+            entrada=''
+        if QRReaderM.TarjetaQr:
             functions.LeerFiat=False
             print('llego '+str(Tarjeta))
             entrada=''
@@ -265,6 +275,39 @@ def VerificoHabilitaciones():
     #data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
     #data["Peripherals"][0]["printer_Enabled"]=miboleano(f.args['printer'])
 
+def FinalizaTransaccion():
+    global Tarjeta
+    global LectorTeclado
+
+    if Tarjeta:
+        if swipeCard and nfc:
+            vr='nfc/swipe'
+        elif swipeCard:
+            vr='swipe'
+        elif nfc:
+            vr='nfc'
+        vmpl='mpl'
+        tcard=Tarjeta
+    elif scanApp and QRReaderM.TarjetaQr:
+        vr='QR'
+        vmpl='vmpl'
+        
+        tcard=QRReaderM.TarjetaQr
+        QRReaderM.TarjetaQr=''
+
+        
+
+
+
+    #Close_Transaction
+    event='{"tipo":"Close","timestamp":"'+str(datetime.now())+'"}'
+    eventClose='{"Reader":"'+ str(vr) +'","MPL":"'+ str(vmpl)+'","MPL_Number":"'+str(tcard)+'","System":"Autocashier","Total_amount_local_currency":"'+str(functions.SALDO)+'"}'
+    database.saveHistoryEvent(event,eventClose,'close')
+    
+    functions.SALDO=0
+    Tarjeta=''
+    LectorTeclado=False
+
 def Eventos():
     global ruta
     global Tarjeta
@@ -273,19 +316,42 @@ def Eventos():
         newCard='True'
     else:
         newCard=''
-    if Tarjeta:
-        functions.SALDO=0
+    
+    
+
+    if Tarjeta and functions.SALDO==0:
         Tarjeta=''
-        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&finTransaccion=true'
+    if Tarjeta and functions.SALDO>0 or QRReaderM.TarjetaQr and functions.SALDO>0:
+        
+
+        FinalizaTransaccion()
+        
+        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$&finTransaccion=true'
         CambioVentana()
-        sleep(2)
-        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
-        CambioVentana()
+        BoardModule.ApagarLucesLectora()
+        
+        #sleep(4)
+        #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+        #CambioVentana()
+        functions.LeerFiat=True
+
+        
     elif functions.Ingreso:
         ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
         CambioVentana()
+    
+    if functions.ReaderActivos:
+        BoardModule.EncenderLucesLectora()
+        functions.ReaderActivos=False
+
     functions.LeerFiat=True
-    functions.LeerIngresoFiat()
+    vif=functions.LeerIngresoFiat()
+    if vif:
+        #device example
+        event='{"tipo":"Device","timestamp":"'+str(datetime.now())+'"}'
+        eventDevice='{"Device":"'+vif['Device']+'","Channel":"'+vif['Channel']+'","Currency":"'+ vif['Currency'] +'","Total_amount_local_currency":"'+vif['Total_amount_local_currency']+'"}'
+        database.saveHistoryEvent(event,eventDevice,'device')
+
     functions.LeerFiat=False
     
 
@@ -314,6 +380,12 @@ def imprime():
 
             page=webview.windows[0].get_current_url()
             #print(page[-10:])
+            page=str(page)
+            if page.find('btnCardActivado=true')>-1:
+                ruta=rutaVista+'index.html?&saldo2='+ str(functions.SALDO) +'&simbolo2=$&valueMonto1=10&&valueMonto1=50&&valueMonto1=100&&valueMonto1=1000&valuePersonalizado=1&screen2=1'
+                
+                webview.windows[0].load_url(ruta)
+                
             
             """ if  page[-9:]=='exit.html' and entro==False or BoardModule.PuertaAbierta==False:#webview.windows[0].get_current_url()=='file:///C:/Users/LP/Documents/Interface_2020/CajeroNuevo/exit':
                 entro=True

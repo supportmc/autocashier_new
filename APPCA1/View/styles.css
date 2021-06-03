@@ -23,18 +23,11 @@ body {
     width: 1024px;
     height: 0px;
     z-index: 100;
-    transition: .5s ease-in-out;
-    -webkit-transition: .5s ease-in-out; 
 }
 
 .finTransaccionFinal {
-    position: absolute;
-    top:  0;
-    left: 0;
-    width: 1024px;
-    height: 768px; 
-    z-index: 100;
-    background-color: #00a53c;
+    animation-name: animarFondo;
+    animation-duration: 2.5s;
 }
 
 .finTransaccionLogoInicio {
@@ -42,22 +35,68 @@ body {
     top: 40rem;
     left:42%;
     width: 185px; 
-    opacity: 0;
-    transition: .5s ease-in-out;
-    -webkit-transition: .5s ease-in-out; 
-    transition-delay: .5s;
     z-index: 100;
+    opacity: 0;
 }
 
 .finTransaccionLogoFinal {
-    position: absolute;
-    top: 19rem;
-    left:42%;
-    width: 185px; 
-    opacity: 1;
-    z-index: 1000;
-    color: black;
-    z-index: 100;
+    animation-name: animarLogo;
+    animation-duration: 2.5s;
+}
+
+@keyframes animarLogo {
+    0% {
+        position: absolute;
+        top: 40rem;
+        left:42%;
+        width: 185px; 
+        z-index: 100;
+    }
+    50% {
+        position: absolute;
+        top: 19rem;
+        left:42%;
+        width: 185px; 
+        opacity: 1;
+        z-index: 1000;
+        color: black;
+        z-index: 100;
+    }
+    100% {
+        position: absolute;
+        top: 40rem;
+        left: 42%;
+        width: 185px; 
+        z-index: 100;
+    }
+}
+
+@keyframes animarFondo {
+    0% {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1024px;
+        height: 0px;
+        z-index: 100;
+    }
+    50% {
+        position: absolute;
+        top:  0;
+        left: 0;
+        width: 1024px;
+        height: 768px; 
+        z-index: 100;
+        background-color: #00a53c;
+    }
+    100% {
+        position: absolute;
+        bottom:  0;
+        right: 0;
+        width: 1024px;
+        height: 0px;
+        z-index: 100;
+    }
 }
 
 /*  SCREEN 1 */
@@ -368,7 +407,7 @@ body {
 
 .item1 {
     position: absolute;
-    bottom: 10rem;
+    top: 27rem;
     left: 2rem; 
 }
 
@@ -389,7 +428,7 @@ body {
 
 .item2 {
     position: absolute;
-    bottom: 10rem;
+    top: 27rem;
     left: 14.5rem; 
 }
 
@@ -410,7 +449,7 @@ body {
 
 .item3 {
     position: absolute;
-    bottom: 10rem;
+    top: 27rem;
     left: 27rem; 
 }
 
@@ -429,7 +468,7 @@ body {
 
 .item4 {
     position: absolute;
-    bottom: 10rem;
+    top: 27rem;
     right: 14.5rem; 
 }
 
@@ -450,7 +489,7 @@ body {
 
 .itemPersonalizado {
     position: absolute;
-    bottom: 10rem;
+    top: 27rem;
     right: 2rem; 
 }
 
@@ -492,7 +531,7 @@ body {
     background-color: black;
     clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
     position: absolute;
-    top: 60%;
+    top: 29rem;
     right: 2rem;
 }
 
@@ -529,7 +568,7 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: 1.5rem;
+    top: 25rem;
     left: 22rem;
 }
 
@@ -651,7 +690,7 @@ body {
     font-weight: 600;
     letter-spacing: 5px;
     position: absolute;
-    top: 84.8%;
+    top: 40.5rem;
     right: 16%;
 }
 
