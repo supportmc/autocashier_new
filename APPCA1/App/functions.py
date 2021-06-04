@@ -59,7 +59,7 @@ def ResetearSaldo():
 def LeerIncompleto():
     a=1
 
-def LeerIngresoFiat():
+def LeerIngresoFiat(bill1Enabled,bill2Enabled,coinEnabled):
     global LeerFiat
     global Ingreso
     
@@ -69,14 +69,7 @@ def LeerIngresoFiat():
     if Exchange_File.ExchangeFile=='':
         Exchange_File.GetExchange()
 
-    data=SetupM.GetJsonSetup()
-    bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
-    bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
-    coinEnabled= data["Peripherals"][0]["coinEnabled"]
-    if SALDO==0:
-        while BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
-            sleep(0.001)
-            x+=1
+    
 
     to=datetime.now()+timedelta(seconds=1)
     while LeerFiat and to > datetime.now():

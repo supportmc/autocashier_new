@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="styles.css" />
     <title>Front Cajero</title>
   </head>
@@ -22,7 +22,6 @@
         </a>
 
         <a
-          href="?insertCashBtnActivado=true"
           id="insert-cash"
           class="insertCash main-button"
         >
@@ -79,13 +78,15 @@
         />
         <span class="action__item__arrow"></span>
       </div>
+      <!-- SPINNER -->
+        <div class="spinner" id="spinner"></div>
       <!-- SCREEN 2 -->
       <div id="balance2" class="balance2">
         <small id="simbolo2"></small>
         <span id="saldo2"></span>
       </div>
 
-       <a class="back-btn" href="?backToScreen1=true" id="backToScreen1">
+       <a class="back-btn" onclick="backToPreviousPage()" id="backToScreen1">
         <span class="back__text">
           Back
         </span>
@@ -97,28 +98,28 @@
         <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE4LjEuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNjExLjk5NiA2MTEuOTk2IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA2MTEuOTk2IDYxMS45OTY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxnPg0KCQk8cGF0aCBkPSJNNTg4LjYzLDExMy4xOTNMMjEzLjgxMiwzMy44NzFjLTE1Ljg1OC0zLjM1NS0zMS41NzYsNi44NzYtMzQuOTMxLDIyLjczNGwtNy4xMjEsNDUuNzYybDQzMi40NzcsOTEuNTE5bDcuMTIxLTQ1Ljc2Mg0KCQkJQzYxNC43MTMsMTMyLjI3Miw2MDQuNDg4LDExNi41NDksNTg4LjYzLDExMy4xOTN6Ii8+DQoJCTxwYXRoIGQ9Ik00MzEuMDA5LDIwMy41OTFjLTQuMzc4LTE1Ljc2Ni0yMC44NTQtMjUuMDg1LTM2LjYxNS0yMC43MTRMMzIzLjI0LDIwMi42M2wtMTY3Ljc0Mi0zNS41bC0xOC40NDgsODcuMTY1TDIxLjc4NiwyODYuMjg3DQoJCQljLTE1Ljc2LDQuMzcyLTI1LjA3OSwyMC44NDgtMjAuNzA4LDM2LjYwOWw2NC45NTgsMjM0LjA3OGM0LjM3OCwxNS43NiwyMC44NTUsMjUuMDg1LDM2LjYxNSwyMC43MDhsMzcyLjYwOC0xMDMuNDAzDQoJCQljMTUuNzYtNC4zNzgsMjUuMDc5LTIwLjg0OCwyMC43MDgtMzYuNjE1bC0xMS4xNS00MC4xODRsNDEuNzg5LDguODM1YzE1Ljg1OCwzLjM2MSwzMS41NzYtNi44NywzNC45MzEtMjIuNzI4bDI2LjQzOS0xMjQuOTM3DQoJCQlMNDM3LjQ1LDIyNi43OTdMNDMxLjAwOSwyMDMuNTkxeiBNNDc0LjA0LDMyMi41NTlsOS4yMTUtNDMuNTUyYzEuMzg0LTYuNTIxLDcuODUtMTAuNzI3LDE0LjM3LTkuMzVsNDMuNTUyLDkuMjIxDQoJCQljNi41MjcsMS4zODQsMTAuNzMzLDcuODQzLDkuMzU2LDE0LjM3bC05LjIxNSw0My41NTJjLTEuMzg0LDYuNTIxLTcuODQ5LDEwLjczMy0xNC4zNyw5LjM1bC00My41NTItOS4yMTUNCgkJCUM0NzYuODYzLDMzNS41NDYsNDcyLjY1NiwzMjkuMDgsNDc0LjA0LDMyMi41NTl6IE0yOC4yNywzMDkuNjQ2bDEwMy4xMTUtMjguNjA2bDI0My4yOTktNjcuNTE3bDI2LjE4MS03LjI3NA0KCQkJYzAuNDc4LTAuMTI5LDAuOTU1LTAuMTksMS40MjEtMC4xOWMyLjEsMCw0LjYxMSwxLjM3OCw1LjM0NSw0LjAxN2wzLjA3NCwxMS4wN2w5LjYzMSwzNC43MDRMMzcuMTQ4LDM2Mi4xODZsLTEyLjcwNS00NS43NjgNCgkJCUMyMy42NDcsMzEzLjU0NiwyNS4zOTksMzEwLjQ0MiwyOC4yNywzMDkuNjQ2eiBNNDcyLjYwMSw0NDQuMTQxYzAuNDksMS43NzYtMC4wMjQsMy4yNDUtMC41NDUsNC4xNjQNCgkJCWMtMC41MTQsMC45MTgtMS41MDYsMi4xMTktMy4yODIsMi42MDhMOTYuMTczLDU1NC4zMTZjLTAuNDcxLDAuMTI5LTAuOTU1LDAuMTk2LTEuNDIxLDAuMTk2Yy0yLjEsMC00LjYxMS0xLjM4NC01LjM0NS00LjAyMw0KCQkJTDUxLjUxOSw0MTMuOTU1bDM4My4xODgtMTA2LjM0MmwyMy4zNzEsODQuMjA4TDQ3Mi42MDEsNDQ0LjE0MXoiLz4NCgkJPHBhdGggZD0iTTE1Ni4zNzksNDUzLjQ4NGMtMS43ODgtNi40MjktOC40OTktMTAuMjI1LTE0LjkyOC04LjQ0M2wtNDMuNTE1LDEyLjA4Yy02LjQyMywxLjc4Mi0xMC4yMjUsOC40OTktOC40MzcsMTQuOTI4DQoJCQlsMTIuMDc0LDQzLjUwOWMxLjc4OCw2LjQyOSw4LjQ5OSwxMC4yMjUsMTQuOTI4LDguNDM3bDQzLjUxNS0xMi4wNzRjNi40MjktMS43ODIsMTAuMjI1LTguNDk5LDguNDQzLTE0LjkyOEwxNTYuMzc5LDQ1My40ODR6Ii8+DQoJPC9nPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" />
       </div>
 
-      <a href="?value1Selected=10" id="value1" class="value__item item1">
+      <a onclick="value1Selected()" id="value1" class="value__item item1">
         <small id="valueSimbolo1"></small>
         <span id="valueMonto1"></span>
         <div class="arrow-1 arrow"></div>
         <div class="arrow-punta-1 arrowPunta"></div>
       </a>
 
-      <a href="?value2Selected=50" id="value2" class="value__item item2">
+      <a onclick="value2Selected()" id="value2" class="value__item item2">
         <small id="valueSimbolo2"></small>
         <span id="valueMonto2"></span>
         <div class="arrow-2 arrow"></div>
         <div class="arrow-punta-2 arrowPunta"></div>
       </a>
 
-      <a href="?value3Selected=100" id="value3" class="value__item item3">
+      <a onclick="value3Selected()" id="value3" class="value__item item3">
         <small id="valueSimbolo3"></small>
         <span id="valueMonto3"></span>
         <div class="arrow-3 arrow"></div>
         <div class="arrow-punta-3 arrowPunta"></div>
       </a>
 
-      <a href="?value4Selected=300" id="value4" class="value__item item4">
+      <a onclick="value4Selected()" id="value4" class="value__item item4">
         <small id="valueSimbolo4"></small>
         <span id="valueMonto4"></span>
         <div class="arrow-4 arrow"></div>
@@ -126,7 +127,7 @@
       </a>
 
       <a href="?valuePersonalizado=true" id="valuePersonalizado" class="value__item itemPersonalizado">
-        <span id="valueSaldoPersonalizado">Personalised</span>
+        <span id="valueSaldoPersonalizado">Custom</span>
         <div class="arrowPersonalizado arrow"></div>
         <div class="arrow-puntaPersonalizado arrowPunta"></div>
       </a>
@@ -137,7 +138,7 @@
         <span id="saldo3"></span>
       </div>
 
-       <a class="back-btn" href="?backToScreen2=true" id="backToScreen2">
+       <a class="back-btn" onclick="backToPreviousPage()" id="backToScreen2">
         <span class="back__text">
           Back
         </span>
@@ -155,9 +156,6 @@
       </div>
       <img class="posnet-logo" id="posnetIcon" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRmxhdCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im0xMTAuOCAyNC4zNmgtMjUuM3Y4MS4yOWgyNS4zYTUuNjQgNS42NCAwIDAgMCA1LjYzLTUuNjR2LTcwLjAxYTUuNjMgNS42MyAwIDAgMCAtNS42My01LjY0eiIgZmlsbD0iI2ZhYmE1OSIvPjxwYXRoIGQ9Im05NS4wOCAyNC4zNmg5Ljk3djgxLjI5aC05Ljk3eiIgZmlsbD0iIzNkNGM3MCIvPjxyZWN0IGZpbGw9IiMzZDRjNzAiIGhlaWdodD0iMTI2IiByeD0iNi45IiB3aWR0aD0iNzEuNDIiIHg9IjE0Ljk4IiB5PSIxLjQyIi8+PHBhdGggZD0ibTg2LjQgOC4zMnYxMTIuMTlhNi45IDYuOSAwIDAgMSAtNi45MSA2LjloLTU3LjZhNi44OSA2Ljg5IDAgMCAxIC01Ljg5LTMuMzFoNjIuMTdhNC43MSA0LjcxIDAgMCAwIDQuNzEtNC43MnYtMTE2LjU1YTUuMTIgNS4xMiAwIDAgMCAwLS41NiA2Ljk0IDYuOTQgMCAwIDEgMy41MiA2LjA1eiIgZmlsbD0iIzJmM2E1YSIvPjxwYXRoIGQ9Im0yMy44IDEuNDJ2NTMuMjVhNC45MyA0LjkzIDAgMCAwIDQuMiA0Ljg3IDE1Ni40MiAxNTYuNDIgMCAwIDAgNDUuMzIgMCA0LjkyIDQuOTIgMCAwIDAgNC4yMy00Ljg3di01My4yNXoiIGZpbGw9IiMyZjNhNWEiLz48cGF0aCBkPSJtMjMuOCAxMi40NWg1My43OHYzNS42N2gtNTMuNzh6IiBmaWxsPSIjYmFjMmQzIi8+PGcgZmlsbD0iI2IwYjNjMSI+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjIzLjgiIHk9IjcwLjkxIi8+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjQzLjc1IiB5PSI3MC45MSIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI2My43IiB5PSI3MC45MSIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSIyMy44IiB5PSI4My42OCIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI0My43NSIgeT0iODMuNjgiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNjMuNyIgeT0iODMuNjgiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iMjMuOCIgeT0iOTYuNDUiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNDMuNzUiIHk9Ijk2LjQ1Ii8+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjYzLjciIHk9Ijk2LjQ1Ii8+PC9nPjxyZWN0IGZpbGw9IiNlZjUzNjEiIGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSIyMy44IiB5PSIxMDkuMjIiLz48cmVjdCBmaWxsPSIjZmFiYTU5IiBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNDMuNzUiIHk9IjEwOS4yMiIvPjxyZWN0IGZpbGw9IiM3OGMxNjEiIGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI2My43IiB5PSIxMDkuMjIiLz48L3N2Zz4=" />
       <div class="señalador" id="señalador"></div>
-      <div class="processing-text" id="processing">
-        <span>Processing...</span>
-      </div> 
         <img id="successProcess" class="success-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUwNy4yIDUwNy4yIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MDcuMiA1MDcuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojMzJCQTdDOyIgY3g9IjI1My42IiBjeT0iMjUzLjYiIHI9IjI1My42Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojMEFBMDZFOyIgZD0iTTE4OC44LDM2OGwxMzAuNCwxMzAuNGMxMDgtMjguOCwxODgtMTI3LjIsMTg4LTI0NC44YzAtMi40LDAtNC44LDAtNy4yTDQwNC44LDE1MkwxODguOCwzNjh6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTI2MCwzMTAuNGMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMjMuMiwyMy4yYy0xMS4yLDExLjItMzAuNCwxMS4yLTQxLjYsMEw5My42LDI3Mi44DQoJCWMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZsMjMuMi0yMy4yYzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwTDI2MCwzMTAuNHoiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTM0OC44LDEzMy42YzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwbDIzLjIsMjMuMmMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMTc2LDE3NS4yDQoJCWMtMTEuMiwxMS4yLTMwLjQsMTEuMi00MS42LDBsLTIzLjItMjMuMmMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZMMzQ4LjgsMTMzLjZ6Ii8+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" />
         <img id="errorProcess" class="error-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxlbGxpcHNlIHN0eWxlPSJmaWxsOiNFMDRGNUY7IiBjeD0iMjU2IiBjeT0iMjU2IiByeD0iMjU2IiByeT0iMjU1LjgzMiIvPg0KPGcgdHJhbnNmb3JtPSJtYXRyaXgoLTAuNzA3MSAwLjcwNzEgLTAuNzA3MSAtMC43MDcxIDc3LjI2IDMyKSI+DQoJPHJlY3QgeD0iMy45OCIgeT0iLTQyNy42MTUiIHN0eWxlPSJmaWxsOiNGRkZGRkY7IiB3aWR0aD0iNTUuOTkyIiBoZWlnaHQ9IjI4NS42NzIiLz4NCgk8cmVjdCB4PSItMTEwLjgyOCIgeT0iLTMxMi44MTUiIHN0eWxlPSJmaWxsOiNGRkZGRkY7IiB3aWR0aD0iMjg1LjY3MiIgaGVpZ2h0PSI1NS45OTIiLz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K" />
       <!-- SCREEN 3 Monto Personalizado -->
@@ -166,7 +164,7 @@
         <span id="saldo3Personalizado"></span>
       </div>
 
-       <a class="back-btn" href="?backToScreen2=true" id="backToScreen2Personalizado">
+       <a class="back-btn" onclick="backToPreviousPage()" id="backToScreen2Personalizado">
         <span class="back__text">
           Back
         </span>
@@ -204,9 +202,6 @@
     <a class="confirm-btn" id="confirmBtn">CONFIRM</a>
     <img class="posnet-logo" id="posnetIconPersonalizado" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRmxhdCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im0xMTAuOCAyNC4zNmgtMjUuM3Y4MS4yOWgyNS4zYTUuNjQgNS42NCAwIDAgMCA1LjYzLTUuNjR2LTcwLjAxYTUuNjMgNS42MyAwIDAgMCAtNS42My01LjY0eiIgZmlsbD0iI2ZhYmE1OSIvPjxwYXRoIGQ9Im05NS4wOCAyNC4zNmg5Ljk3djgxLjI5aC05Ljk3eiIgZmlsbD0iIzNkNGM3MCIvPjxyZWN0IGZpbGw9IiMzZDRjNzAiIGhlaWdodD0iMTI2IiByeD0iNi45IiB3aWR0aD0iNzEuNDIiIHg9IjE0Ljk4IiB5PSIxLjQyIi8+PHBhdGggZD0ibTg2LjQgOC4zMnYxMTIuMTlhNi45IDYuOSAwIDAgMSAtNi45MSA2LjloLTU3LjZhNi44OSA2Ljg5IDAgMCAxIC01Ljg5LTMuMzFoNjIuMTdhNC43MSA0LjcxIDAgMCAwIDQuNzEtNC43MnYtMTE2LjU1YTUuMTIgNS4xMiAwIDAgMCAwLS41NiA2Ljk0IDYuOTQgMCAwIDEgMy41MiA2LjA1eiIgZmlsbD0iIzJmM2E1YSIvPjxwYXRoIGQ9Im0yMy44IDEuNDJ2NTMuMjVhNC45MyA0LjkzIDAgMCAwIDQuMiA0Ljg3IDE1Ni40MiAxNTYuNDIgMCAwIDAgNDUuMzIgMCA0LjkyIDQuOTIgMCAwIDAgNC4yMy00Ljg3di01My4yNXoiIGZpbGw9IiMyZjNhNWEiLz48cGF0aCBkPSJtMjMuOCAxMi40NWg1My43OHYzNS42N2gtNTMuNzh6IiBmaWxsPSIjYmFjMmQzIi8+PGcgZmlsbD0iI2IwYjNjMSI+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjIzLjgiIHk9IjcwLjkxIi8+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjQzLjc1IiB5PSI3MC45MSIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI2My43IiB5PSI3MC45MSIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSIyMy44IiB5PSI4My42OCIvPjxyZWN0IGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI0My43NSIgeT0iODMuNjgiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNjMuNyIgeT0iODMuNjgiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iMjMuOCIgeT0iOTYuNDUiLz48cmVjdCBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNDMuNzUiIHk9Ijk2LjQ1Ii8+PHJlY3QgaGVpZ2h0PSI3LjMiIHJ4PSIxLjgyIiB3aWR0aD0iMTMuODgiIHg9IjYzLjciIHk9Ijk2LjQ1Ii8+PC9nPjxyZWN0IGZpbGw9IiNlZjUzNjEiIGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSIyMy44IiB5PSIxMDkuMjIiLz48cmVjdCBmaWxsPSIjZmFiYTU5IiBoZWlnaHQ9IjcuMyIgcng9IjEuODIiIHdpZHRoPSIxMy44OCIgeD0iNDMuNzUiIHk9IjEwOS4yMiIvPjxyZWN0IGZpbGw9IiM3OGMxNjEiIGhlaWdodD0iNy4zIiByeD0iMS44MiIgd2lkdGg9IjEzLjg4IiB4PSI2My43IiB5PSIxMDkuMjIiLz48L3N2Zz4=" />
     <div class="señalador" id="señaladorPersonalizado"></div>
-    <div class="processing-textPersonalizado" id="processingPersonalizado">
-      <span>Processing...</span>
-    </div> 
     <img id="successProcessPersonalizado" class="success-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUwNy4yIDUwNy4yIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MDcuMiA1MDcuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojMzJCQTdDOyIgY3g9IjI1My42IiBjeT0iMjUzLjYiIHI9IjI1My42Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojMEFBMDZFOyIgZD0iTTE4OC44LDM2OGwxMzAuNCwxMzAuNGMxMDgtMjguOCwxODgtMTI3LjIsMTg4LTI0NC44YzAtMi40LDAtNC44LDAtNy4yTDQwNC44LDE1MkwxODguOCwzNjh6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTI2MCwzMTAuNGMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMjMuMiwyMy4yYy0xMS4yLDExLjItMzAuNCwxMS4yLTQxLjYsMEw5My42LDI3Mi44DQoJCWMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZsMjMuMi0yMy4yYzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwTDI2MCwzMTAuNHoiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTM0OC44LDEzMy42YzExLjItMTEuMiwzMC40LTExLjIsNDEuNiwwbDIzLjIsMjMuMmMxMS4yLDExLjIsMTEuMiwzMC40LDAsNDEuNmwtMTc2LDE3NS4yDQoJCWMtMTEuMiwxMS4yLTMwLjQsMTEuMi00MS42LDBsLTIzLjItMjMuMmMtMTEuMi0xMS4yLTExLjItMzAuNCwwLTQxLjZMMzQ4LjgsMTMzLjZ6Ii8+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" />
     <img id="errorProcessPersonalizado" class="error-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxlbGxpcHNlIHN0eWxlPSJmaWxsOiNFMDRGNUY7IiBjeD0iMjU2IiBjeT0iMjU2IiByeD0iMjU2IiByeT0iMjU1LjgzMiIvPg0KPGcgdHJhbnNmb3JtPSJtYXRyaXgoLTAuNzA3MSAwLjcwNzEgLTAuNzA3MSAtMC43MDcxIDc3LjI2IDMyKSI+DQoJPHJlY3QgeD0iMy45OCIgeT0iLTQyNy42MTUiIHN0eWxlPSJmaWxsOiNGRkZGRkY7IiB3aWR0aD0iNTUuOTkyIiBoZWlnaHQ9IjI4NS42NzIiLz4NCgk8cmVjdCB4PSItMTEwLjgyOCIgeT0iLTMxMi44MTUiIHN0eWxlPSJmaWxsOiNGRkZGRkY7IiB3aWR0aD0iMjg1LjY3MiIgaGVpZ2h0PSI1NS45OTIiLz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K" />
     <div id="successMsg" class="success-msg-personalizado"></div>
@@ -217,8 +212,8 @@
         <div class="charge-info__header">
           <div class="charge-info__title">Charge Information</div>
           <div class="charge-info__subtitle">Card number:<span id="card-number"></span></div>
-      </div> 
-       <div class="movimientos-table" id="chargeInfo"></div> 
+        </div> 
+       <div class="movimientos-table" id="chargeInfoTable"></div> 
      </div> 
     </div> 
   </div>

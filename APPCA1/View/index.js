@@ -5,8 +5,14 @@ function parseURLParams(variable) {
     return paramValue;
 }
 
-// Pantalla 1:
+function backToPreviousPage() {
+    history.go(-2);
+}
 
+// SPINNER
+if ( (!parseURLParams('btnCardActivado')) || (!parseURLParams('btnCardActivado')) )  document.getElementById('spinner').style.display = 'none';
+
+// Pantalla 1:
 if (!parseURLParams('mercadoPago')) document.getElementById('mercado-pago').style.display = 'none';
 if (!parseURLParams('insertCash')) document.getElementById('insert-cash').style.display = 'none';
 if (!parseURLParams('card')) document.getElementById('card').style.display = 'none';
@@ -46,7 +52,6 @@ window.onload = function() {
 }
 
 // Pantalla 2 
-
 if ( (!parseURLParams('saldo2')) || (!parseURLParams('simbolo2')) ) {
     document.getElementById('balance2').style.display = 'none';
 } else {
@@ -87,11 +92,33 @@ if (!parseURLParams('valueMonto4') ) {
     document.getElementById('valueSimbolo4').innerHTML = parseURLParams('simbolo2');
 }
 
-if (!parseURLParams('valuePersonalizado')) document.getElementById('valuePersonalizado').style.display = 'none'
+if (!parseURLParams('montoPersonalizado ')) document.getElementById('valuePersonalizado').style.display = 'none';
 
+function value1Selected() {
+    var URL = window.location.pathname;
+    var valueMonto1 = document.getElementById('valueMonto1').innerHTML;
+    window.location.href = URL + '?' + 'valueSelected=' + valueMonto1;  
+}
+
+function value2Selected() {
+    var URL = window.location.pathname;
+    var valueMonto2 = document.getElementById('valueMonto2').innerHTML;
+    window.location.href = URL + '?' + 'valueSelected=' + valueMonto2;  
+}
+
+function value3Selected() {
+    var URL = window.location.pathname;
+    var valueMonto3 = document.getElementById('valueMonto3').innerHTML;
+    window.location.href = URL + '?' + 'valueSelected=' + valueMonto3;  
+}
+
+function value4Selected() {
+    var URL = window.location.pathname;
+    var valueMonto4 = document.getElementById('valueMonto4').innerHTML;
+    window.location.href = URL + '?' + 'valueSelected=' + valueMonto4;  
+}
 
 // Screen 3  Monto Seleccionado 
-
 if ( (!parseURLParams('saldo3')) || (!parseURLParams('simbolo3')) ) {
     document.getElementById('balance3').style.display = 'none';
 } else {
@@ -117,13 +144,12 @@ if (parseURLParams('saldoUpdated')) {
     document.getElementById('valueMontoSelected').innerHTML = parseURLParams('saldoUpdated');
 };
 
-if (!parseURLParams('processing')) document.getElementById('processing').style.display = 'none';
+// if (!parseURLParams('processing')) document.getElementById('processing').style.display = 'none';
 if (!parseURLParams('successProcess')) document.getElementById('successProcess').style.display = 'none';
 if (!parseURLParams('errorProcess')) document.getElementById('errorProcess').style.display = 'none';
 
 
 // Screen 3 Monto Personalizado
-
 if ( (!parseURLParams('saldo3Personalizado')) || (!parseURLParams('simbolo3Personalizado')) ) {
     document.getElementById('balance3Personalizado').style.display = 'none';
 } else {
@@ -140,7 +166,7 @@ if (!parseURLParams('screen3Personalizado')) {
     document.getElementById('señaladorPersonalizado').style.display = 'none';
 }
 
-if (!parseURLParams('processingPersonalizado')) document.getElementById('processingPersonalizado').style.display = 'none';
+// if (!parseURLParams('processingPersonalizado')) document.getElementById('processingPersonalizado').style.display = 'none';
 if (!parseURLParams('successProcessPersonalizado')) document.getElementById('successProcessPersonalizado').style.display = 'none'; 
 if (!parseURLParams('errorProcessPersonalizado')) document.getElementById('errorProcessPersonalizado').style.display = 'none'; 
 
@@ -184,10 +210,16 @@ if (!parseURLParams('errorMsg')) {
 }
 
 // CHARGE INFORMATION SCREEN
+if (!parseURLParams('chargeInfo')) document.getElementById('chargeInfo').style.display = 'none';
 
- if (!parseURLParams('cardNumber')) document.getElementById('card-number').style.display = 'none'; 
- if (!parseURLParams('chargeInfo')) {
-    document.getElementById('chargeInfo').style.display = 'none';
+ if (!parseURLParams('cardNumber')) {
+    document.getElementById('card-number').style.display = 'none'; 
  } else {
-     document.getElementById('chargeInfo').innerHTML = parseURLParams('chargeInfo');
+    document.getElementById('card-number').innerHTML = parseURLParams('cardNumber'); 
+ }
+ 
+ if (!parseURLParams('chargeInfoTable')) {
+    document.getElementById('chargeInfoTable').style.display = 'none';
+ } else {
+    document.getElementById('chargeInfoTable').innerHTML = parseURLParams('chargeInfoTable');
  }

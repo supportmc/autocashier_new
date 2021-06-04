@@ -52,6 +52,10 @@ bill2=''
 coin=''
 newCardPrice=0
 
+bill1Enabled=False
+bill2Enabled=False
+coinEnabled=False
+
 LectorTeclado=False
 LectorscanApp=False
 #-----------------------------------------------------------------------------------
@@ -159,6 +163,11 @@ def CambioVentana():
 def creoVentana():
     global softversion
     global entro
+    global bill1Enabled
+    global bill2Enabled
+    global coinEnabled
+
+
     # //traigo conteos de todo \\
     #softversion=sversion
     
@@ -174,12 +183,28 @@ def creoVentana():
     
     VerificoHabilitaciones()
 
+    functions.LeerFiat=True
+    
+    data=SetupM.GetJsonSetup()
+    bill1Enabled= data["Peripherals"][0]["bill1Enabled"]
+    bill2Enabled= data["Peripherals"][0]["bill2Enabled"]
+    coinEnabled= data["Peripherals"][0]["coinEnabled"]
+    x=0
+    if functions.SALDO==0:
+        while BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
+            sleep(0.001)
+            x+=1
+
     ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
     #ruta=mdir+'/'+ruta
     entro=False
     window = webview.create_window('Get current URL1', ruta,fullscreen=True)
     webview.start(change_url, window,http_server=True)
     webview.windows[0].hide()
+    
+    
+
+    
     
     
 
@@ -267,7 +292,7 @@ def VerificoHabilitaciones():
     scanApp=miboleano2(data["Peripherals"][0]["barcode_reader_Enabled"])
     newCardMagnetic=miboleano2(data["Peripherals"][0]["magnetic_card_dispenser_Enabled"])
     newCardNfc=miboleano2(data["Peripherals"][0]["nfc_card_dispenser_Enabled"])
-    mercadoPago='True'
+    mercadoPago=''
     card='True'
     newCardPrice=float(data["PriceNewCard"])
     if bill1=='strue' or bill2=='true' or  coin=='true':
@@ -335,17 +360,23 @@ def Eventos():
         #CambioVentana()
         functions.LeerFiat=True
 
+        if functions.SALDO==0:
+            while BoardModule.habPlata(bill1Enabled,bill2Enabled,coinEnabled)and x<2:
+                sleep(0.001)
+                x+=1
+
         
     elif functions.Ingreso:
         ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
         CambioVentana()
+        functions.Ingreso=False
     
     if functions.ReaderActivos:
         BoardModule.EncenderLucesLectora()
         functions.ReaderActivos=False
 
     functions.LeerFiat=True
-    vif=functions.LeerIngresoFiat()
+    vif=functions.LeerIngresoFiat(bill1Enabled,bill2Enabled,coinEnabled)
     if vif:
         #device example
         event='{"tipo":"Device","timestamp":"'+str(datetime.now())+'"}'
@@ -381,9 +412,24 @@ def imprime():
             page=webview.windows[0].get_current_url()
             #print(page[-10:])
             page=str(page)
+            #
+            if page.find('valuePersonalizado=true')>-1:
+                t=page.find('=')
+
+                if t>-1:
+                    ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3Personalizado=1&valueSimboloSelected=$'                
+                    webview.windows[0].load_url(ruta)
+
+            if page.find('valueSelected=')>-1:
+                t=page.find('=')
+
+                if t>-1:
+                    ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])                
+                    webview.windows[0].load_url(ruta)
+                    #print(todo[t+1:])
+
             if page.find('btnCardActivado=true')>-1:
-                ruta=rutaVista+'index.html?&saldo2='+ str(functions.SALDO) +'&simbolo2=$&valueMonto1=10&&valueMonto1=50&&valueMonto1=100&&valueMonto1=1000&valuePersonalizado=1&screen2=1'
-                
+                ruta=rutaVista+'index.html?&saldo2='+ str(functions.SALDO) +'&simbolo2=$&valueMonto1=10&valueMonto2=50&valueMonto3=100&valueMonto4=1000&montoPersonalizado=1&screen2=1'                
                 webview.windows[0].load_url(ruta)
                 
             
@@ -411,14 +457,14 @@ def imprime():
             #     entro=True
                 
 
-            sleep(0.0001)
+            sleep(0.000001)
                 
                 
             
         except Exception as e:
             entro=False
             print('error '+ str(e))
-            sleep(0.0001)
+            sleep(0.000001)
             continue
 if __name__ == '__main__':
     #client_thread  = threading.Thread(target=imprime)#,kwargs={'btcNoTocar': notocar}

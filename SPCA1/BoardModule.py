@@ -102,13 +102,18 @@ def ReadSerie():
                     q=qq[2]
                 else:
                     q=qq[3]
-                channel_board=q
+                if q !=0:
+                    channel_board=q
+                else:
+                    channel_board=0
+                    device_board=0
                 print('canal '+str(q))
                 if qq[0]==170:
                     q=qq[3]
                 else:
                     q=qq[4]
-                device_board=q
+                if channel_board:
+                    device_board=q
                 print('billetero '+str(q))
             else:
                 #print(qq.decode())
