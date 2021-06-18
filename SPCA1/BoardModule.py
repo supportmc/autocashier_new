@@ -253,6 +253,24 @@ def desPlata(bill1,bill2,mon):
         return False
     
 
+def EncenderLuzTarjetero():
+    global EnviarPuerto
+    global r
+    r=False
+    EnviarPuerto=[0x63]
+    to=datetime.now()+timedelta(seconds=3)    
+    while r==False and to > datetime.now():
+        sleep(0.01) 
+
+def ApagarLuzTarjetero():
+    global EnviarPuerto
+    global r
+    r=False
+    EnviarPuerto=[0x73]
+    to=datetime.now()+timedelta(seconds=3)    
+    while r==False and to > datetime.now():
+        sleep(0.01) 
+
 def EncenderLucesLectora():
     global EnviarPuerto
     global r

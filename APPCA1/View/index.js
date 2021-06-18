@@ -17,6 +17,7 @@ if (!parseURLParams('mercadoPago')) document.getElementById('mercado-pago').styl
 if (!parseURLParams('insertCash')) document.getElementById('insert-cash').style.display = 'none';
 if (!parseURLParams('card')) document.getElementById('card').style.display = 'none';
 
+
 if (!parseURLParams('nfc')) document.getElementById('nfc').style.display = 'none';
 if (!parseURLParams('swipeCard')) document.getElementById('swipe-card').style.display = 'none';
 if (!parseURLParams('scanApp')) document.getElementById('scan-app').style.display = 'none';
@@ -35,19 +36,37 @@ if (!parseURLParams('finTransaccion')) {
     document.getElementById('finTransaccionLogo').style.display = 'none';
 }
 
+if ( (!parseURLParams('newCardPrice')) ) {
+    document.getElementById('newCardPrice').style.display = 'none';
+} else {
+    document.getElementById('newCardPrice').innerHTML = '(' + parseURLParams('newCardPrice');
+};
+
 window.onload = function() {
-    if ( (parseURLParams('finTransaccion'))  ) {
-        document.getElementById('finTransaccion').className += ' finTransaccionFinal';
-        document.getElementById('finTransaccionLogo').className += ' finTransaccionLogoFinal';
+
+    if ( (!parseURLParams('msj'))  ) {
+        document.getElementById('msj').style.display = 'none';    
+    }
+    // if ( (parseURLParams('msj'))  ) {
+    //     console.log('hola de nuevo')
+    //     document.getElementById('msj').innerHTML = parseURLParams('msj');
+    //     setTimeout(() => {
+    //         history.go(-1); 
+    //     }, 5000);
+    // } else {
+    //     document.getElementById('msj').style.display = 'none';    
+    // }
+
+    if ((parseURLParams('finTransaccion')) && (parseURLParams('msj'))) {
+        console.log('hola')
+        document.getElementById('msj').innerHTML = parseURLParams('msj');
         setTimeout(() => {
             var searchParams = window.location.search;
             var URL = window.location.pathname;
-            console.log(window.location)
-            console.log(URL) 
             var newStr = searchParams.split('&fin')
             var newsearchParams = newStr[0];
-            window.location.href = URL + '?' + newsearchParams;  
-        }, 2500);
+            window.location.href = URL  + newsearchParams; 
+        }, 4500);
     }
 }
 
@@ -92,7 +111,7 @@ if (!parseURLParams('valueMonto4') ) {
     document.getElementById('valueSimbolo4').innerHTML = parseURLParams('simbolo2');
 }
 
-if (!parseURLParams('montoPersonalizado ')) document.getElementById('valuePersonalizado').style.display = 'none';
+if (!parseURLParams('montoPersonalizado')) document.getElementById('valuePersonalizado').style.display = 'none';
 
 function value1Selected() {
     var URL = window.location.pathname;
@@ -117,6 +136,7 @@ function value4Selected() {
     var valueMonto4 = document.getElementById('valueMonto4').innerHTML;
     window.location.href = URL + '?' + 'valueSelected=' + valueMonto4;  
 }
+
 
 // Screen 3  Monto Seleccionado 
 if ( (!parseURLParams('saldo3')) || (!parseURLParams('simbolo3')) ) {
@@ -144,7 +164,6 @@ if (parseURLParams('saldoUpdated')) {
     document.getElementById('valueMontoSelected').innerHTML = parseURLParams('saldoUpdated');
 };
 
-// if (!parseURLParams('processing')) document.getElementById('processing').style.display = 'none';
 if (!parseURLParams('successProcess')) document.getElementById('successProcess').style.display = 'none';
 if (!parseURLParams('errorProcess')) document.getElementById('errorProcess').style.display = 'none';
 
@@ -155,6 +174,7 @@ if ( (!parseURLParams('saldo3Personalizado')) || (!parseURLParams('simbolo3Perso
 } else {
     document.getElementById('saldo3Personalizado').innerHTML = parseURLParams('saldo3Personalizado');
     document.getElementById('simbolo3Personalizado').innerHTML = parseURLParams('simbolo3Personalizado');
+    document.getElementById('divisaDisplay').innerHTML = parseURLParams('simbolo3Personalizado');
 };
 
 if (!parseURLParams('screen3Personalizado')) {
@@ -166,21 +186,8 @@ if (!parseURLParams('screen3Personalizado')) {
     document.getElementById('señaladorPersonalizado').style.display = 'none';
 }
 
-// if (!parseURLParams('processingPersonalizado')) document.getElementById('processingPersonalizado').style.display = 'none';
 if (!parseURLParams('successProcessPersonalizado')) document.getElementById('successProcessPersonalizado').style.display = 'none'; 
 if (!parseURLParams('errorProcessPersonalizado')) document.getElementById('errorProcessPersonalizado').style.display = 'none'; 
-
-if (!parseURLParams('successMsg')) {
-    document.getElementById('successMsg').style.display = 'none';
-} else {
-    document.getElementById('successMsg').innerHTML = parseURLParams('successMsg');
-}
-
-if (!parseURLParams('errorMsg')) {
-    document.getElementById('errorMsg').style.display = 'none';
-} else {
-    document.getElementById('errorMsg').innerHTML = parseURLParams('errorMsg');
-}
 
 function mostrarValor( displayValue, valorBtn ) {
     document.getElementById(displayValue).innerHTML = document.getElementById(displayValue).innerHTML + valorBtn;
@@ -192,7 +199,7 @@ function mostrarValor( displayValue, valorBtn ) {
         eliminarValor()
     }
     var confirmBtn = document.getElementById('confirmBtn');
-    confirmBtn.href = '?confirmedValue' + newDisplayValue;
+    confirmBtn.href = '?confirmedValue=' + newDisplayValue;
     console.log(confirmBtn.href); 
 }
 
@@ -201,12 +208,6 @@ function eliminarValor() {
     var newDisplayValue = displayValue.substr(0, displayValue.length - 1);
     console.log(newDisplayValue)
     document.getElementById('displayValue').innerHTML = newDisplayValue
-}
-
-if (!parseURLParams('errorMsg')) {
-    document.getElementById('errorMsg').style.display = 'none';
-} else {
-    document.getElementById('errorMsg').innerHTML = parseURLParams('errorMsg');
 }
 
 // CHARGE INFORMATION SCREEN
@@ -218,8 +219,28 @@ if (!parseURLParams('chargeInfo')) document.getElementById('chargeInfo').style.d
     document.getElementById('card-number').innerHTML = parseURLParams('cardNumber'); 
  }
  
- if (!parseURLParams('chargeInfoTable')) {
-    document.getElementById('chargeInfoTable').style.display = 'none';
- } else {
-    document.getElementById('chargeInfoTable').innerHTML = parseURLParams('chargeInfoTable');
- }
+ if (parseURLParams('chargeInfoTable')) {
+    var chargeInfoTable = parseURLParams('chargeInfoTable');
+
+    var chargeInfoTable =  JSON.parse(chargeInfoTable)
+
+    var result = '';
+    var total = '';
+
+    chargeInfoTable.forEach(getRaw);
+
+    function getRaw(item) {
+        result = '';
+        item.forEach(getI);
+        result = '<tr>'+result+'</tr>';
+        total += result
+        console.log(result);
+        console.log(total);
+        document.getElementById('chargeInfoTable').innerHTML = '<table><tr><th>Date</th><th>System</th><th>Amount</th>'+total+'</tr></table>';
+    }
+
+    function getI(i) {
+        result += '<td>'+i+'</td>';
+        return result;
+    }
+}

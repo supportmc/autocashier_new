@@ -112,6 +112,7 @@ def Start():
 #start App-----------------------------------------
 filename='spca_log.json'                
 data ={"Last_Start":str(datetime.datetime.now())}
+
 #os.remove(filename)
 #fo = open(filename, "wb")
 #print ("Name of the file: ", fo.name)

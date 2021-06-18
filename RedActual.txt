@@ -1,2 +1,2 @@
-Magnetic Cash
+InitController
 5050505050

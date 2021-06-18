@@ -23,6 +23,8 @@ data=pointer.CheckPointer()
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/App/') #importa aplicacion y vista actual
 import functions
 import database
+import posnet
+
 rutaVista='/home/pi/Autocashier/'+str(data['APPCA'])+'/View/'
 
 sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
@@ -30,7 +32,11 @@ sys.path.append('/home/pi/Autocashier/'+str(data['APPCA'])+'/View/')
 sys.path.append("/home/pi/Autocashier/"+data['SPCA'])
 import BoardModule
 import SetupM
+
+import DispenserM
 import QRReaderM
+
+
 #import sapp
 #import sview
 #import SetupM
@@ -51,6 +57,7 @@ bill1=''
 bill2=''
 coin=''
 newCardPrice=0
+simboloTNueva=''
 
 bill1Enabled=False
 bill2Enabled=False
@@ -58,6 +65,9 @@ coinEnabled=False
 
 LectorTeclado=False
 LectorscanApp=False
+
+PosnetActivo=False
+PostnetCon=[]
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -166,6 +176,7 @@ def creoVentana():
     global bill1Enabled
     global bill2Enabled
     global coinEnabled
+    global PosnetActivo
 
 
     # //traigo conteos de todo \\
@@ -180,8 +191,33 @@ def creoVentana():
     print(mdir)
     #webview.windows[0].load_url('setup.html') 
     #Paso todo los parametros a la vista
+    threading.Thread(target=DispenserM.sacarTarjeta, args=('M',)).start()
     
     VerificoHabilitaciones()
+    if PostnetCon:
+        for d in PostnetCon:
+            r=posnet.Posnet_Init(d[0],int(d[1]))
+            if r!='Error':
+                r=json.loads(r)
+
+                if r['Resultado']['Cod']==0:
+                    r=posnet.Posnet_Status()
+                    r=json.loads(r)
+                    if r['Resultado']['Cod']==15:
+                        threading.Thread(target=posnet.Posnet_Config).start()
+                        PosnetActivo=True
+                    elif r['Resultado']['Cod']!=0:
+                        print('Error en Posnet')
+                    elif r['Resultado']['Cod']==0:
+                        print('Postnet Operativo')
+                        PosnetActivo=True
+                else:
+                    print('Error al inicializar posnet')
+                    if r['Resultado']['Cod']==15:
+                        threading.Thread(target=posnet.Posnet_Config).start()
+            else:
+                PosnetActivo=False
+    
 
     functions.LeerFiat=True
     
@@ -195,12 +231,17 @@ def creoVentana():
             sleep(0.001)
             x+=1
 
-    ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+    #ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+    if PosnetActivo:        
+        ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+    else:
+        ruta=rutaVista+'index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
     #ruta=mdir+'/'+ruta
     entro=False
     window = webview.create_window('Get current URL1', ruta,fullscreen=True)
     webview.start(change_url, window,http_server=True)
     webview.windows[0].hide()
+    
     
     
 
@@ -282,6 +323,9 @@ def VerificoHabilitaciones():
     global bill2
     global coin
     global newCardPrice
+    global simboloTNueva
+    global PostnetCon
+    global PosnetActivo
 
     data=SetupM.GetJsonSetup()
     bill1=miboleano2(data["Peripherals"][0]["bill1Enabled"])
@@ -295,8 +339,14 @@ def VerificoHabilitaciones():
     mercadoPago=''
     card='True'
     newCardPrice=float(data["PriceNewCard"])
+    simboloTNueva=data["PriceNewCardSymbol"]
     if bill1=='strue' or bill2=='true' or  coin=='true':
         insertCash='true'
+
+    if data['Payment_url'] and data['Payment_port']:
+        PostnetCon.append([data['Payment_url'],data['Payment_port'] ])
+        #PosnetActivo=True
+
     #data["Peripherals"][0]["nfc_card_dispenser_Enabled"]=miboleano(f.args['nfc_dispenser'])
     #data["Peripherals"][0]["printer_Enabled"]=miboleano(f.args['printer'])
 
@@ -304,7 +354,8 @@ def FinalizaTransaccion():
     global Tarjeta
     global LectorTeclado
 
-    if Tarjeta:
+    if Tarjeta and Tarjeta.find(';')>-1:
+
         if swipeCard and nfc:
             vr='nfc/swipe'
         elif swipeCard:
@@ -319,6 +370,13 @@ def FinalizaTransaccion():
         
         tcard=QRReaderM.TarjetaQr
         QRReaderM.TarjetaQr=''
+    elif Tarjeta:
+        vr='Dispenser'
+        vmpl='mpl'
+        
+        tcard=';'+Tarjeta
+
+        
 
         
 
@@ -332,26 +390,56 @@ def FinalizaTransaccion():
     functions.SALDO=0
     Tarjeta=''
     LectorTeclado=False
+    
+    
 
 def Eventos():
     global ruta
     global Tarjeta
     #muestra boton tarjeta nueva si esta hab y alcanza
-    if functions.SALDO>=newCardPrice and newCardNfc=='true' or functions.SALDO>newCardPrice and newCardMagnetic=='true':
+    if functions.SALDO>=newCardPrice and newCardNfc=='true' or functions.SALDO>newCardPrice and newCardMagnetic=='true' and DispenserM.TPreparada:
         newCard='True'
+        newCardValue=simboloTNueva+' '+ str(newCardPrice)
     else:
         newCard=''
+        newCardValue=''
     
     
 
-    if Tarjeta and functions.SALDO==0:
+    if Tarjeta and functions.SALDO==0 or QRReaderM.TarjetaQr and functions.SALDO==0:
+        t=''
+        if Tarjeta:
+            data=database.GetHistory(Tarjeta)
+            t=Tarjeta
+        elif QRReaderM.TarjetaQr:
+            data=database.GetHistory(QRReaderM.TarjetaQr)
+            t=QRReaderM.TarjetaQr
+        if data:
+            #tableHistory='<table><tr><th>Date</th><th>System</th><th>Amount</th></tr>'
+            tt=[]
+            tableHistory=[]
+            for registro in data:
+                #tableHistory+='<tr><td>'+ str(registro[6])+'</td><td>Autocashier</td><td>'+ str(registro[5])+'</td></tr>'
+                tableHistory.append('"'+ registro[6][:-7]+'"')
+                tableHistory.append('"'+ registro[4]+'"')
+                tableHistory.append('"'+ registro[5]+'"')
+                
+                tt.append(tableHistory)            
+                tableHistory=[]
+            #tableHistory+='</table>'
+            tt=json.dumps(tt)
+            tt=tt.replace('\\"','')
+            ruta='index.html?&chargeInfo=true&cardNumber='+str(t)+'&chargeInfoTable='+str(tt)#&cardNumber='+str(Tarjeta)+'&chargeInfo=true&
+            CambioVentana()
         Tarjeta=''
+        QRReaderM.TarjetaQr=''
+    
     if Tarjeta and functions.SALDO>0 or QRReaderM.TarjetaQr and functions.SALDO>0:
         
 
         FinalizaTransaccion()
         
-        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$&finTransaccion=true'
+        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
         CambioVentana()
         BoardModule.ApagarLucesLectora()
         
@@ -367,7 +455,10 @@ def Eventos():
 
         
     elif functions.Ingreso:
-        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+        if PosnetActivo:        
+            ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ newCardValue
+        else:
+            ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ newCardValue
         CambioVentana()
         functions.Ingreso=False
     
@@ -392,7 +483,10 @@ def imprime():
     global entro
     global entroProbador
     global ruta
-    
+    global newCardPrice
+    global Tarjeta
+    if newCardPrice < 0:
+        newCardPrice=0
     while 1:
         try:
             
@@ -413,19 +507,132 @@ def imprime():
             #print(page[-10:])
             page=str(page)
             #
+
+            if page.find('btnBackFromMovimientos=true')>-1:
+                #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)
+                if PosnetActivo:        
+                    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)
+                else:
+                    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)
+                CambioVentana()
+                
+
+            if page.find('newCardBtnActivado=true')>-1:
+                #ruta='index.html?&btnCardActivado=true'
+                #CambioVentana()
+                #functions.Ingreso=False
+                #r=DispenserM.sacarTarjeta('M')
+                
+                #r=DispenserM.EstadoTarjetero()
+                Tarjeta=DispenserM.LeerTarjeta('M')
+                if Tarjeta:#r['Lector Ocupado']==1:
+                    
+                    #Tarjeta=r['card_number']
+                    FinalizaTransaccion()
+                    #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice=$'+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                    if PosnetActivo:        
+                        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                    else:
+                        ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                    CambioVentana()
+                    
+                                        
+                    #if Tarjeta:
+                    BoardModule.EncenderLuzTarjetero()
+                    DispenserM.ExpulsarTarjeta()
+                    #DispenserM.TPreparada=False
+                    sleep(2.5)
+                    BoardModule.ApagarLucesLectora()
+                    BoardModule.ApagarLuzTarjetero()
+                elif not Tarjeta:
+                    DispenserM.TPreparada=False
+                    #sleep(0.2)
+                    Tarjeta=DispenserM.LeerTarjeta('M')
+                    if Tarjeta:
+                        FinalizaTransaccion()
+                        #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice=$'+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                        if PosnetActivo:        
+                            ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                        else:
+                            ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccion=true&msj=Transaction OK!'
+                        CambioVentana()
+                        DispenserM.ExpulsarTarjeta()
+                        sleep(2)
+                        BoardModule.ApagarLucesLectora()
+                        BoardModule.ApagarLuzTarjetero()
+                    else:
+                        DispenserM.sacarTarjeta('M')
+                        DispenserM.TPreparada=False
+
+                
+                    
+                    
+                    
+                    
+
+                else:                
+                    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice=$'+ newCardPrice+''
+                    CambioVentana()
+                    functions.Ingreso=False
+                
+
+                
+
+            if page.find('confirmedValue')>-1:
+                t=page.find('=')
+                ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])                
+                webview.windows[0].load_url(ruta)
+
+
             if page.find('valuePersonalizado=true')>-1:
                 t=page.find('=')
+                
 
                 if t>-1:
                     ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3Personalizado=1&valueSimboloSelected=$'                
                     webview.windows[0].load_url(ruta)
 
-            if page.find('valueSelected=')>-1:
-                t=page.find('=')
+            if page.find('valueSelected=')>-1 or page.find('valueMontoSelected=')>-1:
+                p=0
+                p=page.find('valueMontoSelected=')
+                if p> -1:
+                    t=page[p:].find('=')
+                    t=t+p
+                else:
+                    t=page.find('=')
 
                 if t>-1:
                     ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])                
                     webview.windows[0].load_url(ruta)
+                    for d in PostnetCon:
+                        r=posnet.Posnet_Status()
+                        r=json.loads(r)
+                        if r['Resultado']['Cod']==15:
+                            threading.Thread(target=posnet.Posnet_Config).start()
+                        elif r['Resultado']['Cod']==0:
+                            r=posnet.Posnet_Pay(float(page[t+1:]),1)
+                            r=json.loads(r)
+                            if r['Resultado']['Cod']==0:
+                                functions.Incrementar(float(page[t+1:]))
+                                print('Total ingresado '+ str(page[t+1:]))                                                               
+                                ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])+'&successProcessPersonalizado=true'                
+                                webview.windows[0].load_url(ruta)
+                                sleep(2)
+                                functions.Ingreso=True
+                            else:
+                                ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])+'&errorProcessPersonalizado=true'                
+                                webview.windows[0].load_url(ruta)
+                                sleep(2)
+                                functions.Ingreso=True
+
+
+                            
+                        elif r['Resultado']['Cod']!=0:
+                            print('Error en Posnet')
+                            ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])+'&errorProcessPersonalizado=true'                
+                            webview.windows[0].load_url(ruta)
+                            sleep(2)
+                            functions.Ingreso=True
                     #print(todo[t+1:])
 
             if page.find('btnCardActivado=true')>-1:

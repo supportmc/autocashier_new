@@ -167,6 +167,28 @@ def saveCollect(event):
 
 
 
+def GetHistory(mpl):
+    try:
+        conn=None
+        conn=sqlite3.connect(dbpath+'Autocashier.db')
+    except Exception as e:
+        print(e)
+        return False
+    finally:
+        if conn:
+            try:
+                c=conn.cursor()
+                c.execute("select * from TBL_Close_Transaction,TBL_History_Event  where TBL_Close_Transaction.MPL_Number='"+str(mpl)+"' and TBL_Close_Transaction.ID_History_Event=TBL_History_Event.rowid order by TBL_Close_Transaction.rowid desc limit 15;")
+                t=c.fetchall()
+                c.close()
+                conn.close()
+                return t
+            except Exception as e:
+                print(e)
+                return []
+
+
+
 #events:
 #Start
 #Device
@@ -178,8 +200,8 @@ def saveCollect(event):
 
 
 
-
-""" #Special
+#print(str(GetHistory(';6380012273366')))
+"""#Special
 event='{"tipo":"Special","timestamp":"'+str(datetime.now())+'"}'
 eventSpecial='{"App_Version_Name":"*-*","App_Version_Number":"1.0","Event":"Open_App","Loc_Currency_Type":"Pesos"}'#eventDevice='{"Device":"bill1","Channel":"ch80","Currency":"2.0","Total_amount_Local_Currency":"2.0"}'
 saveHistoryEvent(event,eventSpecial,'special')
@@ -206,3 +228,5 @@ eventCollect='{"Bill1_Local_Currency":"5.0","Bill2_Local_Currency":"5.0","Coin_L
 saveHistoryEvent(event,eventCollect,'collect')
 
 print("fin") """
+
+
