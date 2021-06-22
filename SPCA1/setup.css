@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main-content {
+    width: 1024px;
+    height: 758px;
+    background-color: black;
+    color: white;
+    padding: 2rem;
+}
+
+.audits,
+.collect,
+.chargedFromStart,
+.posnetConfiguration,
+.printerSetup {
+    width: 100%;
+    height: 100%;
+}
+
+.audits__title,
+.collect__title,
+.chargedFromStart__title,
+.chargedFromTo__title,
+.chargeNotClose__title,
+.chargedManual__title,
+.startSystemFromTo__title,
+.posnetConfiguration__title,
+.printerSetup__title {
+    font-size: 2rem;
+    text-decoration: underline;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.posnet-title {
+    margin-bottom: 5rem;
+}
+
+.collect__subtitle,
+.chargedFromStart__subtitle,
+.startSystemFromTo__subtitle,
+.printerSetup__header {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 3rem; 
+}
+
+.collect__total {
+    width: 460px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-left: 5rem;
+    margin-bottom: 1rem;
+}
+
+.chargedFromStart__total,
+.chargedFromTo__total,
+.posnetConfiguration__total {
+    width: 460px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0 auto;
+} 
+
+.chargeManual__total {
+    width: 560px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-bottom: 2rem; 
+}
+
+.audits__list__item {
+    text-decoration: none;
+}
+
+.audits__list__item:active,
+.audits__list__item:visited {
+    color: white;
+}
+
+.collect__total__item,
+.chargedFromStart__total__item,
+.chargedFromTo__total__item,
+.chargeNotClose__total__item,
+.chargeManual__total__item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.collect__item--last,
+.chargedFromStart__item--last {
+    padding-left: 10rem;
+}
+
+.chargedFromTo__item--last {
+    padding-left: 9rem;
+}
+
+.chargeManual__total__item--last {
+    padding-left: 19.5rem;
+}
+
+.audits__list {
+    display: flex;
+    flex-direction: column;
+    margin-top:4rem;
+}
+
+.audits__list__item {
+    padding-bottom: 2rem;
+    list-style: none;
+    cursor: pointer;
+}
+
+.audits__btn,
+.chargedFromStart__btn,
+.chargedFromTo__btn,
+.chargeNotClose__btn,
+.chargedManual__btn,
+.startSystemFromTo__btn,
+.posnetConfiguration__btn,
+.printerSetup__btn {
+    width: 150px;
+    padding: .5rem 2rem;
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    position: absolute;
+    bottom: 5rem;
+    left: 27.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.collect__input,
+.chargeNotClose__input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:center;
+    height: 150px;
+}
+
+.collect__input > input,
+.chargeNotClose__input > input {
+    width: 500px;
+    height: 150px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.collection__btn {
+    width: 300px;
+    padding: .5rem 1rem;
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.collect__text {
+    margin-top: 15px;
+}
+
+.collect__btn {
+    width: 150px;
+    padding: .5rem 2rem;
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    position: absolute;
+    bottom: 5rem;
+    left: 27.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chargedFromTo__subtitle,
+.chargedManual__subtitle {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.chargedFromTo__subtitle h2,
+.chargedManual__subtitle h2 {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.chargeNotClose__total {
+    width: 600px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 2rem auto;
+}
+
+.chargeNotClose__input > #botonAtras {
+    width: 60px;
+    height: 110px;
+    position: absolute;
+    top: 20rem;
+    left: 5rem;
+    background-color: white;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 50%);
+}
+
+#botonAdelante {
+    width: 60px;
+    height: 110px;
+    position: absolute;
+    top: 20rem;
+    right: 5rem;
+    background-color: white;
+    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0 100%);
+}
+
+.startSystemFromTo__transaction {
+    width: 450px;
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.transaction__detail {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chargeNotClose__closeBtn {
+    width: 150px;
+    padding: .5rem 2rem;
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    position: absolute;
+    bottom: 15rem;
+    right: 16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.printerSetup__total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 60%;
+    margin-left: 8rem;
+}
+
+.printerSetup__total__item {
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+}
+
+.printerSetup__total__item input {
+    width: 400px;
+    font-size: 1.2rem;
+    padding-left: .8rem;
+}
+
+
