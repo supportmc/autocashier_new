@@ -35,6 +35,7 @@ import SetupM
 
 import DispenserM
 import QRReaderM
+import PrintM
 
 
 #import sapp
@@ -170,30 +171,9 @@ def CambioVentana():
     webview.windows[0].load_url(ruta)
     webview.windows[0].show()
 
-def creoVentana():
-    global softversion
-    global entro
-    global bill1Enabled
-    global bill2Enabled
-    global coinEnabled
+def VerificaPosnet():
+    global PostnetCon
     global PosnetActivo
-
-
-    # //traigo conteos de todo \\
-    #softversion=sversion
-    
-
-    #Channel_File.GetJsonChannel()
-
-    #os.chdir(start.rutaPrincipal)
-
-    mdir=os.getcwd()
-    print(mdir)
-    #webview.windows[0].load_url('setup.html') 
-    #Paso todo los parametros a la vista
-    threading.Thread(target=DispenserM.sacarTarjeta, args=('M',)).start()
-    
-    VerificoHabilitaciones()
     if PostnetCon:
         for d in PostnetCon:
             r=posnet.Posnet_Init(d[0],int(d[1]))
@@ -217,6 +197,33 @@ def creoVentana():
                         threading.Thread(target=posnet.Posnet_Config).start()
             else:
                 PosnetActivo=False
+
+def creoVentana():
+    global softversion
+    global entro
+    global bill1Enabled
+    global bill2Enabled
+    global coinEnabled
+    global PosnetActivo
+
+
+    # //traigo conteos de todo \\
+    #softversion=sversion
+    
+
+    #Channel_File.GetJsonChannel()
+
+    #os.chdir(start.rutaPrincipal)
+
+    mdir=os.getcwd()
+    print(mdir)
+    #webview.windows[0].load_url('setup.html') 
+    #Paso todo los parametros a la vista
+    threading.Thread(target=DispenserM.sacarTarjeta, args=('M',)).start()
+    threading.Thread(target=PrintM.Print).start()
+    
+    VerificoHabilitaciones()
+    VerificaPosnet()
     
 
     functions.LeerFiat=True
@@ -353,6 +360,7 @@ def VerificoHabilitaciones():
 def FinalizaTransaccion():
     global Tarjeta
     global LectorTeclado
+    global simbolo
 
     if Tarjeta and Tarjeta.find(';')>-1:
 
@@ -381,6 +389,14 @@ def FinalizaTransaccion():
         
 
 
+    #PrintM.Print(0,functions.SALDO,"Autocashier",tcard,simbolo,21)
+    PrintM.parametros.append(0) #ptarjeta
+    PrintM.parametros.append(functions.SALDO)#saldo
+    PrintM.parametros.append("Autocashier")#nomb cajero
+    PrintM.parametros.append(tcard)#mpl
+    PrintM.parametros.append(simbolo)#simbolo
+    PrintM.parametros.append(21)#tax
+
 
     #Close_Transaction
     event='{"tipo":"Close","timestamp":"'+str(datetime.now())+'"}'
@@ -390,6 +406,12 @@ def FinalizaTransaccion():
     functions.SALDO=0
     Tarjeta=''
     LectorTeclado=False
+
+    
+
+
+
+    #VerificaPosnet()
     
     
 
@@ -560,6 +582,7 @@ def imprime():
                         sleep(2)
                         BoardModule.ApagarLucesLectora()
                         BoardModule.ApagarLuzTarjetero()
+                        
                     else:
                         DispenserM.sacarTarjeta('M')
                         DispenserM.TPreparada=False

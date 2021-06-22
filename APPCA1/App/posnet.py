@@ -68,7 +68,9 @@ def Posnet_Pay(importe,tax):
 
 Host='10.0.0.5'
 Port=11000
-#r=Posnet_Status()
+#r=Posnet_Pay(20,1)
+#r=Posnet_Init(Host,Port)
+#r=Posnet_Config()
 #print(r)
 """ while 1:
     r=Posnet_Status()
