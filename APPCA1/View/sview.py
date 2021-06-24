@@ -187,7 +187,7 @@ def VerificaPosnet():
                     #if r['Resultado']['Cod']==0 and r['Resultado']['Status']!='wtConfig':
                         #r=posnet.Posnet_Status()
                         #r=json.loads(r)
-                    if r['Resultado']['Cod']==15 or r['Resultado']['Cod']==15000 or r['Resultado']['Status']=='wtConfig':
+                    if r['Resultado']['Cod']==15 or r['Resultado']['Cod']==15000 or r['Resultado']['Status']=='WtConfig':
                         #threading.Thread(target=posnet.Posnet_Config).start()
                         posnet.Posnet_Config()
                         #PosnetActivo=True
@@ -203,7 +203,7 @@ def VerificaPosnet():
                     #        posnet.Posnet_Config()
                 else:
                     PosnetActivo=False
-        sleep(3)
+        sleep(1)
 
 
 def creoVentana():

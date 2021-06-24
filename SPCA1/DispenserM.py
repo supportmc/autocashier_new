@@ -441,44 +441,32 @@ def sacarTarjeta(tipo):
                 resp.append({"status":"Error"})
             #if r['Lector Ocupado']==1:
                 
-            if not tarjeta:
-                if r['Lector Ocupado']==0:
-                    SendDispenser('5')
-                if tipo=='M':
-                    tm=SendDispenser('6')
-                    tarjeta=tm
-                    TPreparada=True
-                else:
-                    tn=SendDispenser('16')
-                    tarjeta=tn
-                    TPreparada=True
-            else:
-                TPreparada=True
+            
 
-            if r['Lector Ocupado']==0:
-                r=SendDispenser('2')
-                rj=r
-                #"Bezel Status":aa[1:2],"Pre Send Status"
-                if rj!='Error':
-                    if rj['Bezel Status']=='0':
-                        print('tarjeta no preparada')
-                    if rj['Pre Send Status']=='0':
-                        print('No hay tarjeta')
-                        resp.append({"status":"No cards"})
-                        #return
-                    if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0':
-                        print('precaucion, no hay tarjetas')
-                        resp.append({"status":"No cards"})
-                        #return
-                        #break
-                    if rj['Error']=='1':
-                        resp.append({"status":"Read Error"})
-                        SendDispenser('9')
-                    else:
-                        #SendDispenser('3')
-                        #sleep(0.11)
-                        #SendDispenser('4')
-                        sleep(0.11)
+            # if r['Lector Ocupado']==0:
+            #     r=SendDispenser('2')
+            #     rj=r
+            #     #"Bezel Status":aa[1:2],"Pre Send Status"
+            #     if rj!='Error':
+            #         if rj['Bezel Status']=='0':
+            #             print('tarjeta no preparada')
+            #         if rj['Pre Send Status']=='0':
+            #             print('No hay tarjeta')
+            #             resp.append({"status":"No cards"})
+            #             #return
+            #         if rj['LessCard Status']=='1' and  rj['Pre Send Status']=='0':
+            #             print('precaucion, no hay tarjetas')
+            #             resp.append({"status":"No cards"})
+            #             #return
+            #             #break
+            #         if rj['Error']=='1':
+            #             resp.append({"status":"Read Error"})
+            #             #SendDispenser('9')
+            #         else:
+            #             #SendDispenser('3')
+            #             #sleep(0.11)
+            #             #SendDispenser('4')
+            #             sleep(0.11)
                     #SendDispenser('5')
                     #sleep(0.11)
                 
@@ -490,9 +478,22 @@ def sacarTarjeta(tipo):
                     #    tn=SendDispenser('16')
                     #    tarjeta=tn
                     
+                    
+            if not tarjeta:
+                if r['Lector Ocupado']==0:
+                    SendDispenser('5')
+                if tipo=='M':
+                    tm=SendDispenser('6')
+                    tarjeta=tm
                     if tarjeta !='' and tarjeta !=None:
                         print('leyo tarjeta '+ str(tarjeta))
-            
+                    TPreparada=True
+                else:
+                    tn=SendDispenser('16')
+                    tarjeta=tn
+                    TPreparada=True
+            else:
+                TPreparada=True
             # if tarjeta!='' and tarjeta !=None:
             #     sleep(0.1)
             #     r=SendDispenser('2')
