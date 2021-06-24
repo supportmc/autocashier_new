@@ -3,11 +3,11 @@
     "Enabled": 0,
     "Type": "Pendrive",
     "Customer": "Lepark_5400001",
-    "Total_Start": 705,
-    "Parcial_Start": 425,
-    "SPAC_Start": 705,
-    "APPAC_Start": 705,
-    "VAC_Start": 705,
+    "Total_Start": 716,
+    "Parcial_Start": 436,
+    "SPAC_Start": 716,
+    "APPAC_Start": 716,
+    "VAC_Start": 716,
     "LastReset": "28/12/20 11:02:23",
     "Peripherals": [
         {
@@ -34,6 +34,6 @@
     "Node_port": "4555",
     "System_url": "10.0.0.2",
     "System_port": "4848",
-    "PriceNewCard": 10,
+    "PriceNewCard": 1,
     "PriceNewCardSymbol": "$"
 }

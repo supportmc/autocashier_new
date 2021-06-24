@@ -2,6 +2,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    cursor: none;
 }
 
 body {
@@ -11,9 +12,12 @@ body {
     background-size: cover;
     display: block;
     position: relative;
+    top: 0;
+    left: 0;
     margin: 0;
     overflow: hidden;
     cursor: none;
+    z-index: 0;
 }
 
 .transaccion-box {
@@ -63,10 +67,34 @@ body {
 /*  SCREEN 1 */
 
 .company-logo {
-    width: 250px;
+    width: 200px;
+    height: 200px;
     position: absolute;
-    top: -20px;
-    left: -30px;
+    top: 0rem;
+    left: 0rem;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility:    hidden;
+    -ms-backface-visibility:     hidden;
+    backface-visibility: hidden;
+    background-image: url('assets/logoLePark.png');
+    background-position: center 0;
+    background-size: cover;
+    display: block;
+    z-index: 2;
+}
+
+.lights {
+    position: relative;
+    top: 1rem;
+    right: 1rem;
+}
+
+.lights__item {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    width: 20px;
+    height: 20px;
 }
 
 .main-button {
@@ -693,6 +721,7 @@ body {
     position: absolute;
     top: 1.7rem;
     left: 1rem;
+    z-index: 1000;
 }
 
 .confirm-btn {

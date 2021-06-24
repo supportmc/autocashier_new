@@ -45,6 +45,7 @@ def Incrementar(valor):
             ReaderActivos=True
         if valor>0:
             SALDO+=valor
+        SALDO=round(SALDO,2)
     except Exception as e:
         print(e)
     

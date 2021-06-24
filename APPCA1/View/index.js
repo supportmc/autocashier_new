@@ -47,15 +47,6 @@ window.onload = function() {
     if ( (!parseURLParams('msj'))  ) {
         document.getElementById('msj').style.display = 'none';    
     }
-    // if ( (parseURLParams('msj'))  ) {
-    //     console.log('hola de nuevo')
-    //     document.getElementById('msj').innerHTML = parseURLParams('msj');
-    //     setTimeout(() => {
-    //         history.go(-1); 
-    //     }, 5000);
-    // } else {
-    //     document.getElementById('msj').style.display = 'none';    
-    // }
 
     if ((parseURLParams('finTransaccion')) && (parseURLParams('msj'))) {
         console.log('hola')
@@ -69,6 +60,9 @@ window.onload = function() {
         }, 4500);
     }
 }
+
+if ( (!parseURLParams('redWarning'))) document.getElementById('redWarning').style.display = 'none';
+if ( (!parseURLParams('yellowWarning'))) document.getElementById('yellowWarning').style.display = 'none';
 
 // Pantalla 2 
 if ( (!parseURLParams('saldo2')) || (!parseURLParams('simbolo2')) ) {
@@ -147,7 +141,6 @@ if ( (!parseURLParams('saldo3')) || (!parseURLParams('simbolo3')) ) {
 };
 
 if (!parseURLParams('screen3')) {
-    document.getElementById('backToScreen2').style.display = 'none'; 
     document.getElementById('card3').style.display = 'none';
     document.getElementById('posnetIcon').style.display = 'none';
     document.getElementById('señalador').style.display = 'none'   
@@ -183,7 +176,6 @@ if (!parseURLParams('screen3Personalizado')) {
     document.getElementById('posnetPersonalizado').style.display = 'none';  
     document.getElementById('posnetIconPersonalizado').style.display = 'none';
     document.getElementById('confirmBtn').style.display = 'none';
-    document.getElementById('señaladorPersonalizado').style.display = 'none';
 }
 
 if (!parseURLParams('successProcessPersonalizado')) document.getElementById('successProcessPersonalizado').style.display = 'none'; 

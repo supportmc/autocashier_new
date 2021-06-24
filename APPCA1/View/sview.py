@@ -176,29 +176,33 @@ def CambioVentana():
 def VerificaPosnet():
     global PostnetCon
     global PosnetActivo
-    if PostnetCon:
-        for d in PostnetCon:
-            r=posnet.Posnet_Init(d[0],int(d[1]))
-            if r!='Error':
-                r=json.loads(r)
-
-                if r['Resultado']['Cod']==0:
-                    r=posnet.Posnet_Status()
+    PosnetActivo=False
+    while PosnetActivo==False:
+        if PostnetCon:
+            for d in PostnetCon:
+                r=posnet.Posnet_Init(d[0],int(d[1]))
+                if r!='Error':
                     r=json.loads(r)
-                    if r['Resultado']['Cod']==15:
-                        threading.Thread(target=posnet.Posnet_Config).start()
-                        PosnetActivo=True
-                    elif r['Resultado']['Cod']!=0:
-                        print('Error en Posnet')
-                    elif r['Resultado']['Cod']==0:
-                        print('Postnet Operativo')
-                        PosnetActivo=True
+
+                    if r['Resultado']['Cod']==0:
+                        r=posnet.Posnet_Status()
+                        r=json.loads(r)
+                        if r['Resultado']['Cod']==15 or r['Resultado']['Cod']==15000:
+                            threading.Thread(target=posnet.Posnet_Config).start()
+                            PosnetActivo=True
+                        elif r['Resultado']['Cod']!=0:
+                            print('Error en Posnet')
+                        elif r['Resultado']['Cod']==0:
+                            print('Postnet Operativo')
+                            PosnetActivo=True
+                    else:
+                        print('Error al inicializar posnet')
+                        if r['Resultado']['Cod']==15:
+                            threading.Thread(target=posnet.Posnet_Config).start()
                 else:
-                    print('Error al inicializar posnet')
-                    if r['Resultado']['Cod']==15:
-                        threading.Thread(target=posnet.Posnet_Config).start()
-            else:
-                PosnetActivo=False
+                    PosnetActivo=False
+        sleep(3)
+
 
 def creoVentana():
     global softversion

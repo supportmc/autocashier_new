@@ -1,13 +1,13 @@
 {
     
     "Bill1":[{
-        "Ch1":[{"value":5,"type":"Pesos"}],
-        "Ch2":[{"value":10,"type":"Pesos"}],
-        "Ch3":[{"value":20,"type":"Pesos"}],
-        "Ch4":[{"value":50,"type":"Pesos"}],
-        "Ch5":[{"value":100,"type":"Pesos"}],
-        "Ch6":[{"value":500,"type":"Pesos"}],
-        "Ch7":[{"value":1000,"type":""}],
+        "Ch1":[{"value":1,"type":"USD"}],
+        "Ch2":[{"value":5,"type":"USD"}],
+        "Ch3":[{"value":10,"type":"USD"}],
+        "Ch4":[{"value":20,"type":"USD"}],
+        "Ch5":[{"value":50,"type":"USD"}],
+        "Ch6":[{"value":100,"type":"USD"}],
+        "Ch7":[{"value":0,"type":""}],
         "Ch8":[{"value":0,"type":""}],
         "Ch9":[{"value":0,"type":""}],
         "Ch10":[{"value":0,"type":""}],
@@ -19,13 +19,13 @@
         "Ch16":[{"value":0,"type":""}]
     }],
     "Bill2":[{
-        "Ch1":[{"value":5,"type":"Pesos"}],
-        "Ch2":[{"value":10,"type":"Pesos"}],
-        "Ch3":[{"value":20,"type":"Pesos"}],
-        "Ch4":[{"value":50,"type":"Pesos"}],
-        "Ch5":[{"value":100,"type":"Pesos"}],
-        "Ch6":[{"value":500,"type":"Pesos"}],
-        "Ch7":[{"value":1000,"type":""}],
+        "Ch1":[{"value":1,"type":"USD"}],
+        "Ch2":[{"value":5,"type":"USD"}],
+        "Ch3":[{"value":10,"type":"USD"}],
+        "Ch4":[{"value":20,"type":"USD"}],
+        "Ch5":[{"value":50,"type":"USD"}],
+        "Ch6":[{"value":100,"type":"USD"}],
+        "Ch7":[{"value":0,"type":""}],
         "Ch8":[{"value":0,"type":""}],
         "Ch9":[{"value":0,"type":""}],
         "Ch10":[{"value":0,"type":""}],
@@ -37,22 +37,22 @@
         "Ch16":[{"value":0,"type":""}]       
     }],
     "Coin":[{
-        "Ch1":[{"value":0.5,"type":"Pesos"}],
-        "Ch2":[{"value":1,"type":"Pesos"}],
-        "Ch3":[{"value":2,"type":"Pesos"}],
-        "Ch4":[{"value":5,"type":"Pesos"}],
-        "Ch5":[{"value":10,"type":"Pesos"}],
-        "Ch6":[{"value":0,"type":"Pesos"}],
+        "Ch1":[{"value":0,"type":"USD"}],
+        "Ch2":[{"value":0,"type":"USD"}],
+        "Ch3":[{"value":0,"type":"USD"}],
+        "Ch4":[{"value":0,"type":"USD"}],
+        "Ch5":[{"value":0,"type":"USD"}],
+        "Ch6":[{"value":0,"type":"USD"}],
         "Ch7":[{"value":0,"type":""}],
         "Ch8":[{"value":0,"type":""}],
         "Ch9":[{"value":0,"type":""}],
-        "Ch10":[{"value":0,"type":""}],
-        "Ch11":[{"value":0,"type":""}],
-        "Ch128":[{"value":5,"type":"Pesos"}],
-        "Ch112":[{"value":2,"type":"Pesos"}],
-        "Ch144":[{"value":10,"type":"Pesos"}],
-        "Ch160":[{"value":1,"type":"Pesos"}],
-        "Ch80":[{"value":1,"type":"Pesos"}]       
+        "Ch16":[{"value":0.01,"type":"USD"}],
+        "Ch32":[{"value":0.05,"type":"USD"}],
+        "Ch48":[{"value":0.10,"type":"USD"}],
+        "Ch64":[{"value":0.25,"type":"USD"}],
+        "Ch144":[{"value":0,"type":"USD"}],
+        "Ch160":[{"value":0,"type":"USD"}],
+        "Ch80":[{"value":0,"type":"USD"}]       
     }]
 
 }
