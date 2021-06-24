@@ -13,9 +13,10 @@ enviar="""{"titulo":"MAGNETIC CASH",
 "email":"lab@magneticash.com",
 "web":"www.magneticash.com",
 "cashier":"Matias",
-"date":"03/06/2021 15:45",
 "mpl":"3650011783889",
 "symbol":"USD",
+"payment_method":"",
+"payment_info":"",
 "card_price":2.00,
 "load":30.00,
 "subtotal":32.00,
@@ -47,6 +48,8 @@ def Print():#pcard,amount,cashier,mpl,symbol,tax
                 r['total']=r['subtotal']+r['iva_monto']
                 r['mpl']=parametros[3]
                 r['symbol']=parametros[4]
+                r['payment_method']=parametros[7]
+                r['payment_info']=parametros[6]
                 parametros=[]
                 print(r)
                 f = open("Parameters.txt", "w")

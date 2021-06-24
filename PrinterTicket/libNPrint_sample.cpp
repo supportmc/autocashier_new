@@ -1,13 +1,3 @@
-/*
- ============================================================================
- Name        : libNPrint_sample.cpp
- Author      : Nippon Printer Engnieering Inc.
- Version     : 2.3
- Copyright   : Nippon Printer Engnieering Inc.
- Description : Ansi-style
- ============================================================================
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -15,29 +5,19 @@
 #include <unistd.h>					// usleep
 #include <iostream>
 #include <fstream>
-
 #include <time.h>					// localtime
-
-//#include "cv.h"						// for OpenCV2
-//#include "highgui.h"				// for OpenCV2
-
 #include <opencv2/core.hpp>			// for OpenCV3
 #include <opencv2/highgui.hpp>		// for OpenCV3
 #include <opencv2/imgcodecs.hpp>	// for OpenCV3
-
 #define	N_SUCCESS					0
 #define	N_ERR_OFFLINE				-5
-
 #define IMG_RASTER_LINE				0x00
 #define IMG_RASTER_BLOCK			0x01
 #define IMG_RASTER_GRADATION		0x02
 #define IMG_BITIMG					0x10
-
 using namespace std;
 
 typedef void(*NCALLBACK) (char*, int, int, int);
-
-
 extern "C" int NEnumPrinters(char* o_printers, unsigned int* o_size);
 extern "C" int NOpenPrinter(char* i_prt, unsigned char i_statusFlg, NCALLBACK i_callback);
 extern "C" int NClosePrinter(char* i_prt);
@@ -51,21 +31,14 @@ extern "C" int NStartDoc(char* i_prt, unsigned int* o_jobid);
 extern "C" int NEndDoc(char* i_prt);
 extern "C" int NCancelDoc(char* i_prt);
 extern "C" unsigned long cputime();
-
-//int NImagePrintWrap(char* i_prt, IplImage* i_bmp, unsigned int i_width, unsigned int i_height, unsigned char i_putType, unsigned int* o_jobid);		// for OpenCV2
 extern "C" int NImagePrintWrap(char* i_prt, cv::Mat i_bmp, unsigned int i_width, unsigned int i_height, unsigned char i_putType, unsigned int* o_jobid);		// for OpenCV3
 
-//***************************************************************************
-//  Name : fncGetDate
-//***************************************************************************
 void fncGetDate(char *o_staData)
 {
 	time_t timep;
     struct tm *time_inf;
     char staDate[32];
-
     time(&timep);
-
     time_inf = localtime(&timep);
     memset(staDate, 0x00, 32);
     sprintf(staDate,"%02d/%02d/%04d %02d:%02d", time_inf->tm_mon + 1, time_inf->tm_mday, time_inf->tm_year + 1900, time_inf->tm_hour, time_inf->tm_min);
@@ -73,16 +46,9 @@ void fncGetDate(char *o_staData)
     return;
 }
 
-//---------------------------------------------------------------------------
-//  Name     : fncTestSample
-//  Deteail  : TEST Sample
-//  Argument : Nothing
-//  Return   : Nothing
-//---------------------------------------------------------------------------
 void fncTestSample(void)
 {	
 	ifstream Parameters;
-
 	string CompanyNameSTR;
 	string HeaderTextSTR;
 	string AddressSTR;
@@ -93,9 +59,10 @@ void fncTestSample(void)
 	string MailSTR;
 	string WebsiteSTR;
 	string CashierIDSTR;
-	string DateSTR;
 	string CardNumberSTR;
 	string CurrencySTR;
+	string PaymentMethodSTR;
+	string PaymentInfoSTR;
 	string CardPriceSTR;
 	string LoadSTR;
 	string SUBTOTALSTR;
@@ -104,71 +71,32 @@ void fncTestSample(void)
 	string TOTALSTR;
 	string FootTextSTR;
 
-
 	Parameters.open("Parameters.txt", ios::in);
-
 	if(Parameters.fail()) {
 		cout << "No se pudo abrir el archivo";
 	}
-
-	
 	getline(Parameters, CompanyNameSTR);
-	cout << CompanyNameSTR;
 	getline(Parameters, HeaderTextSTR);
-	cout << HeaderTextSTR;
 	getline(Parameters, AddressSTR);
-	cout << AddressSTR;
 	getline(Parameters, CitySTR);
-	cout << CitySTR;
 	getline(Parameters, StateSTR);
-	cout << StateSTR;
 	getline(Parameters, CountrySTR);
-	cout << CountrySTR;
 	getline(Parameters, TelephoneSTR);
-	cout << TelephoneSTR;
 	getline(Parameters, MailSTR);
-	cout << MailSTR;
 	getline(Parameters, WebsiteSTR);
-	cout << WebsiteSTR;
 	getline(Parameters, CashierIDSTR);
-	cout << CashierIDSTR;
-	getline(Parameters, DateSTR);
-	cout << DateSTR;
 	getline(Parameters, CardNumberSTR);
-	cout << CardNumberSTR;
 	getline(Parameters, CurrencySTR);
-	cout << CurrencySTR;
+	getline(Parameters, PaymentMethodSTR);
+	getline(Parameters, PaymentInfoSTR);
 	getline(Parameters, CardPriceSTR);
-	cout << CardPriceSTR;
 	getline(Parameters, LoadSTR);
-	cout << LoadSTR;
 	getline(Parameters, SUBTOTALSTR);
-	cout << SUBTOTALSTR;
 	getline(Parameters, IVASTR);
-	cout << IVASTR;
 	getline(Parameters, TOTALIVASTR);
-	cout << TOTALIVASTR;
 	getline(Parameters, TOTALSTR);
-	cout << TOTALSTR;
 	getline(Parameters, FootTextSTR);
-	cout << FootTextSTR;
-
 	Parameters.close();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	char CompanyName[36];
 	char HeaderText[86];
@@ -182,6 +110,8 @@ void fncTestSample(void)
 	char CashierID[36];
 	char CardNumber[36];
 	char Currency[36];
+	char PaymentMethod[36];
+	char PaymentInfo[86];
 	char CardPrice[36];
 	char Load[36];
 	char SUBTOTAL[36]; 
@@ -189,7 +119,6 @@ void fncTestSample(void)
 	char TOTALIVA[36];
 	char TOTAL[36];
 	char FootText[86];
-
 	
 	strcpy(CompanyName, CompanyNameSTR.c_str());
 	strcpy(HeaderText, HeaderTextSTR.c_str());
@@ -202,6 +131,8 @@ void fncTestSample(void)
 	strcpy(Website, WebsiteSTR.c_str());
 	strcpy(CashierID, CashierIDSTR.c_str());
 	strcpy(CardNumber, CardNumberSTR.c_str());
+	strcpy(PaymentMethod, PaymentMethodSTR.c_str());
+	strcpy(PaymentInfo, PaymentInfoSTR.c_str());
 	strcpy(Currency, CurrencySTR.c_str());
 	strcpy(CardPrice, CardPriceSTR.c_str());
 	strcpy(Load, LoadSTR.c_str());
@@ -210,12 +141,6 @@ void fncTestSample(void)
 	strcpy(TOTALIVA, TOTALIVASTR.c_str());
 	strcpy(TOTAL, TOTALSTR.c_str());
 	strcpy(FootText, FootTextSTR.c_str());
-
-
-
-
-
-
 
 	char Temp[86];
 	sprintf(Temp, "\"%s\"", CompanyName);
@@ -242,6 +167,10 @@ void fncTestSample(void)
 	strcpy(CardNumber, Temp);
 	sprintf(Temp, "\"%s\"", Currency);
 	strcpy(Currency, Temp);
+	sprintf(Temp, "\"%s\"", PaymentMethod);
+	strcpy(PaymentMethod, Temp);
+	sprintf(Temp, "\"%s\"", PaymentInfo);
+	strcpy(PaymentInfo, Temp);
 	sprintf(Temp, "\"%s\"", CardPrice);
 	strcpy(CardPrice, Temp);
 	sprintf(Temp, "\"%s\"", Load);
@@ -262,7 +191,6 @@ void fncTestSample(void)
 	char staDate[32];
 	unsigned char rawGScmd[8];
 	unsigned char rawGetData[128];
-
 	int nmsRet;
 	int nmsCnt;
 	unsigned long nmuTimeout;
@@ -272,14 +200,11 @@ void fncTestSample(void)
 	unsigned int nmuGetJobID;
 	unsigned int *pnmuID;
 
-	char *staImgPath = "./PrintSample.bmp";
-//	IplImage *img = cvLoadImage(staImgPath, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);	// for OpenCV2
-	cv::Mat img = cv::imread(staImgPath);														// for OpenCV3
+	char *staImgPath = "./PrintSample.jpg";
+	cv::Mat img = cv::imread(staImgPath);
 
-	printf("********** Test Sample in **********\n");
+	printf("IMPRESION\n");
 	
-	// ポートオープン
-	// Port open
 	nmsRet = NOpenPrinter("PRT001", 1, NULL);
 	printf(" NOpenPrinter           ReturnCode : %d\n", nmsRet);
 	if(nmsRet != N_SUCCESS)
@@ -287,19 +212,13 @@ void fncTestSample(void)
 		exit(-1);
 	}
 
-	// 年月日、時間取得
-	// get a date
 	memset(staDate, 0x00, 32);
 	strcat(staDate, "\"Date: ");
 	fncGetDate(&staDate[strlen(staDate)]);
 	strcat(staDate, "\"");
 
-	// 状態確認
-	// Printer status check
 	nmsRet = NGetStatus(staPort, &nmuStatus);
 	
-	// 情報取得CMD発行
-	// Information acquisition command output
 	nmsRet = NPrint(staPort, "1b73021b73031b7304", strlen("1b73021b73031b7304"), &nmuJob);
 	usleep(1000000);
 	// Model name
@@ -314,11 +233,6 @@ void fncTestSample(void)
 	memset(rawGetData, 0x00, 128);
 	nmsRet = NGetInformation(staPort, (unsigned char)0x04, rawGetData, &nmuTime);
 	printf(" NGetInformation(ID:04) ReturnCode : %d -> Boot Version     : %s\n", nmsRet, rawGetData);
-
-	//
-	// データセット
-	// Set data
-	//
 
 	// StartDoc
 	nmuJob = 0;
@@ -340,15 +254,26 @@ void fncTestSample(void)
 	nmsCnt+=4;
 	nmsRet = NDPrint(staPort, rawGScmd, nmsCnt, NULL);
 
+	nmsRet = NPrint(staPort, "1b61011b2130", strlen("1b61011b2130"), NULL); //LETRA GRANDE, NEGRITA Y CENTRADA
+
+
+	// Raster image data
+	nmsRet = NImagePrintF(staPort, staImgPath, IMG_RASTER_BLOCK, NULL);
+
+	// Raster image data
+	//nmsRet = NImagePrintWrap(staPort, img, img->width, img->height, IMG_RASTER_BLOCK, NULL);
+	nmsRet = NImagePrintWrap(staPort, img, img.cols, img.rows, IMG_RASTER_BLOCK, NULL);
+
 	// 文字データ
 	// other data
+	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
 	nmsRet = NPrint(staPort, "1b61011b2130", strlen("1b61011b2130"), NULL); //LETRA GRANDE, NEGRITA Y CENTRADA
 	nmsRet = NPrint(staPort, CompanyName, strlen(CompanyName), NULL);
 	nmsRet = NPrint(staPort, "1b2100", strlen("1b2100"), NULL); //LETRA CHICA
 	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
-	nmsRet = NPrint(staPort, "1b6100", strlen("1b6100"), NULL); //POSICION DEL TEXTO A LA IZQUIERDA
 	nmsRet = NPrint(staPort, HeaderText, strlen(HeaderText), NULL);
 	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
+	nmsRet = NPrint(staPort, "1b6100", strlen("1b6100"), NULL); //POSICION DEL TEXTO A LA IZQUIERDA
 	nmsRet = NPrint(staPort, "\"********************************\"0a", strlen("\"********************************\"0a"), NULL);
 	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
 	nmsRet = NPrint(staPort, Address, strlen(Address), NULL);
@@ -379,6 +304,12 @@ void fncTestSample(void)
 	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
 	nmsRet = NPrint(staPort, "\"Card number: \"", strlen("\"Card number: \""), NULL);
 	nmsRet = NPrint(staPort, CardNumber, strlen(CardNumber), NULL);
+	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
+	nmsRet = NPrint(staPort, "\"Payment method: \"", strlen("\"Payment method: \""), NULL);
+	nmsRet = NPrint(staPort, PaymentMethod, strlen(PaymentMethod), NULL);
+	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
+	nmsRet = NPrint(staPort, "\"Payment info: \"", strlen("\"Payment info: \""), NULL);
+	nmsRet = NPrint(staPort, PaymentInfo, strlen(PaymentInfo), NULL);
 	nmsRet = NPrint(staPort, "\"\"0a", strlen("\"\"0a"), NULL); //SALTO DE LINEA en el "0a"
 	nmsRet = NPrint(staPort, "\"Card price: \"", strlen("\"Card price: \""), NULL);
 	nmsRet = NPrint(staPort, Currency, strlen(Currency), NULL);
@@ -415,15 +346,9 @@ void fncTestSample(void)
 	nmsRet = NPrint(staPort, "1b61011b2130", strlen("1b61011b2130"), NULL); //LETRA GRANDE, NEGRITA Y CENTRADA
 	nmsRet = NPrint(staPort, "1b2100", strlen("1b2100"), NULL); //LETRA CHICA
 	nmsRet = NPrint(staPort, FootText, strlen(FootText), NULL);
-/*
-	// Raster image data
-	nmsRet = NImagePrintF(staPort, staImgPath, IMG_RASTER_BLOCK, NULL);
 
-	// Raster image data
-	//nmsRet = NImagePrintWrap(staPort, img, img->width, img->height, IMG_RASTER_BLOCK, NULL);
-	nmsRet = NImagePrintWrap(staPort, img, img.cols, img.rows, IMG_RASTER_BLOCK, NULL);*/
+	
 
-	// 文字データ(Feed&Cut)
 	// Feed / Cut command
 	nmsRet = NPrint(staPort, "1b4aff1b69", strlen("1b4aff1b69"), NULL);
 
@@ -431,9 +356,8 @@ void fncTestSample(void)
 	nmsRet = NPrint(staPort, "<./rasterData.bin>", strlen("<./rasterData.bin>"), NULL);
 
 	// Image Data
-	nmsRet = NPrint(staPort, "[./PrintSample.bmp]", strlen("[./PrintSample.bmp]"), NULL);
+	nmsRet = NPrint(staPort, "[./PrintSample.jpg]", strlen("[./PrintSample.jpg]"), NULL);
 
-	// 印字終了CMD
 	// Out printing command
 	nmsRet = NPrint(staPort, "1d4710", strlen("1d4710"), NULL);
 
@@ -491,23 +415,13 @@ void fncTestSample(void)
 		}
 	}
 	
-
-	// ポートクローズ
 	// port close
 	nmsRet = NClosePrinter(staPort);
 	printf(" NClosePrinter          ReturnCode : %d\n", nmsRet);
-
-	
-	printf("********** Test Sample out **********\n");
-
-	//cvReleaseImage(&img);		// OpenCV2
-
+	printf("Fin del modulo de impresion\n");
 	return;
 }
 
-//***************************************************************************
-//  Name : main
-//***************************************************************************
 int main(void)
 {
 	int nmsRet;
@@ -516,9 +430,9 @@ int main(void)
 	unsigned int nmuSize;
 	unsigned int nmuDummy;
 
-	printf("---------- libNPrint.so Test Sample Start ----------\n");
+	printf("Inicio de la funcion de impresion\n");
 	fncTestSample();
-	printf("---------- libNPrint.so Test Sample End ----------\n");
+	printf("Fin del programa\n");
 	return EXIT_SUCCESS;
 }
 
@@ -574,8 +488,6 @@ int NImagePrintWrap(char* i_prt, cv::Mat i_bmp, unsigned int i_width, unsigned i
 	int channels = i_bmp.channels();			// Channel count of Image
 	int step = i_bmp.step;						// Step count of Image
 	unsigned char* bufImage = i_bmp.data;		// Data array of Image
-
 	ret = NImagePrint(i_prt, bufImage, i_width, i_height, channels, step, i_putType, o_jobid);
-
 	return ret;
 }

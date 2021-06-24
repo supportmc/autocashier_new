@@ -87,6 +87,12 @@ r=json.loads(r)
 if r['Resultado']['Cod']==15:
     r=Posnet_Config()
     print(r) """
-#print(Posnet_Pay(10.0,1))
-#r=json.loads(r)
 
+#r=Posnet_Pay(20,1)
+#r=json.loads(r)
+#print(r)
+
+
+
+#now = str(time.ctime((time.time()+40000000000)))
+#print("the now time is " + str(now))

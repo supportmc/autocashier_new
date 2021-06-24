@@ -69,6 +69,8 @@ LectorscanApp=False
 
 PosnetActivo=False
 PostnetCon=[]
+PNCard=''
+PTCard=''
 #-----------------------------------------------------------------------------------
 
 import datetime
@@ -361,6 +363,8 @@ def FinalizaTransaccion():
     global Tarjeta
     global LectorTeclado
     global simbolo
+    global PNCard
+    global PTCard
 
     if Tarjeta and Tarjeta.find(';')>-1:
 
@@ -396,6 +400,15 @@ def FinalizaTransaccion():
     PrintM.parametros.append(tcard)#mpl
     PrintM.parametros.append(simbolo)#simbolo
     PrintM.parametros.append(21)#tax
+    if PNCard:
+        PrintM.parametros.append(PNCard)#tax
+        PrintM.parametros.append(PTCard)#tax
+    else:
+        PrintM.parametros.append('-')#tax
+        PrintM.parametros.append('Cash')#tax
+
+    PNCard=''
+    PTCard=''
 
 
     #Close_Transaction
@@ -507,6 +520,9 @@ def imprime():
     global ruta
     global newCardPrice
     global Tarjeta
+    global PNCard
+    global PTCard
+
     if newCardPrice < 0:
         newCardPrice=0
     while 1:
@@ -636,12 +652,26 @@ def imprime():
                             r=posnet.Posnet_Pay(float(page[t+1:]),1)
                             r=json.loads(r)
                             if r['Resultado']['Cod']==0:
+                                if 'ReceiptData' in r['Resultado']:
+                                    for key,value in r['Resultado']['ReceiptData'].items():
+                                        #print(value+'\n')
+                                        if key=='Line4':
+                                            PNCard=value[-8:]
+                                        if value.find(".APPLICATION LABEL:")>-1:
+
+                                            PTCard=value[20:]
                                 functions.Incrementar(float(page[t+1:]))
+
                                 print('Total ingresado '+ str(page[t+1:]))                                                               
+
                                 ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])+'&successProcessPersonalizado=true'                
                                 webview.windows[0].load_url(ruta)
                                 sleep(2)
                                 functions.Ingreso=True
+                                #process
+                                event='{"tipo":"Process","timestamp":"'+str(datetime.now())+'"}'
+                                eventProcess='{"Process":"Datacap","Pay_Method":"Card","Card":"'+ PTCard +'","Card_Number":"'+ PNCard +'","Total_amount_local_currency":'+str(functions.SALDO)+'}'
+                                database.saveHistoryEvent(event,eventProcess,'process')
                             else:
                                 ruta=rutaVista+'index.html?&saldo3='+ str(functions.SALDO) +'&simbolo3=$&screen3=1&valueSimboloSelected=$&valueMontoSelected='+str(page[t+1:])+'&errorProcessPersonalizado=true'                
                                 webview.windows[0].load_url(ruta)

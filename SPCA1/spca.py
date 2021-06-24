@@ -76,6 +76,7 @@ Setup=0
 """ def GetSetupJson():
     global JsonSetup
     return JsonSetup """
+    
 def GetVersion():
     return(str(Version))
 
