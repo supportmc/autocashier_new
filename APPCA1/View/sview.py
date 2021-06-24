@@ -180,25 +180,27 @@ def VerificaPosnet():
     while PosnetActivo==False:
         if PostnetCon:
             for d in PostnetCon:
-                r=posnet.Posnet_Init(d[0],int(d[1]))
+                r=posnet.Posnet_Status()
                 if r!='Error':
                     r=json.loads(r)
 
-                    if r['Resultado']['Cod']==0:
-                        r=posnet.Posnet_Status()
-                        r=json.loads(r)
-                        if r['Resultado']['Cod']==15 or r['Resultado']['Cod']==15000:
-                            threading.Thread(target=posnet.Posnet_Config).start()
-                            PosnetActivo=True
-                        elif r['Resultado']['Cod']!=0:
-                            print('Error en Posnet')
-                        elif r['Resultado']['Cod']==0:
-                            print('Postnet Operativo')
-                            PosnetActivo=True
-                    else:
-                        print('Error al inicializar posnet')
-                        if r['Resultado']['Cod']==15:
-                            threading.Thread(target=posnet.Posnet_Config).start()
+                    #if r['Resultado']['Cod']==0 and r['Resultado']['Status']!='wtConfig':
+                        #r=posnet.Posnet_Status()
+                        #r=json.loads(r)
+                    if r['Resultado']['Cod']==15 or r['Resultado']['Cod']==15000 or r['Resultado']['Status']=='wtConfig':
+                        #threading.Thread(target=posnet.Posnet_Config).start()
+                        posnet.Posnet_Config()
+                        #PosnetActivo=True
+                    elif r['Resultado']['Cod']!=0:
+                        print('Error en Posnet')
+                    elif r['Resultado']['Cod']==0:
+                        print('Postnet Operativo')
+                        PosnetActivo=True
+                    #else:
+                    #    print('Error al inicializar posnet')
+                    #    if r['Resultado']['Cod']==15:
+                            #threading.Thread(target=posnet.Posnet_Config).start()
+                    #        posnet.Posnet_Config()
                 else:
                     PosnetActivo=False
         sleep(3)

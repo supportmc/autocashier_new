@@ -8,14 +8,14 @@ Argentina
 lab@magneticash.com
 www.magneticash.com
 Autocashier
-;6020011858615
+;6680001237432
 
-VISA CREDIT
-****0119
+Cash
+-
 0
-18.0357
-18.0357
+0.79
+0.79
 21.0
-4.7943
-22.83
+0.21
+1.0
 thank you!!!

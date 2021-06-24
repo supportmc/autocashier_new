@@ -96,3 +96,5 @@ if r['Resultado']['Cod']==15:
 
 #now = str(time.ctime((time.time()+40000000000)))
 #print("the now time is " + str(now))
+#r=Posnet_Config()
+#print(r)

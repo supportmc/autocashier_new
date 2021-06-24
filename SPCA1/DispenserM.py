@@ -428,6 +428,7 @@ def sacarTarjeta(tipo):
     resp=[]
     while 1:
         sleep(0.001)
+        tarjeta=''
         while TPreparada==False:
             sleep(0.01)
             r=None
@@ -438,19 +439,21 @@ def sacarTarjeta(tipo):
                 resp.append({"status":"Error"})
             if r=='Port Error':
                 resp.append({"status":"Error"})
-            if r['Lector Ocupado']==1:
+            #if r['Lector Ocupado']==1:
                 
-                if not tarjeta:
-                    if tipo=='M':
-                        tm=SendDispenser('6')
-                        tarjeta=tm
-                        TPreparada=True
-                    else:
-                        tn=SendDispenser('16')
-                        tarjeta=tn
-                        TPreparada=True
-                else:
+            if not tarjeta:
+                if r['Lector Ocupado']==0:
+                    SendDispenser('5')
+                if tipo=='M':
+                    tm=SendDispenser('6')
+                    tarjeta=tm
                     TPreparada=True
+                else:
+                    tn=SendDispenser('16')
+                    tarjeta=tn
+                    TPreparada=True
+            else:
+                TPreparada=True
 
             if r['Lector Ocupado']==0:
                 r=SendDispenser('2')
@@ -476,16 +479,16 @@ def sacarTarjeta(tipo):
                         #sleep(0.11)
                         #SendDispenser('4')
                         sleep(0.11)
-                    SendDispenser('5')
-                    sleep(0.11)
+                    #SendDispenser('5')
+                    #sleep(0.11)
                 
-                    sleep(0.1)
-                    if tipo=='M':
-                        tm=SendDispenser('6')
-                        tarjeta=tm
-                    else:
-                        tn=SendDispenser('16')
-                        tarjeta=tn
+                    #sleep(0.1)
+                    #if tipo=='M':
+                    #    tm=SendDispenser('6')
+                    #    tarjeta=tm
+                    #else:
+                    #    tn=SendDispenser('16')
+                    #    tarjeta=tn
                     
                     if tarjeta !='' and tarjeta !=None:
                         print('leyo tarjeta '+ str(tarjeta))
@@ -495,7 +498,7 @@ def sacarTarjeta(tipo):
             #     r=SendDispenser('2')
             #     rj=r
             #     #"Bezel Status":aa[1:2],"Pre Send Status"
-            #     if rj['Bezel Status']=='0':
+            #     if rj['Bezel Status']=r['Resultado']['Status']!='wtConfig':='0':
             #         print('tarjeta no preparada')
             #     if rj['Pre Send Status']=='0':
             #         print('No hay tarjeta')
