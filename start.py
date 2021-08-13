@@ -31,8 +31,8 @@ def start():
 
     #spca.Start()
 
-    execute="python3 "+rutaPrincipal+"spca.py"
-    os.system(execute)
+    #execute="python3 "+rutaPrincipal+"spca.py"
+    #os.system(execute)
     
     
     exit()

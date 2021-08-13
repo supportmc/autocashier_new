@@ -5,6 +5,7 @@ import os
 from time import sleep
 import ports
 import threading
+import datetime
 
 intentos=0
 
@@ -193,7 +194,7 @@ def SendDispenser(transaction):
             p=str(q).find('01Y')
             if p> -1:
                 tt=str(q)[p+4:p+17]
-                print(tt)
+                #print(tt)
                 return(tt)
             else:
                 if intentos <3:
@@ -426,10 +427,11 @@ def sacarTarjeta(tipo):
     Tarjeta=''
     tarjeta=''
     resp=[]
-    while 1:
+    if 1:
         sleep(0.001)
-        tarjeta=''
+        
         while TPreparada==False:
+            tarjeta=''
             sleep(0.01)
             r=None
             while r==None:
@@ -482,16 +484,17 @@ def sacarTarjeta(tipo):
             if not tarjeta:
                 if r['Lector Ocupado']==0:
                     SendDispenser('5')
-                if tipo=='M':
-                    tm=SendDispenser('6')
-                    tarjeta=tm
+                else:#tipo=='M':
+                    tn=SendDispenser('6')
+                    tarjeta=tn
+                    if not tarjeta:
+                        tm=SendDispenser('16')
+                        tarjeta=tm
                     if tarjeta !='' and tarjeta !=None:
                         print('leyo tarjeta '+ str(tarjeta))
                     TPreparada=True
-                else:
-                    tn=SendDispenser('16')
-                    tarjeta=tn
-                    TPreparada=True
+                #else:
+                    
             else:
                 TPreparada=True
             # if tarjeta!='' and tarjeta !=None:
@@ -524,10 +527,10 @@ def sacarTarjeta(tipo):
                 #Tarjeta=t
                 #SendDispenser('8')
                 #return {"status":"Ok"}#,"card_number":t}
-            else:#SendDispenser('8')
-                #Tarjeta=''
+            elif not TPreparada:#SendDispenser('8')
+                Tarjeta=''
                 TPreparada=False
-                SendDispenser('9')
+                SendDispenser('8')
                 #return {"status":"Error","msg":resp}
         
 
@@ -585,11 +588,13 @@ def PrepararTarjeta():
 #SendDispenser('4') 
 #sleep(3)
 
-#SendDispenser('8')
+#SendDispenser('5')
 #SendDispenser('5')
 #SendDispenser('8')
 #sleep(3)
 
 #sleep(3)
-#print(SendDispenser('6'))
+#print(datetime.datetime.now())
+#print(SendDispenser('16'))
+#print(datetime.datetime.now())
 #sacarTarjeta('M')
