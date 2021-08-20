@@ -985,8 +985,8 @@ li {
 
 #credits,
 #bonus,
-#tks,
-#qty {
+#Tks,
+#Qty {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -1079,7 +1079,7 @@ td {
 }
 
 #outOfService img {
-    padding-left: 9rem;
+    padding-left: 15rem;
 }
 
 

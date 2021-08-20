@@ -229,21 +229,7 @@ def creoVentana():
     mdir=os.getcwd()
     print(mdir)
 
-    #modulo MC 
-    r=magnetic.opencash('AutoCajero','CajeroAzul1') 
-    rr=json.loads(r)
-    if rr['status']=='ok':
-        newCardPrice=float(rr['card_price'])
-    else:
-        while 1:
-            print('sin red')
-            sleep(1)
-
-    #webview.windows[0].load_url('setup.html') 
-    #Paso todo los parametros a la vista
-    h=threading.Thread(target=DispenserM.sacarTarjeta, args=('M',))
-    h.setDaemon=True
-    h.start()
+    
 
     #h=threading.Thread(target=PrintM.Print)#.start()
     #h.setDaemon=True
@@ -508,6 +494,7 @@ def Eventos():
         bn=0
         qty=0
         tks=0
+        data={}
         if Tarjeta:
             r=magnetic.balance(Tarjeta[-14:])
             #r.json.dumps(r)
@@ -599,6 +586,34 @@ def imprime():
     global Tarjeta
     global PNCard
     global PTCard
+
+    data=SetupM.GetJsonSetup()
+
+    #modulo MC 
+    r=magnetic.opencash('AutoCajero',data['device_name']) 
+    rr=json.loads(r)
+    if rr['status']=='ok':
+        newCardPrice=float(rr['card_price'])
+    else:
+        ruta='index.html?outOfService=true'
+        CambioVentana()
+        
+        while 1:
+            r=magnetic.opencash('AutoCajero','CajeroAzul1') 
+            rr=json.loads(r)
+            if rr['status']=='ok':
+                newCardPrice=float(rr['card_price'])
+                break
+            else:
+                print('sin red')
+                sleep(1)
+    ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
+    CambioVentana()
+    #webview.windows[0].load_url('setup.html') 
+    #Paso todo los parametros a la vista
+    h=threading.Thread(target=DispenserM.sacarTarjeta, args=('M',))
+    h.setDaemon=True
+    h.start()
 
     if newCardPrice < 0:
         newCardPrice=0

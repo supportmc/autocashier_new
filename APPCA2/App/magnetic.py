@@ -31,7 +31,7 @@ def client_program(data):
         if data:
             return data
         else:
-            return '{"status":"Error"}'
+            return '{"status":"Error","msg":"error"}'
     except Exception as e:
         return '{"status":"Error","msg":"'+str(e)+'"}'
 
