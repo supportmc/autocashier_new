@@ -38,6 +38,7 @@ body {
 }
 
 .transaccion-box--success {
+    display: none;
     position: absolute;
     top: 0rem;
     left: 0;
@@ -48,6 +49,7 @@ body {
 }
 
 .transaccion-logo--success {
+    display: none;
     width: 400px;
     position: absolute;
     top: 12rem;
@@ -58,6 +60,7 @@ body {
 }
 
 .transaccion-box--error {
+    display: none;
     position: absolute;
     top: 0rem;
     left: 0;
@@ -68,6 +71,7 @@ body {
 }
 
 .transaccion-logo--error {
+    display: none;
     width: 400px;
     position: absolute;
     top: 12rem;
@@ -120,6 +124,7 @@ body {
 /* MODAL */
 .modal-overlay {
     position: fixed; 
+    display: none;
     width: 100%; 
     height: 100%; 
     top: 0;
@@ -127,39 +132,41 @@ body {
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.3); 
-    z-index: 2; 
+    z-index: 15 ; 
 }
 
 .modal {
-    width: 800px;
-    height: 480px;
+    width: 600px;
+    height: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 142.5px;
-    margin-left: 112px;
     animation: fadein 1s;
     padding:  1px 5px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    z-index: 15
 }
 
 .modalClosing {
-    animation: fadeout 1s;
+    animation: fadeout 1s forwards;
 }
 
 #modal img {
-    width: 100px;
+    width: 50px;
     height: auto;
 }
 
 .header {
-    width: 62%;
-    align-self: flex-end;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
     font-weight: 400;
@@ -207,11 +214,10 @@ li {
     font-size: 1.5rem;
     font-weight: 500;
     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin-bottom: 1rem;
-    margin-right: 2px;
+    position: absolute;
+    top: 2px;
+    right: .5rem;
 }
-
-
 
 .company-logo {
     width: 200px;
@@ -240,9 +246,11 @@ li {
     position: relative;
     top: 1rem;
     right: 1rem;
+    z-index: 12;
 }
 
 .lights__item {
+    display: none;
     position: absolute;
     top: 0rem;
     right: 0rem;
@@ -427,6 +435,7 @@ li {
 }
 
 .message--success {
+    display: none;
     width: 100%;
     height: 13rem;
     background-color: rgb(76, 175, 80);
@@ -437,7 +446,6 @@ li {
     text-align: center;
     font-size: 3rem;
     color: white;
-    display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 2rem;
@@ -446,6 +454,7 @@ li {
 }
 
 .message--error {
+    display: none;
     width: 100%;
     height: 13rem;
     background-color: #e4544c;
@@ -456,7 +465,6 @@ li {
     text-align: center;
     font-size: 3rem;
     color: white;
-    display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 2rem;
@@ -1073,7 +1081,7 @@ td {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 15;
+    z-index: 10;
     display: none;
     background-color: white;
 }

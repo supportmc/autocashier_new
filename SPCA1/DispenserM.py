@@ -597,4 +597,4 @@ def PrepararTarjeta():
 #print(datetime.datetime.now())
 #print(SendDispenser('16'))
 #print(datetime.datetime.now())
-#sacarTarjeta('M')
+sacarTarjeta('M')

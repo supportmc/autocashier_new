@@ -271,22 +271,28 @@ def ApagarLuzTarjetero():
     while r==False and to > datetime.now():
         sleep(0.01) 
 
-def EncenderLucesLectora():
+def EncenderLucesLectora(swipeCard,scanApp,nfc):
     global EnviarPuerto
     global r
     r=False
-    EnviarPuerto=[0x60]
     to=datetime.now()+timedelta(seconds=3)    
-    while r==False and to > datetime.now():
-        sleep(0.01) 
+    if nfc:
+        EnviarPuerto=[0x60]
+        
+        while r==False and to > datetime.now():
+            sleep(0.01) 
+    
     r=False
-    EnviarPuerto=[0x61]    
-    while r==False and to > datetime.now():
-        sleep(0.01) 
+
+    if swipeCard:
+        EnviarPuerto=[0x61]    
+        while r==False and to > datetime.now():
+            sleep(0.01) 
     r=False
-    EnviarPuerto=[0x62]    
-    while r==False and to > datetime.now():
-        sleep(0.01) 
+    if scanApp:
+        EnviarPuerto=[0x62]    
+        while r==False and to > datetime.now():
+            sleep(0.01) 
         
     
     if  to > datetime.now():
@@ -359,7 +365,7 @@ def ApagarLuces():
     global EnviarPuerto
     global r
     r=False
-    to=datetime.now()+timedelta(seconds=5)    
+    to=datetime.now()+timedelta(seconds=7)    
 
     EnviarPuerto=[0x70]    
     while r==False and to > datetime.now():
@@ -441,4 +447,4 @@ if (abrio==False):
     #    sleep(2)
     sleep(2)
     print('ya')"""
-    #EncenderLucesLectora()
+    #EncenderLucesLectora(False,False,True)

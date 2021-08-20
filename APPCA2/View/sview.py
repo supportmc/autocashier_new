@@ -541,6 +541,10 @@ def Eventos():
             Tarjeta=''
         CambioVentana()
         BoardModule.ApagarLucesLectora()
+        #DispenserM.sacarTarjeta('M')
+        #th=threading._start_new_thread(target=DispenserM.sacarTarjeta,args=['M'])
+        #th.setDaemon=True
+        #th.start()
         
         #sleep(4)
         #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&card='+card+'&scanApp='+scanApp+'&saldo='+ str(functions.SALDO) +'&simbolo=$'
@@ -562,7 +566,7 @@ def Eventos():
         functions.Ingreso=False
     
     if functions.ReaderActivos:
-        BoardModule.EncenderLucesLectora()
+        BoardModule.EncenderLucesLectora(swipeCard,scanApp,nfc)
         functions.ReaderActivos=False
 
     functions.LeerFiat=True
@@ -675,9 +679,15 @@ def imprime():
                     #if Tarjeta:
                     BoardModule.EncenderLuzTarjetero()
                     DispenserM.ExpulsarTarjeta()
-                    #DispenserM.TPreparada=False
-                    sleep(2.5)
+                    DispenserM.TPreparada=False
+                    h=threading.Thread(target=DispenserM.sacarTarjeta, args=('M',))
+                    h.setDaemon=True
+                    h.start()
+                    
+                    sleep(0.5)
                     BoardModule.ApagarLucesLectora()
+                    #BoardModule.ApagarLucesBilleteros()
+                    sleep(1)                        
                     BoardModule.ApagarLuzTarjetero()
                 elif not Tarjeta:
                     DispenserM.TPreparada=False
@@ -696,14 +706,26 @@ def imprime():
                         #else:
                         #ruta='index.html?&nfc='+ nfc +'&mercadoPago='+mercadoPago+'&insertCash='+insertCash+'&swipeCard='+swipeCard+'&scanApp='+scanApp+'&newCard='+newCard+'&saldo='+ str(functions.SALDO) +'&simbolo=$&newCardPrice='+ str(newCardPrice)+'&finTransaccionSuccess=true&msjSuccess=Transaction OK!'
                         CambioVentana()
+                        BoardModule.EncenderLuzTarjetero()
                         DispenserM.ExpulsarTarjeta()
-                        sleep(2)
+                        DispenserM.TPreparada=False
+                        h=threading.Thread(target=DispenserM.sacarTarjeta, args=('M',))
+                        h.setDaemon=True
+                        h.start()
+                        sleep(0.5)
                         BoardModule.ApagarLucesLectora()
+                        #BoardModule.ApagarLucesBilleteros()
+                        sleep(1)                        
                         BoardModule.ApagarLuzTarjetero()
+
+
+                        
                         
                     else:
-                        DispenserM.sacarTarjeta('M')
                         DispenserM.TPreparada=False
+                        r=DispenserM.sacarTarjeta('M')
+                        print(r)
+                        
 
                 
                     

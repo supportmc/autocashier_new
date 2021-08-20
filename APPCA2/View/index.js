@@ -31,14 +31,14 @@ if ( (!parseURLParams('saldo')) || (!parseURLParams('simbolo')) ) {
     document.getElementById('simbolo').innerHTML = parseURLParams('simbolo');
 };
 
-if (!parseURLParams('finTransaccionSuccess')) {
-    document.getElementById('finTransaccionSuccess').style.display = 'none';
-    document.getElementById('finTransaccionLogoSuccess').style.display = 'none';
+if (parseURLParams('finTransaccionSuccess')) {
+    document.getElementById('finTransaccionSuccess').style.display = 'inline';
+    document.getElementById('finTransaccionLogoSuccess').style.display = 'inline';
 }
 
-if (!parseURLParams('finTransaccionError')) {
-    document.getElementById('finTransaccionError').style.display = 'none';
-    document.getElementById('finTransaccionLogoError').style.display = 'none';
+if (parseURLParams('finTransaccionError')) {
+    document.getElementById('finTransaccionError').style.display = 'inline';
+    document.getElementById('finTransaccionLogoError').style.display = 'inline';
 }
 
 if ( (!parseURLParams('newCardPrice')) ) {
@@ -49,13 +49,9 @@ if ( (!parseURLParams('newCardPrice')) ) {
 
 window.onload = function() {
 
-    if ( (!parseURLParams('msjSuccess'))  ) {
-        document.getElementById('msjSuccess').style.display = 'none';    
-    }
+    if ( (parseURLParams('msjSuccess')) ) document.getElementById('msjSuccess').style.display = 'flex';    
 
-    if ( (!parseURLParams('msjError'))  ) {
-        document.getElementById('msjError').style.display = 'none';    
-    }
+    if ( (parseURLParams('msjError')) ) document.getElementById('msjError').style.display = 'flex'; 
 
     if ( ( parseURLParams('finTransaccionSuccess') && (parseURLParams('msjSuccess')) )) {
         document.getElementById('msjSuccess').innerHTML = parseURLParams('msjSuccess');
@@ -66,7 +62,6 @@ window.onload = function() {
             var newsearchParams = newStr[0];
             console.log('newsearchParams', newsearchParams)
             window.location.href = URL  + newsearchParams; 
-            console.log(URL  + newsearchParams);
         }, 4500);
     }
 
@@ -78,18 +73,21 @@ window.onload = function() {
             var newStr = searchParams.split('&fin')
             var newsearchParams = newStr[0];
             window.location.href = URL  + newsearchParams; 
-            console.log(URL  + newsearchParams);
         }, 4500);
     }
 }
 
-if ( (!parseURLParams('redWarning'))) document.getElementById('redWarning').style.display = 'none';
-if ( (!parseURLParams('yellowWarning'))) document.getElementById('yellowWarning').style.display = 'none';
+if ( (parseURLParams('redWarning'))) document.getElementById('redWarning').style.display = 'inline';
+if ( (parseURLParams('yellowWarning'))) document.getElementById('yellowWarning').style.display = 'inline';
 
 // Modal 
 function openModal(warningType) {
     var searchParams = window.location.search;
     var URL = window.location.pathname;
+    if ( !searchParams ) {  
+        window.location.href = URL + searchParams + '?'+ warningType + 'WarningModal=true';
+        return ;
+    }
     window.location.href = URL + searchParams + '&'+ warningType + 'WarningModal=true';
 }
 
@@ -101,13 +99,13 @@ function closeModal() {
         const url = new URL(location);
         url.searchParams.delete('modalContent');
         url.searchParams.delete('yellowWarningModal');
+        url.searchParams.delete('redWarningModal');
         history.replaceState(null, null, url);
-        if ( (!parseURLParams('yellowWarningModal'))) document.getElementById('modal').style.display = 'none';
     },1000) 
 }
 
-if ( (!parseURLParams('yellowWarningModal'))) document.getElementById('modal').style.display = 'none';
-// if ( (!parseURLParams('redWarningModal'))) document.getElementById('modal').style.display = 'none';
+if ( (parseURLParams('yellowWarningModal'))) document.getElementById('modal').style.display = 'inline';
+if ( (parseURLParams('redWarningModal'))) document.getElementById('modal').style.display = 'inline';
 
 // Pantalla 2 
 if ( (!parseURLParams('saldo2')) || (!parseURLParams('simbolo2')) ) {
